@@ -1,0 +1,117 @@
+<?
+// phpCodeGen - versione 14/09/2022
+include_once("sintesi_dati_progetto.conf.php");
+?>
+<?
+
+// APP
+define("COMMON_COMPONENT",APP_PATH.FILE_SEPARATOR."common");
+define("DATABASE_COMPONENT",COMMON_COMPONENT.FILE_SEPARATOR."database");
+define("ERROR_HANDLING_COMPONENT",COMMON_COMPONENT.FILE_SEPARATOR."errorHandler");
+define("UTILS_COMPONENT",COMMON_COMPONENT.FILE_SEPARATOR."utils");
+define("LIB_COMPONENT",APP_PATH.FILE_SEPARATOR."lib");
+
+// Common Classes Location Location
+define("CLASS_EMAIL",LIB_COMPONENT.FILE_SEPARATOR."htmlMimeMail-2.5.1".FILE_SEPARATOR."htmlMimeMail.php");
+define("CLASS_ADODB",LIB_COMPONENT.FILE_SEPARATOR."adodb".FILE_SEPARATOR."adodb.inc.php");
+define("CLASS_DATABASE_CONNECTION_POOL",DATABASE_COMPONENT.FILE_SEPARATOR."databaseConnectionPool.class.php");
+define("CLASS_DATABASE_QUERY",DATABASE_COMPONENT.FILE_SEPARATOR."databaseQuery.class.php");
+define("CLASS_DATABASE_RESULTS_INFO",DATABASE_COMPONENT.FILE_SEPARATOR."databaseResultsInfo.class.php");
+define("CLASS_DATABASE_UTILS",DATABASE_COMPONENT.FILE_SEPARATOR."databaseUtils.class.php");
+
+// UTILITIES
+define("CLASS_ERROR_HANDLER",ERROR_HANDLING_COMPONENT.FILE_SEPARATOR."errorHandler.class.php");
+define("CLASS_TEXT_ENCRYPTER",UTILS_COMPONENT.FILE_SEPARATOR."textEncrypter".FILE_SEPARATOR."textEncrypter.class.php");
+define("CLASS_REQUEST_UTILS",UTILS_COMPONENT.FILE_SEPARATOR."requestUtils".FILE_SEPARATOR."requestUtils.class.php");
+define("CLASS_PAGE_TIMER",UTILS_COMPONENT.FILE_SEPARATOR."pageTimer".FILE_SEPARATOR."pageTimer.class.php");
+define("CLASS_DATE_UTILS",UTILS_COMPONENT.FILE_SEPARATOR."dateUtils".FILE_SEPARATOR."dateUtils.class.php");
+define("CLASS_IP_FUNCTIONS",UTILS_COMPONENT.FILE_SEPARATOR."ipAddress".FILE_SEPARATOR."ipFunctions.class.php");
+define("CLASS_GEOGRAPHICAL_DROP_DOWN",UTILS_COMPONENT.FILE_SEPARATOR."dropDowns".FILE_SEPARATOR."geographicDropDown.class.php");
+define("CLASS_PASSWORD_GENERATOR",UTILS_COMPONENT.FILE_SEPARATOR."passwordGenerator".FILE_SEPARATOR."passwordGenerator.class.php");
+define("CLASS_TURING_IMAGE_GENERATOR",UTILS_COMPONENT.FILE_SEPARATOR."turingImageGenerator".FILE_SEPARATOR."turingImage.class.php");
+define("CLASS_DATA_GRID",UTILS_COMPONENT.FILE_SEPARATOR."dataGrid".FILE_SEPARATOR."dataGrid.class.php");
+define("CLASS_RESULTS_PAGER",UTILS_COMPONENT.FILE_SEPARATOR."resultsPager".FILE_SEPARATOR."resultsPager.class.php");
+
+// SEARCH UTILS
+define("SEARCH_UTIL_COMPONENT",COMMON_COMPONENT.FILE_SEPARATOR."search");
+// searchInfo Classes Location
+define("CLASS_SEARCH_ITEM",SEARCH_UTIL_COMPONENT.FILE_SEPARATOR."searchItem.class.php");
+define("CLASS_SEARCH_UTILS",SEARCH_UTIL_COMPONENT.FILE_SEPARATOR."searchUtils.class.php");
+
+define("APPLICATION_CLASSES_COMPONENT",APP_PATH.FILE_SEPARATOR."crudClasses");
+
+// ***********************PM_TOSCOTEC COMPONENT ****************************
+define("PM_TOSCOTEC_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."pm_toscotec");
+// pm_toscotec classes location 
+define("CLASS_PM_TOSCOTEC_INFO",PM_TOSCOTEC_COMPONENT.FILE_SEPARATOR."pm_toscotecInfo.class.php");
+define("CLASS_PM_TOSCOTEC_GENDAO",PM_TOSCOTEC_COMPONENT.FILE_SEPARATOR."pm_toscotecGenDAO.class.php");
+define("CLASS_PM_TOSCOTEC_DAO",PM_TOSCOTEC_COMPONENT.FILE_SEPARATOR."pm_toscotecDAO.class.php");
+define("CLASS_PM_TOSCOTEC_GENMANAGER",PM_TOSCOTEC_COMPONENT.FILE_SEPARATOR."pm_toscotecGenManager.class.php");
+define("CLASS_PM_TOSCOTEC_MANAGER",PM_TOSCOTEC_COMPONENT.FILE_SEPARATOR."pm_toscotecManager.class.php");
+
+// ***********************SINTESI_DATI_PROGETTO COMPONENT ****************************
+define("SINTESI_DATI_PROGETTO_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."sintesi_dati_progetto");
+// sintesi_dati_progetto classes location 
+define("CLASS_SINTESI_DATI_PROGETTO_INFO",SINTESI_DATI_PROGETTO_COMPONENT.FILE_SEPARATOR."sintesi_dati_progettoInfo.class.php");
+define("CLASS_SINTESI_DATI_PROGETTO_GENDAO",SINTESI_DATI_PROGETTO_COMPONENT.FILE_SEPARATOR."sintesi_dati_progettoGenDAO.class.php");
+define("CLASS_SINTESI_DATI_PROGETTO_DAO",SINTESI_DATI_PROGETTO_COMPONENT.FILE_SEPARATOR."sintesi_dati_progettoDAO.class.php");
+define("CLASS_SINTESI_DATI_PROGETTO_GENMANAGER",SINTESI_DATI_PROGETTO_COMPONENT.FILE_SEPARATOR."sintesi_dati_progettoGenManager.class.php");
+define("CLASS_SINTESI_DATI_PROGETTO_MANAGER",SINTESI_DATI_PROGETTO_COMPONENT.FILE_SEPARATOR."sintesi_dati_progettoManager.class.php");
+
+// ***********************TERMINI_DI_CONSEGNA COMPONENT ****************************
+define("TERMINI_DI_CONSEGNA_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."termini_di_consegna");
+// termini_di_consegna classes location 
+define("CLASS_TERMINI_DI_CONSEGNA_INFO",TERMINI_DI_CONSEGNA_COMPONENT.FILE_SEPARATOR."termini_di_consegnaInfo.class.php");
+define("CLASS_TERMINI_DI_CONSEGNA_GENDAO",TERMINI_DI_CONSEGNA_COMPONENT.FILE_SEPARATOR."termini_di_consegnaGenDAO.class.php");
+define("CLASS_TERMINI_DI_CONSEGNA_DAO",TERMINI_DI_CONSEGNA_COMPONENT.FILE_SEPARATOR."termini_di_consegnaDAO.class.php");
+define("CLASS_TERMINI_DI_CONSEGNA_GENMANAGER",TERMINI_DI_CONSEGNA_COMPONENT.FILE_SEPARATOR."termini_di_consegnaGenManager.class.php");
+define("CLASS_TERMINI_DI_CONSEGNA_MANAGER",TERMINI_DI_CONSEGNA_COMPONENT.FILE_SEPARATOR."termini_di_consegnaManager.class.php");
+// ***********************UTENTI COMPONENT ****************************
+define("UTENTI_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."utenti");
+// utenti classes location 
+define("CLASS_UTENTI_INFO",UTENTI_COMPONENT.FILE_SEPARATOR."utentiInfo.class.php");
+define("CLASS_UTENTI_GENDAO",UTENTI_COMPONENT.FILE_SEPARATOR."utentiGenDAO.class.php");
+define("CLASS_UTENTI_DAO",UTENTI_COMPONENT.FILE_SEPARATOR."utentiDAO.class.php");
+define("CLASS_UTENTI_GENMANAGER",UTENTI_COMPONENT.FILE_SEPARATOR."utentiGenManager.class.php");
+define("CLASS_UTENTI_MANAGER",UTENTI_COMPONENT.FILE_SEPARATOR."utentiManager.class.php");
+
+
+// ***********************UTENTI_GRUPPI COMPONENT ****************************
+define("UTENTI_GRUPPI_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."utenti_gruppi");
+// utenti_gruppi classes location 
+define("CLASS_UTENTI_GRUPPI_INFO",UTENTI_GRUPPI_COMPONENT.FILE_SEPARATOR."utenti_gruppiInfo.class.php");
+define("CLASS_UTENTI_GRUPPI_GENDAO",UTENTI_GRUPPI_COMPONENT.FILE_SEPARATOR."utenti_gruppiGenDAO.class.php");
+define("CLASS_UTENTI_GRUPPI_DAO",UTENTI_GRUPPI_COMPONENT.FILE_SEPARATOR."utenti_gruppiDAO.class.php");
+define("CLASS_UTENTI_GRUPPI_GENMANAGER",UTENTI_GRUPPI_COMPONENT.FILE_SEPARATOR."utenti_gruppiGenManager.class.php");
+define("CLASS_UTENTI_GRUPPI_MANAGER",UTENTI_GRUPPI_COMPONENT.FILE_SEPARATOR."utenti_gruppiManager.class.php");
+
+// ***********************UTENTI_GRUPPI_ASSEGNATI COMPONENT ****************************
+define("UTENTI_GRUPPI_ASSEGNATI_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnati");
+// utenti_gruppi_assegnati classes location 
+define("CLASS_UTENTI_GRUPPI_ASSEGNATI_INFO",UTENTI_GRUPPI_ASSEGNATI_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnatiInfo.class.php");
+define("CLASS_UTENTI_GRUPPI_ASSEGNATI_GENDAO",UTENTI_GRUPPI_ASSEGNATI_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnatiGenDAO.class.php");
+define("CLASS_UTENTI_GRUPPI_ASSEGNATI_DAO",UTENTI_GRUPPI_ASSEGNATI_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnatiDAO.class.php");
+define("CLASS_UTENTI_GRUPPI_ASSEGNATI_GENMANAGER",UTENTI_GRUPPI_ASSEGNATI_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnatiGenManager.class.php");
+define("CLASS_UTENTI_GRUPPI_ASSEGNATI_MANAGER",UTENTI_GRUPPI_ASSEGNATI_COMPONENT.FILE_SEPARATOR."utenti_gruppi_assegnatiManager.class.php");
+
+// ***********************UTENTI_TOKEN_ACCESSO COMPONENT ****************************
+define("UTENTI_TOKEN_ACCESSO_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."utenti_token_accesso");
+// utenti_token_accesso classes location 
+define("CLASS_UTENTI_TOKEN_ACCESSO_INFO",UTENTI_TOKEN_ACCESSO_COMPONENT.FILE_SEPARATOR."utenti_token_accessoInfo.class.php");
+define("CLASS_UTENTI_TOKEN_ACCESSO_GENDAO",UTENTI_TOKEN_ACCESSO_COMPONENT.FILE_SEPARATOR."utenti_token_accessoGenDAO.class.php");
+define("CLASS_UTENTI_TOKEN_ACCESSO_DAO",UTENTI_TOKEN_ACCESSO_COMPONENT.FILE_SEPARATOR."utenti_token_accessoDAO.class.php");
+define("CLASS_UTENTI_TOKEN_ACCESSO_GENMANAGER",UTENTI_TOKEN_ACCESSO_COMPONENT.FILE_SEPARATOR."utenti_token_accessoGenManager.class.php");
+define("CLASS_UTENTI_TOKEN_ACCESSO_MANAGER",UTENTI_TOKEN_ACCESSO_COMPONENT.FILE_SEPARATOR."utenti_token_accessoManager.class.php");
+
+// ***********************VOCI_MENU COMPONENT ****************************
+define("VOCI_MENU_COMPONENT",APPLICATION_CLASSES_COMPONENT.FILE_SEPARATOR."voci_menu");
+// voci_menu classes location 
+define("CLASS_VOCI_MENU_INFO",VOCI_MENU_COMPONENT.FILE_SEPARATOR."voci_menuInfo.class.php");
+define("CLASS_VOCI_MENU_GENDAO",VOCI_MENU_COMPONENT.FILE_SEPARATOR."voci_menuGenDAO.class.php");
+define("CLASS_VOCI_MENU_DAO",VOCI_MENU_COMPONENT.FILE_SEPARATOR."voci_menuDAO.class.php");
+define("CLASS_VOCI_MENU_GENMANAGER",VOCI_MENU_COMPONENT.FILE_SEPARATOR."voci_menuGenManager.class.php");
+define("CLASS_VOCI_MENU_MANAGER",VOCI_MENU_COMPONENT.FILE_SEPARATOR."voci_menuManager.class.php");
+
+
+
+?>

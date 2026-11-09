@@ -1,0 +1,166 @@
+#headerNav {
+            display:block;
+                float:left;
+     position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50px;
+                background-color: #8c857f;
+
+}
+ #headerNav .logo{
+                display:block;
+                float:left;
+                width: 230px;
+                height: 50px;
+               /*background-image: url(../images/logo.png);*/  
+                background-color: #3e3b38;        
+                background-size: auto 44px;
+                background-position: center;
+                background-repeat: no-repeat;
+          
+            }
+            
+                        #headerNav .logout a:hover{
+                background-color: rgba(255,255,255,.3)
+            }
+            #headerNav .logout a{
+                position: absolute;
+             display:block;
+                float:left;
+                top: 0;
+                right: 0px;
+                padding: 5px;
+                width: 50px;
+                line-height: 40px;
+                color: #fff;
+                text-align: center;
+                cursor: pointer;
+            }
+            
+            #headerNav .utente{
+                position: absolute;
+                  display:block;
+                float:left;
+                top: 0;
+                right: 80px;
+                padding: 5px;
+                margin-left: 0px;
+                line-height: 40px;
+                color: #fff;
+                text-align: right;
+            }
+            
+            #headerNav .utente img{
+                height: 40px;
+                border-radius: 20px;
+                background-color: rgba(255,255,255,.5);
+                vertical-align: middle;
+                margin-right:10px
+            }
+            
+#headerNav li {
+      font-size: 16px;
+                font-weight: bold;
+                padding: 10px 15px;
+                font-weight: normal;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+        height:50px;
+	float: left;
+	position: relative;
+	list-style: none;
+        color: #ffffff;
+}
+ 
+#headerNav a {
+	font-weight: bold;
+	color: #ffffff;
+	text-decoration: none;
+	display: block;
+	padding:  12.725px 20px;
+	margin: 0 0 0 0;
+
+}
+ 
+#headerNav .current a, #headerNav li:hover > a {
+      
+    background-color: rgba(255,255,255,.3);
+ 
+} 
+
+#headerNav ul li:hover a, #headerNav li:hover li a {
+	
+	border: none;
+	color: #ffffff ;
+	
+}
+#headerNav ul a:hover {
+	background-color: rgba(255,255,255,.3);
+
+	color: #ffffff !important;
+	
+}
+ 
+#headerNav ul {
+   
+	background: #8c857f; 
+	display: none;
+	margin: 0;
+	padding: 0;
+        width: auto;
+        height: auto;
+	position: absolute;
+	top: 35px;
+	left: 0;
+	
+
+}
+ 
+#headerNav li:hover > ul {
+    margin-top:15px;
+	display: block;
+}
+#headerNav ul li {
+     width:100%;
+	float: none;
+        height:auto;
+	margin: 0;
+	padding: 0;
+}
+#headerNav ul a {
+        width:auto;
+	font-weight: normal;
+}
+ 
+#headerNav ul ul {
+    width: 100%;
+	left: 100%;
+	top: -15px;
+}
+ 
+#headerNav ul li:first-child > a {
+ 
+}
+#headerNav ul li:last-child > a {
+ 
+}
+ 
+#headerNav:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+#headerNav {
+	display: inline-block;
+}
+html[xmlns] #headerNav {
+	display: block;
+}
+* html #headerNav {
+	height: 1%;
+}

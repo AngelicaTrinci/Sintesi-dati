@@ -1,0 +1,321 @@
+<?
+$title="Elenco Sintesi_dati_progetto";
+include "header.php";
+$_SESSION["language_select"]="it";
+require_once "KoolControls/KoolGrid/koolgrid.php";
+require_once "KoolControls/KoolAjax/koolajax.php";
+require_once "config.php";
+//include_once "add_colonna.php";
+?>
+<style>
+.kgrSortHeaderText {
+    color: black !important;
+}
+#grid_mt_c1_hd,
+#grid_mt_c2_hd,
+#grid_mt_c3_hd,
+#grid_mt_c4_hd,
+#grid_mt_c5_hd,
+#grid_mt_c6_hd,
+#grid_mt_c7_hd,
+#grid_mt_c8_hd,
+#grid_mt_c9_hd,
+#grid_mt_c10_hd
+{
+    /* Generali */
+    background: #ffff00 !important;
+    color: black !important;
+}
+#grid_mt_c11_hd,
+#grid_mt_c12_hd,
+#grid_mt_c13_hd,
+#grid_mt_c14_hd,
+#grid_mt_c15_hd,
+#grid_mt_c16_hd,
+#grid_mt_c17_hd,
+#grid_mt_c18_hd,
+#grid_mt_c19_hd,
+#grid_mt_c20_hd,
+#grid_mt_c21_hd,
+#grid_mt_c22_hd,
+#grid_mt_c23_hd,
+#grid_mt_c24_hd
+{
+    /* 7 */
+    background: #ffc000 !important;
+}
+#grid_mt_c25_hd,
+#grid_mt_c26_hd,
+#grid_mt_c27_hd
+{
+    /* Manualistica */
+    background: #92d050 !important;
+}
+#grid_mt_c28_hd,
+#grid_mt_c29_hd,
+#grid_mt_c30_hd,
+#grid_mt_c31_hd,
+#grid_mt_c32_hd,
+#grid_mt_c33_hd
+{
+    /* Training */
+    background: #538dd5 !important;
+    color: #ffff !important;
+    
+}
+#grid_mt_c34_hd,
+#grid_mt_c35_hd,
+#grid_mt_c36_hd
+{
+    /* Fat */
+    background: #ff0000 !important;
+}
+#grid_mt_c37_hd 
+{
+    /* Ricambi */
+    background: #e6b8b7 !important;
+}
+th.kgrHeader {
+    height: 90px;
+}
+#delta-page {
+    position: absolute;
+    z-index: -9999;
+    left: 10px;
+    top: 45px;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+}
+#grid_mt {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.kgrPartHeader {
+    flex-shrink: 0;
+}
+.kgrSortHeaderText {
+    line-height: 10px;
+}
+.kgrIn {
+    font-size: 11px;
+    line-height: 14px;
+}
+</style>
+<?
+/*
+ * Per utilizzare una connessione diversa da quella predefinita
+ * (vedi Connessioni e \deltamail\utenti\Comune_a_tutti\Manuali e Documentazione\PHP\Esecuzione Query.docx)
+ *   $connessione = "ALTRA_CONNESSIONE";
+ *   $ds = creaKoolGridConnection($connessione);
+ */
+$koolajax->scriptFolder = "KoolControls/KoolAjax";
+$ds->SelectCommand = "SELECT
+    Id_dati_progetto,
+    Ragione_sociale_cliente,
+    Area,
+    FORMAT(Data_contratto, 'dd/MM/yyyy', 'it-IT') AS Data_contratto,
+    Scopo_fornitura,
+    Numero_supercommessa_job,
+    Acronimo_progetto,
+    Pm_tt,
+    Pm_customer,
+    Email,
+    Delivery_address,
+
+    CONCAT(FORMAT(Data_consegna_materiale, 'dd/MM/yyyy', 'it-IT'), ' ', Data_consegna_materiale_note) AS Data_consegna_mat,
+    CONCAT(Termine_consegna, ' ', Termine_consegna_note) AS Termine_consegna,
+    Dich_origine,
+    Colori_macchina,
+    CONCAT(Penali_su_consegna, ' ', Penali_su_consegna_note) AS Penali_consegna,
+
+    CONCAT(FORMAT(Data_fine_smontaggio, 'dd/MM/yyyy', 'it-IT'), ' ', Data_fine_smontaggio_note) AS Data_fine_smont,
+    CONCAT(FORMAT(Data_inizio_spedizione, 'dd/MM/yyyy', 'it-IT'), ' ', Data_inizio_spedizione_note) AS Data_inizio_sped,
+    CONCAT(FORMAT(Data_inizio_montaggio, 'dd/MM/yyyy', 'it-IT'), ' ', Data_inizio_montaggio_note) AS Data_inizio_mont,
+
+    CONCAT(FORMAT(Data_avviamento_da_contratto, 'dd/MM/yyyy', 'it-IT'), ' ', Data_avviamento_da_contratto_note) AS Data_avviamento_contr,
+    CONCAT(FORMAT(Data_avviamento_atteso, 'dd/MM/yyyy', 'it-IT'), ' ', Data_avviamento_atteso_note) AS Data_avviamento_att,
+    CONCAT(FORMAT(Data_avviamento_effettivo, 'dd/MM/yyyy', 'it-IT'), ' ', Data_avviamento_effettivo_note) AS Data_avv_effettivo,
+
+    CONCAT(FORMAT(Data_mesi_accettazione, 'dd/MM/yyyy', 'it-IT'), ' ', Data_mesi_accettazione_note) AS Data_mesi_acc,
+    CONCAT(FORMAT(Garanzia_meccanica_contrattuale, 'dd/MM/yyyy', 'it-IT'), ' ', Garanzia_meccanica_contrattuale_note) AS Garanzia_meccanica_contrattuale,
+    CONCAT(FORMAT(Documentazione_contrattuale, 'dd/MM/yyyy', 'it-IT'), ' ', Documentazione_contrattuale_note) AS Documentazione_contrattuale,
+
+    CONCAT(FORMAT(Data_primo_invio_doc_cliente, 'dd/MM/yyyy', 'it-IT'), ' ', Data_primo_invio_doc_cliente_note) AS Data_primo_invio,
+    CONCAT(FORMAT(Data_estrazione_doc_site_manager, 'dd/MM/yyyy', 'it-IT'), ' ', Data_estrazione_doc_site_manager_note) AS Data_estrazione,
+    CONCAT(FORMAT(Data_primo_invio_doc_disegni, 'dd/MM/yyyy', 'it-IT'), ' ', Data_primo_invio_doc_disegni_note) AS Data_invio_doc_disegni,
+
+    CONCAT(Doc_training_tt_startup, ' ', Doc_training_tt_startup_note) AS Doc_training,
+    CONCAT(Training_richiesto, ' ', Training_richiesto_note) AS Training_rich,
+    CONCAT(FORMAT(Data_training, 'dd/MM/yyyy', 'it-IT'), ' ', Data_training_note) AS Data_train,
+
+    Tipologia_training_richiesta,
+    CONCAT(Incluso_pagamento, ' ', Incluso_pagamento_note) AS Incluso_pag,
+    Lingua_training,
+    CONCAT(Interno, ' ', Interno_note) AS Intern,
+    CONCAT(Cliente, ' ', Cliente_note) AS Cli,
+    CONCAT(Esterno, ' ', Esterno_note) AS Est,
+    
+    CONCAT(FORMAT(Data_consegna_ricambi, 'dd/MM/yyyy', 'it-IT'), ' ', Data_consegna_ricambi_note) AS Data_consegna_ric
+
+FROM sintesi_dati_progetto";
+$grid = new KoolGrid("grid");
+$grid->scriptFolder = "KoolControls/KoolGrid";
+$grid->styleFolder=(defined("DEFAULT_KOOLGRID_STYLE")?DEFAULT_KOOLGRID_STYLE:"default");
+$grid->DataSource = $ds;
+$grid->AjaxEnabled = true;
+$grid->Width = "calc(100vw - 40px)";
+$grid->Height = "calc(100vh - 120px)";
+$grid->PageSize = 20;
+$grid->RowAlternative = true;
+$grid->AllowSorting = true;
+$grid->AllowFiltering = true;
+$grid->AllowSelecting = true;
+$grid->AllowResizing = false;
+$grid->AllowScrolling = true;
+$grid->AutoGenerateColumns = false;
+$grid->ColumnWrap = false;
+$grid->Localization->Load("KoolControls/KoolGrid/localization/".$_SESSION["language_select"].".xml");
+$grid->MasterTable->Pager = new GridPrevNextAndNumericPager();
+$grid->MasterTable->Pager->ShowPageSize = true; //visualizza la scelta per il numero righe paginazione
+$grid->MasterTable->ShowFunctionPanel = true;
+$grid->MasterTable->FunctionPanel->Position = "top";
+$grid->MasterTable->TableLayout  = "fixed"; // Dimensione fissa griglia
+$grid->MasterTable->MultiSortingOrder = "LCFS"; // Last click first sort
+$grid->MasterTable->FrozenColumnsCount = 2;
+//$grid->AllowGrouping = true;
+//$grid->MasterTable->ShowGroupPanel = true;
+
+//$grid->MasterTable->Height = "900px";
+$grid->ShowFooter=false;
+//$grid->MasterTable->FrozenColumnsCount = 2;
+
+$grid->ClientSettings->ClientEvents["OnBeforeStartInsert"] = "OnBeforeStartInsert";
+$grid->ClientSettings->ClientEvents["OnRowDoubleClick"] = "DoubleClick";
+$col = new GridCommandColumn();
+$col->CommandText = "Modifica";
+$col->OnClick = "OpenEdit(\"{Id_dati_progetto}\");";
+$col->Width = "35px";
+//$col->CssClass = "ui-button ui-button-text-only ui-widget";
+$grid->MasterTable->AddColumn($col);
+
+add_colonna($grid->MasterTable, "Ragione_sociale_cliente", "RAGIONE SOCIALE CLIENTE", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Area", "AREA", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Data_contratto", "DATA CONTRATTO", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Scopo_fornitura", "SCOPO DI FORNITURA", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Numero_supercommessa_job", "NUMERO SUPERCOMMESSA /<br> JOB", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Acronimo_progetto", "ACRONIMO PROGETTO", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Pm_tt", "P.M. TT", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Pm_customer", "PM customer", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Email", "E-MAIL", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Delivery_address", "DELIVERY ADDRESS", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Data_consegna_mat", "DATA CONSEGNA MATERIALE", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Termine_consegna", "TERMINE CONSEGNA", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Dich_origine", "DICH ORIGINE", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Colori_macchina", "COLORI MACCHINA", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Penali_consegna", "PENALI SU CONSEGNA", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Data_fine_smont", "DATA FINE SMONTAGGIO <br>MACCHINA IN TOSCOTEC", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Data_inizio_sped", "DATA INIZIO <br>SPEDIZIONE <br>MACCHINA", ["larghezza"=>"100px"]);
+add_colonna($grid->MasterTable, "Data_inizio_mont", "DATA INIZIO <br>MONTAGGIO", ["larghezza"=>"100px"]);
+add_colonna($grid->MasterTable, "Data_avviamento_contr", "DATA DI <br>AVVIAMENTO <br>DA<br>CONTRATTO", ["larghezza"=>"100px"]);
+add_colonna($grid->MasterTable, "Data_avviamento_att", "DATA DI <br>AVVIAMENTO <br>ATTESO", ["larghezza"=>"100px"]);
+add_colonna($grid->MasterTable, "Data_avv_effettivo", "DATA <br>AVVIAMENTO <br>EFFETTIVO", ["larghezza"=>"100px"]);
+add_colonna($grid->MasterTable, "Data_mesi_acc", "DATA / MESI <br>ENTRO CUI <br>OTTENERE<br> ACCETTAZIONE", ["larghezza"=>"120px"]);
+add_colonna($grid->MasterTable, "Garanzia_meccanica_contrattuale", "GARANZIA <br>MECCANICA<br> CONTRATTUALE", ["larghezza"=>"140px"]);
+add_colonna($grid->MasterTable, "Documentazione_contrattuale", "DOCUMENTAZIONE <br>CONTRATTUALE", ["larghezza"=>"150px"]);
+add_colonna($grid->MasterTable, "Data_primo_invio", "DATA DI <br>PRIMO INVIO <br>DOCUMENTAZIONE<br> CLIENTE", ["larghezza"=>"190px"]);
+add_colonna($grid->MasterTable, "Data_estrazione", "DATA DI <br>ESTRAZIONE <br>DOCUMENTAZIONE<br> SITE MANAGER", ["larghezza"=>"150px"]);
+add_colonna($grid->MasterTable, "Data_invio_doc_disegni", "DATA DI <br>PRIMO INVIO <br>DOCUMENTAZIONE <br>PER DISEGNI<br> COSTRUTTIVI E <br>PROCUREMENT<br> CLIENTE", ["larghezza"=>"150px"]);
+add_colonna($grid->MasterTable, "Doc_training", "Documentazione <br> per training <br> in TT/allo startup", ["larghezza"=>"150px"]);
+add_colonna($grid->MasterTable, "Training_rich", "Training richiesto<br>NO<br>SI - in TT<br>SI - allo start-up /baby sitting", ["larghezza"=>"200px"]);
+add_colonna($grid->MasterTable, "Data_train", "Data training<br>-IN TT<br>-PRESSO CLIENTE", ["larghezza"=>"180px"]);
+add_colonna($grid->MasterTable, "Tipologia_training_richiesta", "TIPOLOGIA DI TRAINING <br>RICHIESTO<br>-Manutentori<br>-Operatori<br>-Sicurezza", ["larghezza"=>"180px"]);
+add_colonna($grid->MasterTable, "Incluso_pag", "INCLUSO / <br>A PAGAMENTO", ["larghezza"=>"120px"]);
+add_colonna($grid->MasterTable, "Lingua_training", "LINGUA <br>TRAINING", ["larghezza"=>"80px"]);
+add_colonna($grid->MasterTable, "Intern", "INTERNO", ["larghezza"=>"80px"]);
+add_colonna($grid->MasterTable, "Cli", "CLIENTE", ["larghezza"=>"80px"]);
+add_colonna($grid->MasterTable, "Est", "ESTERNO", ["larghezza"=>"80px"]);
+add_colonna($grid->MasterTable, "Data_consegna_ric", "DATA CONSEGNA LISTA RICAMBI", ["larghezza"=>"80px"]);
+
+$grid->Process();
+if(isset($_POST["IgnorePaging"])) $grid->ExportSettings->IgnorePaging = true;
+if(isset($_POST["Export"])&&$_POST["Export"]=='excel'){
+    ob_end_clean();
+    $grid->GetInstanceMasterTable()->ExportToExcel();
+}
+if(isset($_POST["Export"])&&$_POST["Export"]=='word'){
+    ob_end_clean();
+    $grid->GetInstanceMasterTable()->ExportToWord();
+}
+if(isset($_POST["Export"])&&$_POST["Export"]=='csv'){
+    ob_end_clean();
+    $grid->GetInstanceMasterTable()->ExportToCSV();
+}
+if(isset($_POST["Export"])&&$_POST["Export"]=='pdf'){
+    ob_end_clean();
+    $grid->GetInstanceMasterTable()->ExportToPDF();
+}
+?>
+<?php echo $koolajax->Render();?>
+<form id="form1" method="post">
+    <script type="text/javascript">
+        function OnBeforeStartInsert(sender,args){
+            if( typeof delta_dialog != "undefined" ){
+                delta_dialog.openDialog({
+                    url:"editSintesi_dati_progetto.php?Return=Close&Op=Inserisci",
+                    actions:{
+                        "done": function(){
+                            grid.refresh();
+                            grid.commit();
+                        }
+                    }
+                });
+            }
+            else{
+                OpenDiv("editSintesi_dati_progetto.php?Return=Close&Op=Inserisci");
+            }
+            return false; // Approve action
+        }
+        function DoubleClick(sender,args){
+            var row = args["Row"];
+            var dataitem = row.getDataItem();
+            OpenEdit(dataitem["Id_dati_progetto"]);
+        }
+        function OpenEdit(Id_dati_progetto){
+            if( typeof delta_dialog != "undefined" ){
+                delta_dialog.openDialog({
+                    url:"editSintesi_dati_progetto.php?Return=Close&Id_dati_progetto="+Id_dati_progetto,
+                    actions:{
+                        "done": function(){
+                            grid.refresh();
+                            grid.commit();
+                        }
+                    }
+               });
+            }
+            else{
+                OpenDiv("editSintesi_dati_progetto.php?Return=Close&Id_dati_progetto="+Id_dati_progetto);
+            }
+        }
+        function esporta(v){
+            document.getElementById("Export").value=v;
+        }
+    </script>
+    <div style="margin: 10px auto">
+        <?php echo $grid->Render();?>
+    </div>
+    <div>
+        Esportazione:
+        <input type="hidden" id="Export" name="Export" value=""/>
+        <input type="image" src="images/icona_csv.png" onClick="esporta('csv');" width="20" height="20"/>
+        <input type="image" src="images/icona_excel.png" onClick="esporta('excel');"  width="20" height="20"/>
+        <input type="image" src="images/icona_word.png"  onClick="esporta('word');" width="20" height="20"/>
+        <input type="image" src="images/icona_pdf.png"  onClick="esporta('pdf');" width="20" height="20"/>
+        <div style="display: none"><input type="checkbox" id="IgnorePaging" name="IgnorePaging" checked="checked"/> <label for="IgnorePaging">Tutte le pagine</label></div>
+    </div>
+</form>
+<?
+$titleMod="Sintesi_dati_progetto";
+include "footer.php";
+?>

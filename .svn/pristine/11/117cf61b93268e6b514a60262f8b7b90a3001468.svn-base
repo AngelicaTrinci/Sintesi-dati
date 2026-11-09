@@ -1,0 +1,146 @@
+<?
+// phpCodeGen - versione 14/09/2022
+include_once("sintesi_dati_progetto.conf.php");
+?>
+<?php
+include_once(CONFIG_FILE);
+include_once(CLASS_SINTESI_DATI_PROGETTO_INFO);
+include_once(CLASS_SINTESI_DATI_PROGETTO_GENDAO);
+include_once(CLASS_SINTESI_DATI_PROGETTO_DAO);
+include_once(CLASS_DATABASE_RESULTS_INFO);
+?><?php 
+// Class Representing the Sintesi_dati_progettoInfo table 
+// and DML operations on it from the database
+class sintesi_dati_progettoGenManager { 
+
+/** 
+* @return returns the insert Id of the inserted Row. DAO will throw exception if error  
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Inserts a new  row in the table populated from parameters of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function createSintesi_dati_progetto($thisSintesi_dati_progettoInfo) 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   return $thisSintesi_dati_progettoDAO->createSintesi_dati_progetto($thisSintesi_dati_progettoInfo);
+   
+
+} 
+
+
+
+/** 
+* @return returns true if update if successful. DAO will throw exception if error  
+* @param a populated instance of object - (sintesi_dati_progetto) 
+* @desc Updates database table row from parameters of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function updateSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$searchItems="") 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   return $thisSintesi_dati_progettoDAO->updateSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$searchItems);
+   
+
+} 
+
+
+
+/** 
+* @return returns true if delete if successful. DAO will throw exception if error  
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Delete database table row from parameters of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function deleteSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$searchItems="") 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   return $thisSintesi_dati_progettoDAO->deleteSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$searchItems);
+   
+
+} 
+
+
+
+/** 
+* @return returns a  (Sintesi_dati_progettoInfo) object if successul or else returns false 
+* @param unique id of the object you want to get 
+* @desc Searches the database for a (Sintesi_dati_progettoInfo) object  with the passed Id
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function getSintesi_dati_progettoByPK($Id_dati_progetto) 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   return $thisSintesi_dati_progettoDAO->getSintesi_dati_progettoByPK($Id_dati_progetto);
+   
+
+} 
+
+
+
+/** 
+* @return returns an array  (Sintesi_dati_progettoInfo) object if successul or else returns false 
+* @param no params 
+* @desc Searches the database for a (Sintesi_dati_progettoInfo) object  with the passed Id
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function getAllSintesi_dati_progetto($start="",$limit="",$sortBy="",$sortOrder="") 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   // this function returns an array of Sintesi_dati_progettoInfo(s) containing all rows in the database   
+   return $thisSintesi_dati_progettoDAO->searchSintesi_dati_progetto("",$start,$limit,"",$sortBy,$sortOrder);
+   
+
+} 
+
+
+
+/** 
+* @return returns an array (Sintesi_dati_progettoInfo) object if successul or else returns false 
+* @param field to search on, field Value 
+* @desc Searches the database for a Sintesi_dati_progettoInfo object  with the passed field and value
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function searchSintesi_dati_progetto($searchItems,$start="",$limit="",$fieldsToReturn="",$orderBy="",$orderDirection="") 
+{ 
+
+   // Instantiating new instance of Sintesi_dati_progettoInfoDAO 
+   $thisSintesi_dati_progettoDAO = new Sintesi_dati_progettoDAO(); 
+   // this function returns an array of Sintesi_dati_progettoInfo(s) containing all rows in the database   
+   return $thisSintesi_dati_progettoDAO->searchSintesi_dati_progetto($searchItems,$start,$limit,$fieldsToReturn,$orderBy,$orderDirection);
+   
+
+} 
+
+
+
+} // end of sintesi_dati_progettoGenManager Class
+
+?>

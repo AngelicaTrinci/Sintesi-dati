@@ -1,0 +1,1652 @@
+<?php
+include_once("base.conf.php");
+include_once(CONFIG_FILE);
+//include_once(CLASS_TOABCPP_MANAGER);
+if (!function_exists("mysql_escape_string")) {
+
+    function mysql_escape_string($str) {
+        return str_replace(array("\\","'"), array("\\\\","\\'"), $str);
+    }
+
+}
+if (!function_exists("split")) {
+
+    function split($delimiter,$string,$limit = null) {
+        return explode($delimiter, $string, $limit);
+    }
+
+}
+include_once ('class.phpmailer.php');
+include_once ('class.smtp.php');
+
+function effettuaLogin($username, $password, $userWindows = "", $domainWindows = "",$sso="N") {
+    
+    $utente = null;
+    $slash = "\\";
+    if (DATABASE_SERVER_TO_USE == "mysql") {
+        $slash = "\\\\";
+    }
+    if ($username != "") {
+        if (DATABASE_SERVER_TO_USE == "mysql") {
+            $username = mysql_escape_string($username);
+            //echo $thisUsername;
+        }else
+            {
+            $username=  str_replace("'", "''", $username);
+            }
+        //$utentiDao = new utentiDAO();
+            $utentiDao = new toabcppDAO();
+        if($domainWindows==""||$domainWindows==getDominioDefault()||getDominioDefault()==""){
+            //echo " if entrato";
+            //echo "SELECT * FROM TOABCPP where USRLOGN='$username' OR USRLOGN = '" . $domainWindows . $slash . $username . "' ";
+           // $utenti = $utentiDao->searchUtentiFromSql("SELECT * FROM utenti where Username='$username' OR Username = '" . $domainWindows . $slash . $username . "' ");
+            $utenti = $utentiDao->searchToabcppFromSql("SELECT * FROM TOABCPP where usrlogn='$username' OR usrlogn = '" . $domainWindows . $slash . $username . "' ");
+
+            if ($utenti != null) {
+                $utente = $utenti->getResultsArray();
+                if (is_array($utente)) {
+                    $utente = $utente[0];
+                } else {
+                    $utente = null;
+                }
+            }
+        }else
+            {
+                $utenti = $utentiDao->searchUtentiFromSql("SELECT * FROM TOABCPP where usrlogn = '" . $domainWindows . $slash . $username . "' ");
+                if ($utenti != null) {
+                    $utente = $utenti->getResultsArray();
+                    if (is_array($utente)) {
+                        $utente = $utente[0];
+                    } else {
+                        $utente = null;
+                    }
+                }
+            }
+        if ($utente != null)
+            {
+          
+                $username=$utente->getusrlogn();
+                if (DATABASE_SERVER_TO_USE == "mysql") {
+                    $username = mysql_escape_string($username);
+                    //echo $username;
+                }
+            }
+        if ($utente != null && trim($utente->getusrpwd()) == $password) {
+           $sql= "update TOABCPP set faild=0 where usrlogn='".$utente->getusrlogn()."'";
+                $thisDatabaseQuery = new databaseQuery(); 
+                $thisDatabaseQuery->setSqlQuery($sql); 
+                $result = $thisDatabaseQuery->executeQuery(); 
+                
+            $login = 1;
+            $username = $utente->getusrlogn();
+            salvaLogin($username, $password, $utente->Admin,$domainWindows);
+        } else if ($utente != null && $utente->AccessoLdap == "S" && $password!="" && loginLdap($username, $password)) {
+           
+            $login = 1;
+            $username = $utente->getusrlogn();
+            salvaLogin($username, $password, $utente->Admin,$domainWindows);
+        } else if ($utente != null && $utente->AccessoLdap == "A" && loginAdiuto($username, $password)) {
+             
+            $login = 1;
+            $username = $utente->getusrlogn();
+            salvaLogin($username, $password, $utente->Admin,$domainWindows);
+        } else {
+            if($utente!=null){
+                $sql= "update TOABCPP set faild=faild+1 where usrlogn='".$utente->getusrlogn()."'";
+                $thisDatabaseQuery = new databaseQuery(); 
+                $thisDatabaseQuery->setSqlQuery($sql); 
+                $result = $thisDatabaseQuery->executeQuery(); 
+            }
+            
+            $utente = null;
+            disconnetti();
+            //setcookie("admin", "", time()-3600);
+        }
+    } else if ($userWindows != "") {
+        if (DATABASE_SERVER_TO_USE == "mysql") {
+            $userWindows = mysql_escape_string($userWindows);
+            //echo $thisUsername;
+        }else
+            {
+            $userWindows=  str_replace("'", "''", $userWindows);
+            }
+       
+        $utentiDao = new toabcppDAO();
+        
+        if($domainWindows==""||$domainWindows==getDominioDefault()||getDominioDefault()==""){
+            
+            $utenti = $utentiDao->searchToabcppFromSql("SELECT * FROM TOABCPP where usrlogn='$userWindows' OR usrlogn = '" . $domainWindows . $slash . $userWindows . "' ");
+            if ($utenti != null) {
+                $utente = $utenti->getResultsArray();
+                if (is_array($utente)) {
+                    $utente = $utente[0];
+                } else {
+                    $utente = null;
+                }
+            }
+        }else
+            {
+                $utenti = $utentiDao->searchUtentiFromSql("SELECT * FROM TOABCPP where usrlogn = '" . $domainWindows . $slash . $userWindows . "' ");
+                if ($utenti != null) {
+                    $utente = $utenti->getResultsArray();
+                    if (is_array($utente)) {
+                        $utente = $utente[0];
+                    } else {
+                        $utente = null;
+                    }
+                }
+            }
+        //if (($utente != null && $utente->AccessoLdap == "S" &&$sso=="S") || ($utente != null && $utente->AccessoLdap == "S" && $sso!="S" && loginLdap($userWindows, $password)) ) {
+        if ($utente != null && $utente->AccessoLdap == "S"  ) {
+            //echo $userWindows." ".$domainWindows;
+            
+            $login = 1;
+            $impostazioni = impostazioni();
+            $domini = explode(",", $impostazioni->DominioEsterno);
+            $trovato = false;
+            foreach ($domini as $d) {
+                //echo "$d - $domainWindows";
+                if ($d == $domainWindows)
+                    $trovato = true;
+            }
+            if ($trovato) {
+                $username = $utente->getusrlogn();
+                salvaLogin($username, "", $utente->Admin,$domainWindows);
+            } else {
+                $utente = null;
+                disconnetti();
+            }
+        } else {
+            $utente = null;
+            disconnetti();
+        }
+    }
+    
+    return $utente;
+}
+
+function inputCalendario($nome, $valore, $return = false, $id = null) {
+    if ($id == null)
+        $id = $nome;
+    if ($return) {
+        ob_start();
+    }
+    require_once "KoolControls/KoolCalendar/koolcalendar.php";
+    $datapicker = new KoolDatePicker($nome); //Create calendar object
+    $datapicker->scriptFolder = "KoolControls/KoolCalendar"; //Set scriptFolder
+    $datapicker->styleFolder = "default";
+    $datapicker->Localization->Load("KoolControls/KoolCalendar/localization/it.xml");
+    //Change date and time format
+    $datapicker->id = $id;
+    $datapicker->DateFormat = "d/m/Y";
+    $datapicker->Init();
+    $datapicker->Value = str_replace("''", "'", $valore);
+    $datapicker->Width = "100px";
+
+    echo $datapicker->Render();
+    echo "<script>$('#$id').keyup(function() {
+        app=$('#$id').val();
+        if(app.length>2)
+        {
+            if(app.charAt(2)!=='/')
+                app=app.substr(0,2)+'/'+app.substr(2,app.length);
+            if(app.length>5)
+                if(app.charAt(5)!=='/')
+                    app=app.substr(0,5)+'/'+app.substr(5,app.length);
+        }
+        if(app.length==10)
+        {
+            dateParts = app.split('/');
+            var app2 = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+            var date=app2.getDate();
+            if(date<10) date='0'+date;
+            var month=app2.getMonth()+1;
+            if(month<10) month='0'+month;
+            if(app!=(date+'/'+month+'/'+app2.getFullYear()))
+            {
+                alert('Data Errata');
+            }
+        }
+        $('#$id').val(app);});</script>";
+    if ($return) {
+        return ob_get_clean();
+    }
+}
+
+function startsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
+}
+
+function endsWith($haystack, $needle) {
+    // search forward starting from end minus needle length characters
+    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== FALSE);
+}
+
+include_once "selezione_crea.php";
+
+function formReadOnly($Id) {
+    ?>
+    <script>
+        objForm = document.getElementById("<?php echo $Id ?>");
+        var elArr = objForm.elements;
+        for (var i = 0; i < elArr.length; i++) {
+            switch (elArr[i].type) {
+                case 'radio':
+                    elArr[i].disabled = true;
+                    break;
+                case 'checkbox':
+                    elArr[i].disabled = true;
+                    break;
+                case 'select-one':
+                    elArr[i].disabled = true;
+                    break;
+                case 'select-multiple':
+                    elArr[i].disabled = true;
+                    break;
+                case 'text':
+                    elArr[i].readOnly = true;
+                    break;
+                case 'textarea':
+                    elArr[i].readOnly = true;
+                    break;
+                case 'button':
+                    elArr[i].disabled = true;
+                    break;
+                case 'submit':
+                    elArr[i].disabled = true;
+                    break;
+                case 'reset':
+                    elArr[i].disabled = true;
+                    break;
+                case 'hidden':
+                    break;
+                default:
+                    elArr[i].disabled = true;
+                    break;
+            }
+        }
+    </script>
+    <?php
+}
+
+function escapeDB($oggetto) {
+    foreach ($oggetto as $p => $v) {
+        if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+            $oggetto->$p = mysql_escape_string($v);
+        } else {
+            $oggetto->$p = str_replace("'", "''", $v);
+        }
+    }
+    return $oggetto;
+}
+
+function escapeDBVariabile($v) {
+    if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+        return mysql_escape_string($v);
+    } else {
+        return str_replace("'", "''", $v);
+    }
+}
+
+
+
+function getValore($sql) {
+    $thisDatabaseQuery = new databaseQuery();
+    $result = $thisDatabaseQuery->executeDirectQuery($sql);
+    $descrizione = "";
+    $row = $result->GetRows(-1);
+    foreach ($row as $col) {
+        foreach ($col as $c) {
+            $descrizione = $c;
+        }
+    }
+    return $descrizione;
+}
+
+function getMySqlTimestamp() {
+    return date('Y-m-d H:i:s');
+}
+
+function getMySqlDate() {
+    return date('Y-m-d');
+}
+
+function getMySqlTime() {
+    return date('H:i:s');
+}
+
+function getAdmin() {
+    return $_COOKIE['admin'];
+}
+
+function getRadioSiNo($selected = false, $name) {
+    ?>
+    <input type="radio" id="<?php echo $name; ?>S" name="<?php echo $name; ?>" value="S" <?php
+    if ($selected == "S")
+        echo "checked='checked'";
+    ?>/>Si
+    <input type="radio" id="<?php echo $name; ?>N" name="<?php echo $name; ?>" value="N" <?php
+    if ($selected != "S")
+        echo "checked='checked'";
+    ?>/>No
+           <?php
+       }
+
+       function getRadioSiNoVuoto($selected = false, $name) {
+           ?>
+
+    <input type="radio" id="<?php echo $name; ?>S" name="<?php echo $name; ?>" value="S" <?php
+    if ($selected == "S")
+        echo "checked='checked'";
+    ?>/>Si
+    <input type="radio" id="<?php echo $name; ?>N" name="<?php echo $name; ?>" value="N" <?php
+    if ($selected == "N")
+        echo "checked='checked'";
+    ?>/>No
+           <?php
+       }
+
+       function convertiDataExcelToDb($data) {
+           if ($data == null)
+               return null;
+           $d = explode("/", $data);
+           if (count($d) < 3) {
+               $d = explode("-", $data);
+               if (count($d) < 3)
+                   return null;
+           }
+           $giorno = $d[1];
+           if ($giorno < 10 && strlen($giorno) < 2) {
+               $giorno = "0" . $giorno;
+           }
+           $mese = $d[0];
+           if ($mese < 10 && strlen($mese) < 2) {
+               $mese = "0" . $mese;
+           }
+           return $d[2] . "-" . $mese . "-" . $giorno;
+       }
+
+       function convertiTimeToOra($time) {
+           if ($time == null || $time == "")
+               return $time;
+           if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+               //$data=str_replace(array("T","Z")," ", $data);
+               $format = 'H:i:s';
+               //echo $data;
+               $date = new DateTime($time);
+               $time = $date->format($format);
+           }
+
+           if (strpos($time, ".") > 0) {
+               $time = explode(".", $time);
+               return $time[0];
+           }
+           return $time;
+       }
+
+       function convertiDataItToDb($data) {
+           if ($data == null)
+               return null;
+           $d = explode("/", $data);
+           if (count($d) < 3) {
+               $d = explode("-", $data);
+               if (count($d) < 3)
+                   return null;
+           }
+           $giorno = $d[0];
+           if ($giorno < 10 && strlen($giorno) < 2) {
+               $giorno = "0" . $giorno;
+           }
+           $mese = $d[1];
+           if ($mese < 10 && strlen($mese) < 2) {
+               $mese = "0" . $mese;
+           }
+           return $d[2] . "-" . $mese . "-" . $giorno;
+       }
+
+       function convertiDataDbToIt($data) {
+           if ($data == null)
+               return null;
+           if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+               //$data=str_replace(array("T","Z")," ", $data);
+               $format = 'Y-m-d';
+               //echo $data;
+               $date = new DateTime($data);
+               $data = $date->format($format);
+           }
+
+           $d = explode("-", $data);
+           if (count($d) < 3) {
+               return null;
+           }
+           return $d[2] . "/" . $d[1] . "/" . $d[0];
+       }
+
+       function convertiData8ToDb($data){
+           $anno = substr($data, 0, 4);
+           $mese = substr($data, 4, 2);
+           $giorno = substr($data, 6, 2);
+           return "$anno-$mese-$giorno";
+       }
+       function convertiData8ToExternal($data){
+           $anno = substr($data, 0, 4);
+           $mese = substr($data, 4, 2);
+           $giorno = substr($data, 6, 2);
+           return "$giorno/$mese/$anno";
+       }
+       function convertiOra6ToExternal($ora){
+           $ore = substr($ora, 0, 2);
+           $minuti = substr($ora, 2, 2);
+           return "$ore:$minuti";
+       }
+       
+       function convertiDataDbToDate8($data) {
+           if ($data == null)
+               return null;
+           if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+               //$data=str_replace(array("T","Z")," ", $data);
+               $format = 'Y-m-d';
+               //echo $data;
+               $date = new DateTime($data);
+               $data = $date->format($format);
+           }
+
+           $d = explode("-", $data);
+           if (count($d) < 3) {
+               return null;
+           }
+           return $d[0] . "" . $d[1] . "" . $d[2];
+       }
+
+       function convertiDataOraDbToIt($data) {
+
+
+           if ($data == null)
+               return null;
+           if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+               
+           } else if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+               //$data=str_replace(array("T","Z")," ", $data);
+               $format = 'Y-m-d H:i:s';
+               //echo $data;
+               $date = new DateTime($data);
+               $fuso = -((integer) (date("O") / 100));
+               if ($fuso >= 0)
+                   $fuso = "+" . $fuso;
+               $date->modify($fuso . " hours");
+               $data = $date->format($format);
+           }
+           else {
+               $format = 'Y-m-d H:i:s';
+               $date = DateTime::createFromFormat($format, $data);
+               $fuso = -((integer) (date("O") / 100));
+               if ($fuso >= 0)
+                   $fuso = "+" . $fuso;
+               $date->modify($fuso . " hours");
+               $data = $date->format($format);
+           }
+
+
+
+           $d = explode(" ", $data);
+           return convertiDataDbToIt($d[0]) . " " . convertiTimeToOra($d[1]);
+       }
+
+       function convertiDataOraDbToUTC($data) {
+
+           if ($data == null)
+               return null;
+           if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+               
+           } else if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+               //$data=str_replace(array("T","Z")," ", $data);
+               $format = 'Y-m-d H:i:s';
+               //echo $data;
+               $date = new DateTime($data);
+               $fuso = -((integer) (date("O") / 100));
+               if ($fuso >= 0)
+                   $fuso = "+" . $fuso;
+               $date->modify($fuso . " hours");
+               $data = $date->format($format);
+           }else {
+               $format = 'Y-m-d H:i:s';
+               $date = DateTime::createFromFormat($format, $data);
+               $fuso = -((integer) (date("O") / 100));
+               if ($fuso >= 0)
+                   $fuso = "+" . $fuso;
+               $date->modify($fuso . " hours");
+               $data = $date->format($format);
+           }
+
+
+
+           $d = explode(" ", $data);
+           return $d[0] . "T" . convertiTimeToOra($d[1]);
+       }
+
+       function convertiDataOraUTCtoDb($data) {
+
+           $d = explode("T", $data);
+           $d1 = explode("+", $d(1));
+           return $d[0] . " " . $d1[0];
+       }
+
+function disconnetti() {
+$url = $_SERVER['REQUEST_URI']; //returns the current URL
+                    
+                      $dir="";
+$parts = explode('/',$url);
+for ($i = 0; $i < count($parts) - 1; $i++) {
+ $dir .=$parts[$i] . "/";
+}
+    setcookie("username", "", time() - 3600,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("password", "", time() - 3600,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("Dominio", "", time() - 3600,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("admin", "", time() - 3600,$dir,$_SERVER['SERVER_NAME']);
+}
+function filename_sanitizer($filename)
+{
+    $filename = str_replace("'", "", $filename);
+    $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
+    $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
+
+    return str_file($filename," ");
+}
+// Returns filesystem-safe string after cleaning, filtering, and trimming input
+function str_file_filter(
+    $str,
+    $sep = '_',
+    $strict = false,
+    $trim = 248) {
+
+    $str = strip_tags(htmlspecialchars_decode($str)); // lowercase -> decode -> strip tags
+    $str = str_replace("%20", ' ', $str); // convert rogue %20s into spaces
+    $str = preg_replace("/%[A-Za-z0-9]{1,2}/i", '', $str); // remove hexy things
+    $str = str_replace("&nbsp;", ' ', $str); // convert all nbsp into space
+    $str = preg_replace("/&#?[A-Za-z0-9]{2,8};/i", '', $str); // remove the other non-tag things
+    $str = preg_replace("/\s+/", $sep, $str); // filter multiple spaces
+    //$str = preg_replace("/\s+/", $sep, $str); // filter multiple spaces
+    $str = preg_replace("/\.+/", '.', $str); // filter multiple periods
+    $str = preg_replace("/^\.+/", '', $str); // trim leading period
+
+    if ($strict) {
+        $str = preg_replace("/([^\w\d\\" . $sep . ".])/", '', $str); // only allow words and digits
+    } else {
+        $str = preg_replace("/([^\w\d\\" . $sep . "\[\]\(\).])/", '', $str); // allow words, digits, [], and ()
+    }
+
+    $str = preg_replace("/\\" . $sep . "+/", $sep, $str); // filter multiple separators
+    $str = substr($str, 0, $trim); // trim filename to desired length, note 255 char limit on windows
+
+    return $str;
+}
+
+
+// Returns full file name including fallback and extension
+function str_file(
+    $str,
+    $sep = '_',
+    $ext = '',
+    $default = '',
+    $trim = 248) {
+
+    // Run $str and/or $ext through filters to clean up strings
+    $str = str_file_filter($str, $sep);
+    if($ext!="")
+        $ext = '.' . str_file_filter($ext, '', true);
+
+    // Default file name in case all chars are trimmed from $str, then ensure there is an id at tail
+    if (empty($str) && empty($default)) {
+        $str = 'no_name__' . date('Y-m-d_H-m_A') . '__' . uniqid();
+    } elseif (empty($str)) {
+        $str = $default;
+    }
+
+    // Return completed string
+    if (!empty($ext)) {
+        return $str . $ext;
+    } else {
+        return $str;
+    }
+}
+function salvaLogin($username, $password, $admin = "N", $ApriNuovaScheda = 'N', $dominio = "") {
+    $expire = time() + 60 * 60 * 24 * 30 * 12;
+    $url = $_SERVER['REQUEST_URI']; //returns the current URL
+                    
+$dir="";
+$parts = explode('/',$url);
+for ($i = 0; $i < count($parts) - 1; $i++) {
+ $dir .=$parts[$i] . "/";
+}
+    setcookie("username", $username, $expire,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("password", $password, $expire,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("admin", $admin, $expire,$dir,$_SERVER['SERVER_NAME']);
+    setcookie("Dominio", $dominio, $expire,$dir,$_SERVER['SERVER_NAME']);
+}
+function getUsername() {
+    $username = ( isset($_SESSION['username']) && $_SESSION['username'] != "" ) ?
+                  ( $_SESSION['username'] ) :
+                  ( ( isset($_COOKIE['username']) && $_COOKIE['username'] != "" ) ?
+                      $_COOKIE['username'] :
+                      $_GET['username'] );
+    if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+        $username = mysql_escape_string($username);
+    } else {
+        $username = str_replace("'", "''", $username);
+    }
+    return $username;
+}
+
+function getPassword() {
+    $username = ( isset($_SESSION['password']) && $_SESSION['password'] != "" ) ?
+                  ( $_SESSION['password'] ) :
+                  ( ( isset($_COOKIE['password']) && $_COOKIE['password'] != "" ) ?
+                      $_COOKIE['password'] :
+                      $_GET['password'] );
+    if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+        $username = mysql_escape_string($username);
+    } else {
+        $username = str_replace("'", "''", $username);
+    }
+    return $username;
+}
+function checkServer($server, $port = 80) {
+    $timeout = "5";
+    $errno = "";
+    $errstr = "";
+    return @fsockopen("$server", $port, $errno, $errstr, $timeout);
+}
+function eseguiQuery2($sql) {
+    $thisDatabaseQuery = new databaseQuery();
+   if (DATABASE_SERVER_TO_USE == "mssqlnative" || DATABASE_SERVER_TO_USE == "ado_mssql") {
+        $sql = "SET DATEFORMAT ymd; $sql";
+    }
+    $thisDatabaseQuery->setSqlQuery($sql);
+    //echo $sql;
+    $result = $thisDatabaseQuery->executeQuery();
+    if ($result == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
+function getDDD($i) {
+    switch ($i) {
+        case 0: return "LUN";
+        case 1: return "MAR";
+        case 2: return "MER";
+        case 3: return "GIO";
+        case 4: return "VEN";
+        case 5: return "SAB";
+        case 6: return "DOM";
+    }
+    return false;
+}
+
+function getGiorno($i) {
+    switch ($i) {
+        case 0: return "Lunedi'";
+        case 1: return "Martedi'";
+        case 2: return "Mercoledi'";
+        case 3: return "Giovedi'";
+        case 4: return "Venerdi'";
+        case 5: return "Sabato";
+        case 6: return "Domenica";
+    }
+    return false;
+}
+
+function get_mime_type($file) {
+
+    // our list of mime types
+    $mime_types = array(
+        "pdf" => "application/pdf"
+        , "exe" => "application/octet-stream"
+        , "zip" => "application/zip"
+        , "docx" => "application/msword"
+        , "doc" => "application/msword"
+        , "xls" => "application/vnd.ms-excel"
+        , "xlsx" => "application/vnd.ms-excel"
+        , "ppt" => "application/vnd.ms-powerpoint"
+        , "pptx" => "application/vnd.ms-powerpoint"
+        , "gif" => "image/gif"
+        , "png" => "image/png"
+        , "jpeg" => "image/jpg"
+        , "jpg" => "image/jpg"
+        , "mp3" => "audio/mpeg"
+        , "wav" => "audio/x-wav"
+        , "mpeg" => "video/mpeg"
+        , "mpg" => "video/mpeg"
+        , "mpe" => "video/mpeg"
+        , "mov" => "video/quicktime"
+        , "avi" => "video/x-msvideo"
+        , "3gp" => "video/3gpp"
+        , "css" => "text/css"
+        , "jsc" => "application/javascript"
+        , "js" => "application/javascript"
+        , "php" => "text/html"
+        , "htm" => "text/html"
+        , "html" => "text/html"
+        , "odt" => "application/vnd.oasis.opendocument.text"
+        , "ods" => "application/vnd.oasis.opendocument.spreadsheet"
+        , "odp" => "application/vnd.oasis.opendocument.presentation"
+        , "odg" => "application/vnd.oasis.opendocument.graphics"
+        , "xml" => "application/xml"
+    );
+
+    $extension = strtolower(end(explode('.', $file)));
+
+    return $mime_types[$extension] != null ? $mime_types[$extension] : "application/octet-stream";
+}
+
+function inviaMail($to, $oggetto, $messaggio, $da_email, $da_nome) {
+
+    if(!is_array($to)&&$to!="")
+    {
+        $to=array($to);
+    }
+    if (!is_array($to) || count($to) == 0)
+        return;
+    $mail = new PHPMailer();
+
+    $mail->IsSMTP(); // telling the class to use SMTP
+    $mail->Host = SERVER_SMTP; // SMTP server
+    if (PORTA_SMTP != null && PORTA_SMTP > 0)
+        $mail->Port = 0 + PORTA_SMTP;
+    if (!checkServer($mail->Host, $mail->Port)) {
+        return "Server Mail Inattivo";
+    }
+    if ($mail->Port > 400){
+        $mail->SMTPSecure = "ssl";
+        $mail->SMTPOptions = array(
+                    'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                );
+    }
+    if (USERNAME_SMTP != null && USERNAME_SMTP != "" && PASSWORD_SMTP != "") {
+        $mail->SMTPAuth = true;
+        $mail->Username = USERNAME_SMTP;
+        $mail->Password = PASSWORD_SMTP;
+    }
+    $mail->From = $da_email;
+    $mail->FromName = $da_nome;
+
+    $mail->Subject = $oggetto;
+    $mail->AltBody = "Messaggio non in html\n" . html_entity_decode($messaggio);
+    $mail->MsgHTML($messaggio);
+
+    foreach ($to as $ind) {
+        $mail->AddAddress($ind);
+    }
+
+    ini_set("SMTP", SERVER_SMTP);
+    $headers = "From: " . MITTENTE_EMAIL . "\r\n" .
+            'X-Mailer: PHP/' . phpversion() . "\n";
+    $header .= "MIME-Version: 1.0\n";
+    $header .= "Content-Type: text/html; charset=\"utf-8\"\n";
+    $header .= "Content-Transfer-Encoding: 7bit\n\n";
+    //$messaggio= "Content-Type: text/html; charset=\"utf-8\"\n"."Content-Transfer-Encoding: 7bit\n\n".$messaggio;
+    //mail($to,$oggetto,$messaggio,$headers);
+
+    if (!$mail->Send()) {
+        return "Errore Invio Email: " . $mail->ErrorInfo;
+    } else {
+        return true;
+    }
+}
+
+function inviaMail_nuovo(/*$to, $oggetto, $messaggio, $path, $nomeFile*/$to, $oggetto, $messaggio, $da_email, $da_nome) {
+
+        if(!is_array($to)&&$to!="")
+        {
+            $to=array($to);
+        }
+        if (!is_array($to) || count($to) == 0)
+            return;
+    
+        $mail = new PHPMailer();
+//    $mail->SMTPDebug   = 2;
+//    $mail->Debugoutput = "error_log";
+    $mail->IsSMTP();
+    $mail->Host        = IMP_SMTP; 
+    $porta = IMP_SMTPPORTA;
+    $mail->Port = 0 + $porta;
+  
+
+    $mail->From     = $da_email;
+    $mail->FromName = $da_nome;
+    $mail->Subject  = $oggetto;
+    $mail->AltBody  = "Messaggio non in html\n" . html_entity_decode($messaggio);
+
+    $mail->MsgHTML($messaggio);
+    foreach ($to as $ind) {
+        $mail->AddAddress($ind);
+    }
+//    if( trim($destinatario_controllo)!="" ){
+//        $mail->addBCC($destinatario_controllo);
+//    }
+//    $mail->addAttachment($allegato,"badge.pdf");
+
+   
+        
+        //$mail->AddAttachment($path, $nomeFile);
+    
+     if (!$mail->Send()) {
+        return "Errore Invio Email: " . $mail->ErrorInfo;
+    } else {
+        return true;
+    }
+        
+    }
+function validEmail($email) {
+    $isValid = true;
+    $atIndex = strrpos($email, "@");
+    if (is_bool($atIndex) && !$atIndex) {
+        $isValid = false;
+    } else {
+        $domain = substr($email, $atIndex + 1);
+        $local = substr($email, 0, $atIndex);
+        $localLen = strlen($local);
+        $domainLen = strlen($domain);
+        if ($localLen < 1 || $localLen > 64) {
+            // local part length exceeded
+            $isValid = false;
+        } else if ($domainLen < 1 || $domainLen > 255) {
+            // domain part length exceeded
+            $isValid = false;
+        } else if ($local[0] == '.' || $local[$localLen - 1] == '.') {
+            // local part starts or ends with '.'
+            $isValid = false;
+        } else if (preg_match('/\\.\\./', $local)) {
+            // local part has two consecutive dots
+            $isValid = false;
+        } else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain)) {
+            // character not valid in domain part
+            $isValid = false;
+        } else if (preg_match('/\\.\\./', $domain)) {
+            // domain part has two consecutive dots
+            $isValid = false;
+        } else if
+        (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/', str_replace("\\\\", "", $local))) {
+            // character not valid in local part unless
+            // local part is quoted
+            if (!preg_match('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $local))) {
+                $isValid = false;
+            }
+        }
+        /* if ($isValid && !(checkdnsrr($domain,"MX") || checkdnsrr($domain,"A")))
+          {
+          // domain not found in DNS
+          $isValid = false;
+          } */
+    }
+    return $isValid;
+}
+function unzip($file, $basedir = "", $debug = false) {
+    if (substr($basedir, -1) != "\\" && substr($basedir, -1) != "/") {
+        $basedir .= "/";
+    }
+    $files = array();
+    $zip = zip_open($file);
+    if (is_resource($zip)) {
+        $tree = "";
+        while (($zip_entry = zip_read($zip)) !== false) {
+            if (debug)
+                echo "Scompattazione " . zip_entry_name($zip_entry) . "<br>";
+            if (strpos(zip_entry_name($zip_entry), "/") !== false) {
+                $last = strrpos(zip_entry_name($zip_entry), "/");
+                $dir = substr(zip_entry_name($zip_entry), 0, $last);
+                $file = substr(zip_entry_name($zip_entry), strrpos(zip_entry_name($zip_entry), "/") + 1);
+                if (!is_dir($basedir . $dir)) {
+                    mkdir($basedir . $dir);
+                }
+                if (strlen(trim($file)) > 0) {
+                    $return = @file_put_contents($basedir . $dir . "/" . $file, zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+                    if ($return === false) {
+                        echo("Impossibile Scrivere $basedir$dir/$file\n");
+                    } else
+                        $files[] = $basedir . $dir . "/" . $file;
+                }
+            }else {
+
+                $return = @file_put_contents($basedir . zip_entry_name($zip_entry), zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+                if ($return === false) {
+                    echo("Impossibile Scrivere $basedir" . zip_entry_name($zip_entry) . "\n");
+                } else
+                    $files[] = $basedir . zip_entry_name($zip_entry);
+            }
+        }
+    }else {
+        echo "Impossibile Aprire lo Zip\n";
+    }
+    return $files;
+}
+
+function unrar($file, $basedir = "", $debug = false) {
+    if (substr($basedir, -1) != "\\" && substr($basedir, -1) != "/") {
+        $basedir .= "/";
+    }
+    $files = array();
+    $rar_file = rar_open($file);
+    if ($rar_file == null) {
+        echo "Errore Scompattazione RAR";
+        return $files;
+    }
+    $entries = rar_list($rar_file);
+    foreach ($entries as $entry) {
+        if (debug)
+            echo 'Filename: ' . $entry->getName() . "\n";
+        //echo 'Packed size: ' . $entry->getPackedSize() . "\n";
+        //echo 'Unpacked size: ' . $entry->getUnpackedSize() . "\n";
+        if (!$entry->isDirectory() && $entry->extract($basedir)) {
+            $files[] = $basedir . $entry->getName();
+        }
+    }
+    rar_close($rar_file);
+    return $files;
+}
+
+function getSelectFromTabella($selected, $name, $tabella, $campoValue, $campoDescr, $opz = false) {
+    $campoDescrName=$campoDescr;
+    $campoOrderBy=$campoDescr;
+    $posAs= strpos($campoDescr, " as ");
+    if($posAs!==false)
+    {
+        $campoDescrName= trim(substr($campoDescr, $posAs+4));
+        $campoOrderBy= substr($campoDescr, 0,$posAs);
+    }
+    //echo $campoDescr." - ".$campoDescrName;
+    ?>
+    <select id="<?php echo $name; ?>" name="<?php echo $name; ?>">
+
+        <?php
+        if ($opz)
+            echo "<option></option>";
+        $thisDatabaseQuery = new databaseQuery();
+        $result = $thisDatabaseQuery->executeDirectQuery("SELECT DISTINCT $campoValue,$campoDescr FROM $tabella ORDER BY $campoOrderBy");
+
+
+        //faccio apparire prima gli attivi
+//           $result = $tipoLettereDao->searchTipolettere("","","","","Descrizione","ASC");
+
+        if ($result != false) {
+            $rows = $result->GetRows(-1);
+            $trovato = false;
+            foreach ($rows as $row) {
+              //  var_dump($row);
+                ?>
+                <option value="<?php echo htmlentities(trim($row[$campoValue])); ?>" <?php
+                if ($selected == trim($row[$campoValue])) {
+                    $trovato = true;
+                    echo "selected='selected'";
+                }
+                ?> ><?php echo htmlentities(trim($row[$campoDescrName]));
+                ?></option>
+                <?php
+            }
+            //gestisco il caso che non sia a tabella il valore
+            if (!$trovato && $selected != "") {
+                ?>
+                <option value="<?php echo $selected; ?>" <?php
+                echo "selected='selected'";
+                ?> > <?php
+                            echo $selected;
+                            echo " *Non a Tabella*";
+                            ?></option>
+                <?php
+            }
+        }
+        ?>
+
+    </select>
+    <?php
+}
+
+function getBoundFromTabella($column, $tabella, $campoValue, $campoDescr, $opz = false) {
+    if ($opz)
+        $column->AddItem("", "NULL");
+    $thisDatabaseQuery = new databaseQuery();
+    $result = $thisDatabaseQuery->executeDirectQuery("SELECT DISTINCT $campoValue,$campoDescr FROM $tabella ORDER BY $campoDescr");
+
+    if ($result != false) {
+        $rows = $result->GetRows(-1);
+        foreach ($rows as $row) {
+            $column->AddItem(trim($row[$campoDescr]), trim($row[$campoValue]));
+        }
+    }
+}
+
+function getSelectFromTabellaZero($selected, $name, $tabella, $campoValue, $campoDescr) {
+    ?>
+    <select id="<?php echo $name; ?>" name="<?php echo $name; ?>">
+        <option value="0">Non Selezionato</option>
+        <?php
+        $thisDatabaseQuery = new databaseQuery();
+        $result = $thisDatabaseQuery->executeDirectQuery("SELECT DISTINCT $campoValue,$campoDescr FROM $tabella");
+
+
+        //faccio apparire prima gli attivi
+//           $result = $tipoLettereDao->searchTipolettere("","","","","Descrizione","ASC");
+
+        if ($result != false) {
+            $rows = $result->GetRows(-1);
+            $trovato = false;
+            foreach ($rows as $row) {
+                ?>
+                <option value="<?php echo $row[$campoValue]; ?>" <?php
+                if ($selected == $row[$campoValue]) {
+                    $trovato = true;
+                    echo "selected='selected'";
+                }
+                ?> > <?php echo $row[$campoDescr];
+                ?></option>
+                <?php
+            }
+            //gestisco il caso che non sia a tabella il valore
+            if (!$trovato && $selected != "") {
+                ?>
+                <option value="<?php echo $selected; ?>" <?php
+                echo "selected='selected'";
+                ?> > <?php
+                            echo $selected;
+                            echo " *Non a Tabella*";
+                            ?></option>
+                <?php
+            }
+        }
+        ?>
+
+    </select>
+    <?php
+}
+
+function decodeFromTabella($selected, $tabella, $campoValue, $campoDescr) {
+
+    $thisDatabaseQuery = new databaseQuery();
+    $result = $thisDatabaseQuery->executeDirectQuery("SELECT $campoValue,$campoDescr FROM $tabella WHERE $campoValue='$selected'");
+    $ritorno = "";
+    $row = $result->GetRows(-1);
+    foreach ($row as $col) {
+        $ritorno = $col[$campoDescr];
+    }
+    return $ritorno;
+    /* $gruppoVenditaDao = new gruppo_venditaDAO();
+      $result = $gruppoVenditaDao->searchGruppo_venditaFromSql("SELECT $campoValue,$campoDescr FROM $tabella");
+      //faccio apparire prima gli attivi
+      //           $result = $tipoLettereDao->searchTipolettere("","","","","Descrizione","ASC");
+
+      if ($result != false) {
+      foreach ($result->getResultsArray() as $tipo) {
+      if ($selected == $tipo->Codice) {
+      return $tipo->Descrizione;
+      }
+      }
+      }
+      return ""; */
+}
+
+class FlxZipArchive extends ZipArchive {
+
+    /**
+     * Add a Dir with Files and Subdirs to the archive
+     *
+     * @param string $location Real Location
+     * @param string $name Name in Archive
+     * @author Nicolas Heimann
+     * @access private
+     * */
+    public function addDir($location, $name) {
+        if ($name != null)
+            $this->addEmptyDir($name);
+
+        $this->addDirDo($location, $name);
+    }
+
+// EO addDir;
+
+    /**
+     * Add Files & Dirs to archive.
+     *
+     * @param string $location Real Location
+     * @param string $name Name in Archive
+     * @author Nicolas Heimann
+     * @access private
+     * */
+    private function addDirDo($location, $name) {
+        if ($name != null)
+            $name .= '/';
+        else
+            $name = "";
+        $location .= '/';
+
+        // Read all Files in Dir
+        $dir = opendir($location);
+        while ($file = readdir($dir)) {
+            if ($file == '.' || $file == '..')
+                continue;
+
+            // Rekursiv, If dir: FlxZipArchive::addDir(), else ::File();
+            $do = (filetype($location . $file) == 'dir') ? 'addDir' : 'addFile';
+            $this->$do($location . $file, $name . $file);
+        }
+    }
+
+// EO addDirDo();
+}
+function rimuovi_escapeDBVariabile($v) {
+    if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+        return str_replace("''", "'", str_replace("\\\\", "\\", $v));
+    } else {
+        return str_replace("''", "'", $v);
+    }
+}
+function add_colonna(&$grid,$nome,$label,$opzioni=array()){
+    $numero_formattato=false;
+    $textarea=false;
+    if($opzioni["TextArea"]===true){
+        $textarea=true;
+    }
+    if($opzioni["number"]===true){
+        $numero_formattato=true;
+    }
+    if(isset($_POST["Export"])&&$_POST["Export"]=='excel'){
+        $numero_formattato=false;
+    }
+    if(isset($_POST["Export"])&&$_POST["Export"]=='csv'){
+        $numero_formattato=false;
+    }
+    if($textarea){
+        $col = new GridTextAreaColumn();
+	$col->AllowHtmlRender = true;
+    }
+    else if($numero_formattato){
+        $col=new GridNumberColumn();
+        $col->Align = "right";
+        $col->DecimalPoint = ",";
+        $col->DecimalNumber = "2";
+        $col->ThousandSeperate = ".";
+    }
+    else if($opzioni["date"]==true){
+        $col = new GridDateTimeColumn();
+	$col->FormatString = "d/m/Y";
+        $col->DatabaseFormatString="Y-m-d";
+        if($opzioni["datepicker"]==true){
+            $col->Picker = new KoolDatePicker();
+            $col->Picker->Localization->Load("KoolControls/KoolCalendar/localization/it.xml");
+            $col->Picker->scriptFolder = "KoolControls/KoolCalendar";
+            $col->Picker->styleFolder = "default";
+            $col->Picker->DateFormat = "d/m/Y";
+            $col->Picker->CalendarSettings->FirstDayOfWeek = 1;
+        }
+        if(isset($opzioni["date_empty"]))
+            $col->EmptyDate = $opzioni["date_empty"];
+    }
+    else if($opzioni["datetime"]==true){
+        $col = new GridDateTimeColumn();
+	$col->FormatString = "d/m/Y H:m:s";
+        $col->DatabaseFormatString="Y-m-d";
+        if($opzioni["datepicker"]==true){
+            $col->Picker = new KoolDatePicker();
+            $col->Picker->Localization->Load("KoolControls/KoolCalendar/localization/it.xml");
+            $col->Picker->scriptFolder = "KoolControls/KoolCalendar";
+            $col->Picker->styleFolder = "default";
+            $col->Picker->DateFormat = "d/m/Y";
+            $col->Picker->CalendarSettings->FirstDayOfWeek = 1;
+        }
+        if(isset($opzioni["date_empty"]))
+            $col->EmptyDate = $opzioni["date_empty"];
+    }
+    else if($opzioni["boolean"]==true){
+        $col = new GridBooleanColumn();
+        $col->Align = "center";
+                $col->UseCheckBox = true;
+    }
+    else if($opzioni["combo"]){
+        $col = new GridDropDownColumn();
+        foreach($opzioni["combo"] as $k=>$val){
+            $col->AddItem($val,$k);
+        }
+    }
+    else{
+        $col=new GridBoundColumn();
+        //$col->Filter = array("Value"=>"","Exp"=>"Contain");
+    }
+    $col->NullDisplayText = " ";
+    $col->DataField = $nome;
+    if($opzioni["icona"])
+        $col->HeaderText = "<span style='display: inline-block; width:60px'><span title=' ' style='display: inline-block;' class='".$opzioni["icona"]."'></span>$label</span>";
+    else
+        $col->HeaderText = $label;
+    if(isset($opzioni["larghezza"]))
+        $col->Width=$opzioni["larghezza"];
+    if(isset($opzioni["visibile"]))
+        $col->Visible=$opzioni["visibile"];
+    if(isset($opzioni["sort"]))
+        if ($opzioni["sort"]=="none")
+            $col->AllowSorting = false;
+        else    
+            $col->Sort = $opzioni["sort"];
+    if(isset($opzioni["filter"])){
+        if(is_array( $opzioni["filter"] )){
+            $col->Filter=$opzioni["filter"];
+        }
+        else{
+            $col->AllowFiltering=$opzioni["filter"];
+        }
+    }
+    if(isset($opzioni["cssclass"])){
+        $col->CssClass = $opzioni["cssclass"];         
+    }
+    if(isset($opzioni["align"])){
+        $col->Align = $opzioni["align"];       
+    }
+    if(isset($opzioni["decimals"])){
+        $col->DecimalNumber = $opzioni["decimals"];       
+    }
+    if(isset($opzioni["Aggregate"])){
+        $col->Aggregate = $opzioni["Aggregate"];
+    }
+    $grid->AddColumn($col);
+}
+
+/**
+ * Apre una nuova connessione
+ * @param string $connessione Nome della connessione, se vuota apre la connessione al database predefinito.<br>La connessione deve essere definita nel file .conf.php<br>Vedi il documento 
+ * @return Object databaseQuery
+ */
+function open_DatabaseQuery( $connessione="" ){
+
+    include_once(CLASS_DATABASE_QUERY);
+    $query=new databaseQuery();
+    
+    if( trim($connessione)!="" ){
+
+        $SERVER_TO_USE = constant("DATABASE_SERVER_TO_USE_".$connessione);
+        $HOST = constant("DATABASE_HOST_".$connessione);
+        $USER_NAME = constant("DATABASE_USER_NAME_".$connessione);
+        $PASSWORD = constant("DATABASE_PASSWORD_".$connessione);
+        $NAME = constant("DATABASE_NAME_".$connessione);
+
+        $query->setDatabaseType($SERVER_TO_USE);
+        $query->setDatabaseHost($HOST);
+        $query->setDatabaseUserName($USER_NAME);
+        $query->setDatabasePassword($PASSWORD);
+        $query->setDatabaseToUse($NAME);
+        $query->dbConn = ADONewConnection($query->getDatabaseType());
+        if(CHARSET=="UTF-8"){
+            if($SERVER_TO_USE||$SERVER_TO_USE) 
+                $query->dbConn->SetCharSet('utf8');
+            //$query->dbConn->setConnectionParameter("ReturnDatesAsStrings",true);
+        }
+        $query->dbConn->Connect($query->getDatabaseHost(),$query->getDatabaseUserName(),$query->getDatabasePassword(),$query->getDatabaseToUse());
+        $query->dbConn->SetFetchMode(ADODB_FETCH_ASSOC);
+    }
+
+    return $query;
+
+}
+
+/**
+ * 
+ * @param string $id Identificativo univoco del controllo. Verrà creato un oggetto javascript con questo nome.
+ * @param string $query Query da eseguire per effettuare il controllo.
+ * @param array $par Parametri da sostituire ai ? nella query.
+ * @param array $assegnamenti Assegnamenti che verranno fatti se la lettura va a buon fine. E' un array di stringhe. Il formato di ogni stringa deve essere:<br>
+ * "&lt;id campo html&gt;=&lt;nome campo sql&gt;
+ * @param bool $obbligatorio (opzionale) Se impostato a true, verrà segnalato come errore se tutti i campi indicati come $par sono vuoti.
+ * @param bool $controlla_subito (opzionale) Se impostato a true, verrà eseguito il controllo alla fine del caricamento della pagina.
+ * @param string $done_fnc (opzionale) Nome di una funzione javascript. Questa funzione verrà richiamata alla fine del controllo. Deve ricevere un parametro. Se il controllo è anato bene, il parametro conterrà il record letto. Altrimenti saraà = false.
+ */
+function creaDecodifica($id,$query,$par,$assegnamenti,$obbligatorio=false,$controlla_subito=false,$done_fnc=""){
+    creaDecodifica_ex($id,array(
+        query => $query,
+        par => $par,
+        assegnamenti => $assegnamenti,
+        obbligatorio => $obbligatorio,
+        controlla_subito => $controlla_subito,
+        done_fnc => $done_fnc
+    ));
+}
+
+function creaDecodifica_ex($id,$opzioni){
+
+    $query = $opzioni["query"];
+    $par = $opzioni["par"]?$opzioni["par"]:"";
+    if(is_array($par)){}
+    else{
+        $par = explode(",",$par);
+    }
+    
+    $assegnamenti = $opzioni["assegnamenti"]?$opzioni["assegnamenti"]:"";
+    if(is_array($assegnamenti)){}
+    else{
+        $assegnamenti = explode(",", $assegnamenti);
+    }
+    foreach( $assegnamenti as $k=>$assegnamento){
+        $assegnamenti[$k]=explode("=",$assegnamento);
+    }
+    
+    $obbligatorio = $opzioni["obbligatorio"];
+    $controlla_subito = $opzioni["controlla_subito"];
+    $done_fnc = $opzioni["done_fnc"];
+
+    ?>
+    <script>
+        var campo_valido_<?=$id;?>=null;
+        var controllo_incorso_<?=$id;?>=null;
+        function controllo_<?=$id;?>(async){
+            var cod_in_corso="";
+            var cod=[];
+            var i=0;
+            var cod_vuoto=true;
+            <? foreach($par as $parametro){ ?>
+                valore=$.trim($("#<?=$parametro;?>").val());
+                cod[i]=valore;
+                i++;
+                cod_in_corso+=valore+"-";
+                if( valore != "" ){
+                    cod_vuoto = false;
+                }
+            <? } ?>
+            if(controllo_incorso_<?=$id;?>==cod_in_corso)
+                return false;
+            controllo_incorso_<?=$id;?>=cod_in_corso;
+            var valido=true;
+            // Pulisco i campi dell'assegnamento. Ad eccezione dei campi chiave.
+            <?
+            foreach($assegnamenti as $assegnamento){
+                if( in_array($assegnamento[0], $par) === false ){
+            ?>
+                $("#<?=$assegnamento[0];?>").val("");
+            <?
+                }
+            }
+            ?>
+            if(cod_vuoto==false){
+                $.ajax({
+                    cache: false,
+                    url: "include/controllo.php"/*"controlloWeb_art.php"*/,
+                    method: "post",
+                    data: {
+                        query: "<?=base64_encode($query);?>",
+                        par: cod
+                    },
+                    async: async,
+                    dataType: 'json',
+                    success: function(data){
+                        if(data.esito=="OK"){
+                            <? foreach($par as $parametro){ ?>
+                                $("#<?=$parametro;?>").css("background-color","");
+                            <? } ?>
+                            
+                            <? foreach($assegnamenti as $assegnamento){ ?>
+                                $("#<?=$assegnamento[0];?>").val(data.record.<?=$assegnamento[1];?>);
+                            <? } ?>
+                                
+                            campo_valido_<?=$id;?>=true;
+                            <? if($done_fnc!=""){ ?>
+                                <?=$done_fnc;?>(data.record);
+                            <? } ?>
+                        }
+                        else{
+                            <? foreach($par as $parametro){ ?>
+                                $("#<?=$parametro;?>").css("background-color","#f00000");
+                            <? } ?>
+                            valido=false;
+                            campo_valido_<?=$id;?>=false;
+                                
+                            <? if($done_fnc!=""){ ?>
+                                <?=$done_fnc;?>(false);
+                            <? } ?>
+                        }
+                        controllo_incorso_<?=$id;?>=null;
+                    },
+                    error: function(){
+                        <? foreach($par as $parametro){ ?>
+                            $("#<?=$parametro;?>").css("background-color","#f00000");
+                        <? } ?>
+                        valido=false;
+                        campo_valido_<?=$id;?>=false;
+                        controllo_incorso_<?=$id;?>=null;
+                    }
+                });
+            }
+            else{
+                controllo_incorso_<?=$id;?>=null;
+                <? if($obbligatorio){ ?>
+                    <? foreach($par as $parametro){ ?>
+                        $("#<?=$parametro;?>").css("background-color","#f00000");
+                    <? } ?>
+                    valido=false;
+                    campo_valido_<?=$id;?>=false;
+                <? }else{ ?>
+                    <? foreach($par as $parametro){ ?>
+                        $("#<?=$parametro;?>").css("background-color","");
+                    <? } ?>
+                    campo_valido_<?=$id;?>=true;
+                <? } ?>
+            }
+        return valido;
+    }
+    <? foreach($par as $parametro){ ?>
+    $("#<?=$parametro;?>").change(function(){
+        campo_valido_<?=$id;?>=null;
+        controllo_<?=$id;?>(true);
+    });
+    <? } ?>
+    if (typeof add_controllo === "function") { 
+        add_controllo(function(){
+            if(campo_valido_<?=$id;?>==null){
+                controllo_<?=$id;?>(false);
+            }
+            if(campo_valido_<?=$id;?>==null){
+                return false;
+            }else{
+                return campo_valido_<?=$id;?>;
+            }
+        });
+    }
+    <? if($controlla_subito){ ?>
+    $(function(){
+        controllo_<?=$id;?>(true);
+    });
+    <? } ?>
+</script>
+<?
+
+}
+
+function creaControllo($idcampo,$tabella,$codice,$assegnamenti,$obbligatorio=false,$controlla_subito=true,$cbkfnc="",$valore=""){
+    $assegnamenti_a=explode(",",$assegnamenti);
+    $assegnamenti_v=array();
+    $campi="$codice";
+    foreach($assegnamenti_a as $assegnamenti_a_v){
+        $v=explode("=",$assegnamenti_a_v);
+        $assegnamenti_v[]=$v;
+        $campi.=",$v[1]";
+    }
+?>
+<script>
+    var campo_valido_<?=$idcampo;?>=null;
+    var controllo_incorso_<?=$idcampo;?>=null;
+    function controllo_<?=$idcampo;?>(async){
+        var cod=$.trim($("#<?=$idcampo;?>").val());
+        if(controllo_incorso_<?=$idcampo;?>==cod)
+            return false;
+        controllo_incorso_<?=$idcampo;?>=cod;
+        var valido=true;
+        <? if(is_array($assegnamenti_v)){
+           foreach($assegnamenti_v as $assegnamenti_v_v){
+               ?>$("#<?=$assegnamenti_v_v[0];?>").val("");<?
+           }
+        } ?>
+        if(cod!=""){
+            $.ajax({
+                cache: false,
+                url: "controlloGenerico.php"/*"controlloWeb_art.php"*/,
+                method: "post",
+                data: {
+                    //DATA: JSON.stringify({
+                        TABELLA: "<?=$tabella;?>",
+                        KEY_VAL: cod,
+                        KEY_FLD: "<?=$codice;?>",
+                        FLD: "<?=$campi;?>"
+                    //})
+                },
+                async: async,
+                dataType: 'json',
+                success: function(data){
+                    if(data.esito=="OK"){
+                        $("#<?=$idcampo;?>").val(data.<?=$codice;?>);
+                        <? if(is_array($assegnamenti_v)){
+                            foreach($assegnamenti_v as $assegnamenti_v_v){
+                                ?>$("#<?=$assegnamenti_v_v[0];?>").val(data.<?=$assegnamenti_v_v[1];?>);<?
+                            }
+                         }
+                         if($cbkfnc!=""){
+                             echo"$cbkfnc(data);";
+                         }
+                        ?>
+                        $("#<?=$idcampo;?>").css("background-color","");
+                        campo_valido_<?=$idcampo;?>=true;
+                    }
+                    else{
+                        $("#<?=$idcampo;?>").css("background-color","#f00000");
+                        valido=false;
+                        campo_valido_<?=$idcampo;?>=false;
+                    }
+                    controllo_incorso_<?=$idcampo;?>=null;
+                },
+                error: function(){
+                    $("#<?=$idcampo;?>").css("background-color","#f00000");
+                    valido=false;
+                    campo_valido_<?=$idcampo;?>=false;
+                    controllo_incorso_<?=$idcampo;?>=null;
+                }
+            });
+        }
+        else{
+            controllo_incorso_<?=$idcampo;?>=null;
+            <? if($obbligatorio){ ?>
+                $("#<?=$idcampo;?>").css("background-color","#f00000");
+                valido=false;
+                campo_valido_<?=$idcampo;?>=false;
+            <? }else{ ?>
+                $("#<?=$idcampo;?>").css("background-color","");
+                campo_valido_<?=$idcampo;?>=true;
+            <? } ?>
+        }
+        return valido;
+    }
+    $("#<?=$idcampo;?>").change(function(){
+        campo_valido_<?=$idcampo;?>=null;
+        controllo_<?=$idcampo;?>(true);
+    });
+    if (typeof add_controllo === "function") { 
+        add_controllo(function(){
+            if(campo_valido_<?=$idcampo;?>==null){
+                controllo_<?=$idcampo;?>(false);
+            }
+            if(campo_valido_<?=$idcampo;?>==null){
+                return false;
+            }else{
+                return campo_valido_<?=$idcampo;?>;
+            }
+        });
+    }
+    <?
+    if($controlla_subito && $valore!=""){
+        ob_start();
+        $controllo_tabella=$tabella;
+        $controllo_chiave=$codice;
+        $controllo_codici=$valore;
+        $controllo_campi=$campi;
+        include "controlloGenerico.php";
+        $esito = ob_get_clean();
+        $esito_str=json_decode($esito);
+        if($esito_str){
+            if($esito_str->{'esito'}=="OK"){
+                ?> $(function(){ <?
+                    if(is_array($assegnamenti_v)){
+                        foreach($assegnamenti_v as $assegnamenti_v_v){ ?> 
+                            $("#<?=$assegnamenti_v_v[0];?>").val("<?=$esito_str->{$assegnamenti_v_v[1]};?>");
+                        <? }
+                    }
+                    ?> campo_valido_<?=$idcampo;?>=true; <?
+                    if($cbkfnc!=""){ ?>
+                       <?=$cbkfnc;?>();
+                    <? }
+                ?> }); <?
+            }
+        }
+    }
+    ?>
+</script>
+<?
+}
+
+/**
+ * Ritorna il testo cryptato
+ * @param type $string_to_encrypt
+ * @return type
+ */
+function cryptText($string_to_encrypt){
+    $password="DeltaInformaticaSrl-Via Provinciale Lucchese, 47, 51034, SerravallePistoiese(PT)-PasswordSegretaPerCryptaggio";
+    return openssl_encrypt($string_to_encrypt,"AES-128-ECB",$password);
+}
+/**
+ * Ritorna il testo decryptato
+ * @param type $string_to_decrypt
+ * @return type
+ */
+function decryptText($string_to_decrypt){
+    $password="DeltaInformaticaSrl-Via Provinciale Lucchese, 47, 51034, SerravallePistoiese(PT)-PasswordSegretaPerCryptaggio";
+    return openssl_decrypt($string_to_decrypt,"AES-128-ECB",$password);
+}
+
+/**
+ * Apre la connessione al db, esegue la query e restituisce il risultato
+ * @param string $str Query sql da eseguire
+ * @param string $par Parametri da sostiuire ai ? presenti nella query
+ * @param string $connessione Connessione da utilizzare, specificare solo se diversa dalla connessione di default
+ * @return object Restituisce un oggetto in caso di esito positivo.<br>
+ * Restituisce false in caso di errore.
+ */
+function executeDirectQuery($str,$par=null,$connessione=""){
+    $qry=open_DatabaseQuery($connessione);
+    $rs = $qry->executeDirectQueryPar($str,$par);
+    if($rs==false){
+        return false;
+    }
+    return $rs;
+}
+
+/**
+ * Apre la connessione al db, esegue la query e restituisce il risultato (sottoforma di array di record)
+ * @param string $str Query sql da eseguire
+ * @param string $par Parametri da sostiuire ai ? presenti nella query
+ * @param string $connessione Connessione da utilizzare, specificare solo se diversa dalla connessione di default
+ * @return array Restituisce un array di record in caso di esito positivo.<br>
+ * Restituisce false in caso di errore.
+ */
+function executeDirectQueryGetRows($str,$par=null,$connessione="",$limit=-1){
+    $rs = executeDirectQuery($str,$par,$connessione);
+    if($rs){
+        return $rs->GetRows($limit);
+    }
+    else{
+        return false;
+    }
+}
+
+function inglese(){
+    $inglese=true;
+    if(trim($_SESSION[PREFISSO_SESSIONE."_lingua"])=="Italiano"){
+        $inglese=false;
+    }
+    return $inglese;
+}

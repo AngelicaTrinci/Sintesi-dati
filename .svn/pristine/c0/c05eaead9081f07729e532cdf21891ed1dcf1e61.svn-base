@@ -1,0 +1,11 @@
+$(function(){
+$("#nav>li").hover(
+   function(){$("ul",this).css('zIndex',999999).show();},
+   function(){$("ul",this).css({left:"-1px"}).hide();});
+});
+/*$(function(){
+$("#nav>ul").hover(
+    function(){$("div",this).show();
+            },
+    function(){$("div",this).hide();});
+});*/

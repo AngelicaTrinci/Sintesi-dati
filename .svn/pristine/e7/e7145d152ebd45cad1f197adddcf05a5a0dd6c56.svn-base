@@ -1,0 +1,380 @@
+<?
+class utentiInfo
+{ 
+
+		// Variables 
+		var $Id_utente;
+		var $Utente_creazione;
+		var $Data_ora_creazione;
+		var $Utente_modifica;
+		var $Data_ora_modifica;
+		var $Nome;
+		var $Cognome;
+		var $Email;
+		var $Utente;
+		var $Dominio;
+		var $Password;
+		var $Obbligo_cambio_password;
+		var $Reset_password;
+		var $Data_password;
+		var $TipoLogin;
+		var $Attivo;
+		var $Amministratore;
+
+
+		/**
+		* @return returns value of variable $Id_utente
+		* @desc getId_utente : Getting value for variable $Id_utente
+		*/
+		function getId_utente()
+		{
+				return $this->Id_utente;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Id_utente
+		* @desc setId_utente : Setting value for $Id_utente
+		*/
+		function setId_utente($value)
+		{
+				$this->Id_utente = $value;
+		}
+
+		/**
+		* @return returns value of variable $Utente_creazione
+		* @desc getUtente_creazione : Getting value for variable $Utente_creazione
+		*/
+		function getUtente_creazione()
+		{
+				return $this->Utente_creazione;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Utente_creazione
+		* @desc setUtente_creazione : Setting value for $Utente_creazione
+		*/
+		function setUtente_creazione($value)
+		{
+				$this->Utente_creazione = $value;
+		}
+
+		/**
+		* @return returns value of variable $Data_ora_creazione
+		* @desc getData_ora_creazione : Getting value for variable $Data_ora_creazione
+		*/
+		function getData_ora_creazione()
+		{
+				return $this->Data_ora_creazione;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Data_ora_creazione
+		* @desc setData_ora_creazione : Setting value for $Data_ora_creazione
+		*/
+		function setData_ora_creazione($value)
+		{
+				$this->Data_ora_creazione = $value;
+		}
+
+		/**
+		* @return returns value of variable $Utente_modifica
+		* @desc getUtente_modifica : Getting value for variable $Utente_modifica
+		*/
+		function getUtente_modifica()
+		{
+				return $this->Utente_modifica;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Utente_modifica
+		* @desc setUtente_modifica : Setting value for $Utente_modifica
+		*/
+		function setUtente_modifica($value)
+		{
+				$this->Utente_modifica = $value;
+		}
+
+		/**
+		* @return returns value of variable $Data_ora_modifica
+		* @desc getData_ora_modifica : Getting value for variable $Data_ora_modifica
+		*/
+		function getData_ora_modifica()
+		{
+				return $this->Data_ora_modifica;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Data_ora_modifica
+		* @desc setData_ora_modifica : Setting value for $Data_ora_modifica
+		*/
+		function setData_ora_modifica($value)
+		{
+				$this->Data_ora_modifica = $value;
+		}
+
+		/**
+		* @return returns value of variable $Nome
+		* @desc getNome : Getting value for variable $Nome
+		*/
+		function getNome()
+		{
+				return $this->Nome;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Nome
+		* @desc setNome : Setting value for $Nome
+		*/
+		function setNome($value)
+		{
+				$this->Nome = $value;
+		}
+
+		/**
+		* @return returns value of variable $Cognome
+		* @desc getCognome : Getting value for variable $Cognome
+		*/
+		function getCognome()
+		{
+				return $this->Cognome;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Cognome
+		* @desc setCognome : Setting value for $Cognome
+		*/
+		function setCognome($value)
+		{
+				$this->Cognome = $value;
+		}
+
+		/**
+		* @return returns value of variable $Email
+		* @desc getEmail : Getting value for variable $Email
+		*/
+		function getEmail()
+		{
+				return $this->Email;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Email
+		* @desc setEmail : Setting value for $Email
+		*/
+		function setEmail($value)
+		{
+				$this->Email = $value;
+		}
+
+		/**
+		* @return returns value of variable $Utente
+		* @desc getUtente : Getting value for variable $Utente
+		*/
+		function getUtente()
+		{
+				return $this->Utente;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Utente
+		* @desc setUtente : Setting value for $Utente
+		*/
+		function setUtente($value)
+		{
+				$this->Utente = $value;
+		}
+
+		/**
+		* @return returns value of variable $Dominio
+		* @desc getDominio : Getting value for variable $Dominio
+		*/
+		function getDominio()
+		{
+				return $this->Dominio;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Dominio
+		* @desc setDominio : Setting value for $Dominio
+		*/
+		function setDominio($value)
+		{
+				$this->Dominio = $value;
+		}
+
+		/**
+		* @return returns value of variable $Password
+		* @desc getPassword : Getting value for variable $Password
+		*/
+		function getPassword()
+		{
+				return $this->Password;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Password
+		* @desc setPassword : Setting value for $Password
+		*/
+		function setPassword($value)
+		{
+				$this->Password = $value;
+		}
+
+		/**
+		* @return returns value of variable $Obbligo_cambio_password
+		* @desc getObbligo_cambio_password : Getting value for variable $Obbligo_cambio_password
+		*/
+		function getObbligo_cambio_password()
+		{
+				return $this->Obbligo_cambio_password;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Obbligo_cambio_password
+		* @desc setObbligo_cambio_password : Setting value for $Obbligo_cambio_password
+		*/
+		function setObbligo_cambio_password($value)
+		{
+				$this->Obbligo_cambio_password = $value;
+		}
+
+		/**
+		* @return returns value of variable $Reset_password
+		* @desc getReset_password : Getting value for variable $Reset_password
+		*/
+		function getReset_password()
+		{
+				return $this->Reset_password;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Reset_password
+		* @desc setReset_password : Setting value for $Reset_password
+		*/
+		function setReset_password($value)
+		{
+				$this->Reset_password = $value;
+		}
+
+		/**
+		* @return returns value of variable $Data_password
+		* @desc getData_password : Getting value for variable $Data_password
+		*/
+		function getData_password()
+		{
+				return $this->Data_password;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Data_password
+		* @desc setData_password : Setting value for $Data_password
+		*/
+		function setData_password($value)
+		{
+				$this->Data_password = $value;
+		}
+
+		/**
+		* @return returns value of variable $TipoLogin
+		* @desc getTipoLogin : Getting value for variable $TipoLogin
+		*/
+		function getTipoLogin()
+		{
+				return $this->TipoLogin;
+		}
+
+		/**
+		* @param param : value to be saved in variable $TipoLogin
+		* @desc setTipoLogin : Setting value for $TipoLogin
+		*/
+		function setTipoLogin($value)
+		{
+				$this->TipoLogin = $value;
+		}
+
+		/**
+		* @return returns value of variable $Attivo
+		* @desc getAttivo : Getting value for variable $Attivo
+		*/
+		function getAttivo()
+		{
+				return $this->Attivo;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Attivo
+		* @desc setAttivo : Setting value for $Attivo
+		*/
+		function setAttivo($value)
+		{
+				$this->Attivo = $value;
+		}
+
+		/**
+		* @return returns value of variable $Amministratore
+		* @desc getAmministratore : Getting value for variable $Amministratore
+		*/
+		function getAmministratore()
+		{
+				return $this->Amministratore;
+		}
+
+		/**
+		* @param param : value to be saved in variable $Amministratore
+		* @desc setAmministratore : Setting value for $Amministratore
+		*/
+		function setAmministratore($value)
+		{
+				$this->Amministratore = $value;
+		}
+
+		// This is the constructor for this class
+		// Initialize all your default variables here
+		function utentiInfo()
+		{
+
+				$this->setId_utente("");
+				$this->setUtente_creazione("");
+				$this->setData_ora_creazione("");
+				$this->setUtente_modifica("");
+				$this->setData_ora_modifica("");
+				$this->setNome("");
+				$this->setCognome("");
+				$this->setEmail("");
+				$this->setUtente("");
+				$this->setDominio("");
+				$this->setPassword("");
+				$this->setObbligo_cambio_password("");
+				$this->setReset_password("");
+				$this->setData_password("");
+				$this->setTipoLogin("");
+				$this->setAttivo("");
+				$this->setAmministratore("");
+		}
+
+		// This function will clear all the values of variables in this class
+		function emptyInfo()
+		{
+
+				$this->setId_utente("");
+				$this->setUtente_creazione("");
+				$this->setData_ora_creazione("");
+				$this->setUtente_modifica("");
+				$this->setData_ora_modifica("");
+				$this->setNome("");
+				$this->setCognome("");
+				$this->setEmail("");
+				$this->setUtente("");
+				$this->setDominio("");
+				$this->setPassword("");
+				$this->setObbligo_cambio_password("");
+				$this->setReset_password("");
+				$this->setData_password("");
+				$this->setTipoLogin("");
+				$this->setAttivo("");
+				$this->setAmministratore("");
+		}
+
+} 
+
+?>

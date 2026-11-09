@@ -1,0 +1,688 @@
+/* Aggiunta Francesco 07/03/2016 */
+
+* {
+	margin: 0;
+	padding: 0;
+        
+}
+.bianco{
+    color:white;
+}
+a img {outline : none;}
+img {border : 0;}
+#loading {
+ width: 280px;
+ height: 280px;
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ margin-top: -140px;
+ margin-left: -140px;
+ text-align: center;
+ }
+body {
+background: #fff;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+line-height: 20px;
+color: #222;
+
+}
+td{
+    font-size:12px;
+}
+
+.Allegati
+{
+	width:100%;
+}
+
+#Bordato 
+{
+	margin: 12px 0 0 0;
+	padding-left: 0px;
+	border: 1px solid #425969;
+        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+
+}
+
+#BordatoTitolo {
+/*	border: 1px solid #425969;*/
+
+/*background: #425969;*/
+color: #fff;
+font-size: 13px;
+color:#27413E;
+/*background:#D7E5F7 url(sprite.gif) repeat-x scroll 0 -600px;*/
+/*
+/*	border-bottom:1px solid #9EB6CE;*/
+/*	border-left:1px solid #9EB6CE;*/
+	font-weight:normal;
+	text-align:right;
+        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+       
+}
+input[type="text"],input.text,textarea,ul.token-input-list-mac
+{
+    /*border: 1px solid #D7E5F7;*/
+    padding: 1px 1px 1px 1px;
+    border: 1px solid #9ebde5;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+
+input[type="button"],input.button
+{
+    /*border: 1px solid #D7E5F7;
+    height:22px;*/
+    font-family: tahoma,verdana,arial,sans-serif; font-size: 1em;
+     border: 1px solid #d3d3d3; background: #d3dbe9 url(custom-theme/images/ui-bg_glass_75_d3dbe9_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #27413e;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+   
+}
+input[type="button"]:hover,input.button:hover
+{
+    /*border: 1px solid #D7E5F7;
+    height:22px;*/
+    font-family: tahoma,verdana,arial,sans-serif; font-size: 1em;
+     border: 1px solid #999999; background: #f9d99f url(custom-theme/images/ui-bg_glass_75_f9d99f_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121;
+     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+     
+}
+select
+{
+    /*border: 1px solid #D7E5F7;*/
+    border: 1px solid #9ebde5;
+    /*color: #27413E;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;*/
+}
+#Bordato h2
+{
+    /*background:#D7E5F7 url(sprite.gif) repeat-x scroll 0 0px;*/
+    border: 1px solid #9ebde5;
+    background: #9ebde5 url(custom-theme/images/ui-bg_inset-soft_75_9ebde5_1x100.png) 50% 50% repeat-x;
+    /*color: #27413e;
+    font-weight: bold;*/
+-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+
+}
+
+#Bordat h2 {
+	border: 1px solid #425969;
+height: 30px;
+line-height: 30px;
+background: #425969;
+color: #fff;
+font-size: 13px;
+}
+
+#BordatoRiga1
+{
+	background: #BCC8FF;
+}
+a {
+text-decoration: none;
+color: #425969;
+}
+a:hover {
+text-decoration: underline;
+color: #111;
+}
+
+#wrap {
+margin: 0 auto;
+min-width: 1100px;
+}
+.menuimg
+{
+    margin-left: 5px;
+    margin-right: 0px;
+    margin-top: 3px;
+    float:left;
+    text-decoration: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    filter: alpha(opacity=70);
+    opacity:0.7;
+}
+.menuimg img
+{
+    width:28px;
+    height:30px;
+    text-decoration:none;
+    cursor: auto;
+}
+.menuimg:hover
+{
+    cursor: pointer;
+    cursor: hand;
+    text-decoration: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+.menuimg img:hover
+{
+    cursor: pointer;
+    cursor: hand;
+    text-decoration: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+
+#header {
+position:relative;
+height: 63px;
+margin-bottom: 10px;
+background: #fff url(../images/header.jpg) no-repeat;
+/*background: #9ebde5 url(custom-theme/images/ui-bg_inset-soft_75_5ed4a4_1x100.png) 50% 100% repeat-x;*/
+background: #9ebde5 url(custom-theme/images/ui-bg_highlight-soft_75_9ebde5_1x100.png) 50% 100% repeat-x;
+}
+
+#content {
+margin: 10px;
+/*padding: 0 20px;
+width: 960px;*/
+min-height: 450px;
+}
+
+#footer {
+    position:relative;
+    bottom:0px;
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 40px;
+    border-top: 1px dotted #aaa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#footer a { color: #aaa; }
+#footer a:hover { color: #111; }
+
+a.menua,a.menua:hover
+{
+    text-decoration: none;
+}
+.LV_valid {
+    color:#00CC00;
+}
+
+.LV_invalid {
+	color:#CC0000;
+}
+
+.LV_validation_message{
+    font-weight:bold;
+    margin:0 0 0 5px;
+}
+
+.LV_valid_field,
+input.LV_valid_field:hover,
+input.LV_valid_field:active,
+textarea.LV_valid_field:hover,
+textarea.LV_valid_field:active,
+.fieldWithErrors input.LV_valid_field,
+.fieldWithErrors textarea.LV_valid_field {
+    
+}
+
+/* Aggiunta Francesco 07/03/2016 */
+.LV_invalid_field,
+input.LV_invalid_field:hover,
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover,
+textarea.LV_invalid_field:active,
+.fieldWithErrors input.LV_invalid_field,
+.fieldWithErrors textarea.LV_invalid_field {
+    border: 1px solid #CC0000 !important;
+}
+/* ***************************** */
+
+
+#nav, #nav ul{
+margin:0;
+padding:0;
+list-style-type:none;
+list-style-position:outside;
+position:relative;
+line-height:1.5em; 
+
+}
+
+/*#nav a{
+display:block;
+padding:0px 5px;
+color:#fff;
+text-decoration:none;
+background-color:#333;
+}*/
+
+#nav a:hover{
+background-color:#fff;
+color:#333;
+}
+
+#nav li{
+
+position:relative;
+}
+
+#nav ul {
+    -webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+        -webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+position:absolute;
+display:none;
+width:auto;
+top:1.5em;
+}
+
+#nav li ul a{
+width:auto;
+height:auto;
+
+}
+
+#nav ul ul{
+top:auto;
+
+}	
+
+#nav li ul ul {
+left:12em;
+margin:0px 0 0 10px;
+}
+
+#nav li:hover ul ul, #nav li:hover ul ul ul, #nav li:hover ul ul ul ul{
+display:none;
+}
+#nav li:hover ul, #nav li li:hover ul, #nav li li li:hover ul, #nav li li li li:hover ul{
+display:block;
+
+}
+input[type="button"].open{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/open.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].open:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"].open_doc{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/open_doc.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].open_doc:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"].edit{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/edit.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].edit:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"].add{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/add.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].add:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"].add_user{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/add_user.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].add_user:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"].select{
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:20px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/select.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"].select:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+/*nuovi pulsanti*/
+input[type="button"][value="Visualizza"],input[type="button"][value="Apri"] {
+    
+    /*line-height:1;
+    padding:auto;
+    margin:auto;*/
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/open.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+.kgrECap input[type="button"][value="Visualizza"]:hover,.kgrECap input[type="button"][value="Apri"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+.kgrECap input[type="button"][value="Modifica"] {
+    
+    /*line-height:1;
+    padding:auto;
+    margin:auto;*/
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/edit.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+.kgrECap input[type="button"][value="Modifica"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+.kgrECap input[type="button"][value="Sel"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/select.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+.kgrECap input[type="button"][value="Sel"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+.kgrECap input[type="button"][value="Apri"].ui-button-allegati {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/open_doc.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+.kgrECap input[type="button"][value="Apri"].ui-button-allegati:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+.kgrECap input[type="button"][value="Adiuto"].ui-button-allegati {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/adiuto.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+.kgrECap input[type="button"][value="Adiuto"].ui-button-allegati:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="+"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/add.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="+"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="+ U"],input[type="button"][value="+U"]  {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/add_user.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="+ U"]:hover,input[type="button"][value="+U"]:hover {
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="Nuovo"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/new.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="Nuovo"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="Prot"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/Puntina_small.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="Prot"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="ApriPA"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/fpa_small.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="ApriPA"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+input[type="button"][value="Download"] {
+    font-size: 0em;
+    color: transparent;
+    cursor:auto;
+    height:25px;
+    width:25px;
+    border: 1px solid #999999;
+    background: url(../images/down.png) no-repeat;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    opacity:0.75;
+}
+input[type="button"][value="Download"]:hover{
+    cursor: pointer;
+    cursor: hand;
+    border: 0px;
+     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity:1;
+}
+
+/* Aggiunta Francesco 07/03/2016 */
+.BordatoTitoloMessi {
+color: #fff;
+font-size: 13px;
+color:#151B19;
+background-color:#A2E6D4;
+font-weight:bold;
+text-align:right;
+-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+/* ***************************** */
+
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+    background-color: white;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+      background-color: white;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    /*padding: 3px 3px;*/
+    background-color: white;
+    width:250px;
+  }

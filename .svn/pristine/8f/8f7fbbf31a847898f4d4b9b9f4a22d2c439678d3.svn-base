@@ -1,0 +1,2330 @@
+<?
+// phpCodeGen - versione 14/09/2022
+include_once("sintesi_dati_progetto.conf.php");
+?>
+<?php
+include_once(CONFIG_FILE);
+include_once(CLASS_DATABASE_QUERY);
+include_once(CLASS_SINTESI_DATI_PROGETTO_INFO);
+include_once(CLASS_DATABASE_RESULTS_INFO);
+include_once(CLASS_SEARCH_UTILS);
+?>
+<?php 
+// Class Representing the Sintesi_dati_progettoInfo table 
+// and DML operations on it from the database
+
+class sintesi_dati_progettoGenDAO { 
+
+/** 
+* @return returns the insert Id of the inserted Row or false on error PROVA  
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Inserts a new  row in the table populated from parameters of (Sintesi_dati_progettoInfo object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function createSintesi_dati_progetto($thisSintesi_dati_progettoInfo) 
+{ 
+
+   // Building SQL Statement for Inserting New Sintesi_dati_progettoInfo) 
+ $notnull=false;
+   $sql = ""; 
+   $sql .= "INSERT INTO ".TABLE_SINTESI_DATI_PROGETTO; 
+   $sql .= "(";
+   if($thisSintesi_dati_progettoInfo->getId_dati_progetto()!=null){
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getArea()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_AREA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getScopo_fornitura()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB."";
+   };
+   if($thisSintesi_dati_progettoInfo->getAcronimo_progetto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_tt()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PM_TT."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_customer()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEmail()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_EMAIL."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDelivery_address()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDich_origine()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getColori_macchina()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getLingua_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING."";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INTERNO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ESTERNO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA."";
+   };
+   $sql .= " )"; 
+   $sql .= " VALUES "; 
+   $sql .= "(";
+ $notnull=false;
+   if($thisSintesi_dati_progettoInfo->getId_dati_progetto()!=null){
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getId_dati_progetto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getArea()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getArea()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_contratto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getScopo_fornitura()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getScopo_fornitura()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getAcronimo_progetto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getAcronimo_progetto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_tt()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPm_tt()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_customer()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPm_customer()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEmail()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEmail()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDelivery_address()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDelivery_address()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_materiale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDich_origine()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDich_origine()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getColori_macchina()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getColori_macchina()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPenali_su_consegna()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTraining_richiesto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTraining_richiesto_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getIncluso_pagamento()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getLingua_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getLingua_training()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getInterno()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getInterno_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getCliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getCliente_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEsterno()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEsterno_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_in_sito()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_in_sito_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_consegna()."'";
+   };
+   $sql .= " )"; 
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+         // Query could not execute. There was an error 
+         if ($result == false) { 
+
+                 // if Error occured in Application, handle error. 
+                 $thisError = new errorHandler();
+                 $thisError->setUserErrorMessage("A fatal error has occured while this application was trying to do some operation on the database.");
+                 $thisError->setProgramErrorMessage("Error occured when trying to do insert on the Sintesi_dati_progetto Table. The SQL Query was : ".$sql);
+                 $thisError->setErrorPage($_SERVER['PHP_SELF']);
+                 //overiding application settings and quiting program on this error 
+                 $thisError->setQuitProgram(true);
+                 $thisError->handleError();
+                 return false; 
+         }
+         // Query Execution was successful -- Return Insert Id
+         else 
+         {
+         // Finding the Insert Id of the Inserted Row
+         return $thisDatabaseQuery->returnLastInsertId(); 
+
+         } 
+
+} 
+
+/** 
+* @return returns the insert Id of the inserted Row or false on error PROVA  
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Inserts a new  row in the table populated from parameters of (Sintesi_dati_progettoInfo object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function createSintesi_dati_progettoNoError($thisSintesi_dati_progettoInfo) 
+{ 
+
+   // Building SQL Statement for Inserting New Sintesi_dati_progettoInfo) 
+ $notnull=false;
+   $sql = ""; 
+   $sql .= "INSERT INTO ".TABLE_SINTESI_DATI_PROGETTO; 
+   $sql .= "(";
+   if($thisSintesi_dati_progettoInfo->getId_dati_progetto()!=null){
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getArea()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_AREA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getScopo_fornitura()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB."";
+   };
+   if($thisSintesi_dati_progettoInfo->getAcronimo_progetto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_tt()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PM_TT."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_customer()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEmail()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_EMAIL."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDelivery_address()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDich_origine()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getColori_macchina()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getLingua_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING."";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INTERNO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_CLIENTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ESTERNO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA."";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE."";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "".FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA."";
+   };
+   $sql .= " )"; 
+   $sql .= " VALUES "; 
+   $sql .= "(";
+ $notnull=false;
+   if($thisSintesi_dati_progettoInfo->getId_dati_progetto()!=null){
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getId_dati_progetto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getArea()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getArea()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_contratto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getScopo_fornitura()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getScopo_fornitura()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getAcronimo_progetto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getAcronimo_progetto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_tt()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPm_tt()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPm_customer()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPm_customer()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEmail()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEmail()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDelivery_address()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDelivery_address()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_materiale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDich_origine()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDich_origine()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getColori_macchina()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getColori_macchina()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPenali_su_consegna()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTraining_richiesto()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTraining_richiesto_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTraining_richiesto_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getIncluso_pagamento()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getLingua_training()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getLingua_training()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getInterno()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getInterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getInterno_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getCliente()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getCliente_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getCliente_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEsterno()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getEsterno_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getEsterno_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_in_sito()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_training_in_sito_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_consegna_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()."'";
+   };
+   if($thisSintesi_dati_progettoInfo->getTermine_consegna()!=null){
+      if($notnull) $sql .= " , ";
+      $notnull=true;
+      $sql .= "'".$thisSintesi_dati_progettoInfo->getTermine_consegna()."'";
+   };
+   $sql .= " )"; 
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+         // Query could not execute. There was an error 
+         if ($result == false) { 
+
+                 // if Error occured in Application, handle error. 
+                 $thisError = new errorHandler();
+                 $thisError->setUserErrorMessage("A fatal error has occured while this application was trying to do some operation on the database.");
+                 $thisError->setProgramErrorMessage("Error occured when trying to do insert on the Sintesi_dati_progetto Table. The SQL Query was : ".$sql);
+                 $thisError->setErrorPage($_SERVER['PHP_SELF']);
+                 //overiding application settings and quiting program on this error 
+                 $thisError->setQuitProgram(false);
+                 $thisError->handleError();
+                 return false; 
+         }
+         // Query Execution was successful -- Return Insert Id
+         else 
+         {
+         // Finding the Insert Id of the Inserted Row
+         return $thisDatabaseQuery->returnLastInsertId(); 
+
+         } 
+
+}
+
+/** 
+* @return returns true if update if successful or false if failure  
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Updates database table row from parameters of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function updateSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$thisSearchItems="") 
+{ 
+
+   // Building SQL Statement for Inserting New Sintesi_dati_progettoInfo 
+  $i=0;   $sql = ""; 
+   $sql .= "UPDATE ".TABLE_SINTESI_DATI_PROGETTO; 
+   $sql .= " SET ";
+   if($thisSearchItems=="S")
+   if ($thisSintesi_dati_progettoInfo->getId_dati_progetto()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO." = '".$thisSintesi_dati_progettoInfo->getId_dati_progetto()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE." = '".$thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getArea()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_AREA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_AREA." = '".$thisSintesi_dati_progettoInfo->getArea()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_contratto()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO." = '".$thisSintesi_dati_progettoInfo->getData_contratto()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getScopo_fornitura()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA." = '".$thisSintesi_dati_progettoInfo->getScopo_fornitura()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB." = '".$thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getAcronimo_progetto()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO." = '".$thisSintesi_dati_progettoInfo->getAcronimo_progetto()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getPm_tt()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PM_TT." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PM_TT." = '".$thisSintesi_dati_progettoInfo->getPm_tt()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getPm_customer()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER." = '".$thisSintesi_dati_progettoInfo->getPm_customer()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getEmail()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_EMAIL." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_EMAIL." = '".$thisSintesi_dati_progettoInfo->getEmail()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDelivery_address()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS." = '".$thisSintesi_dati_progettoInfo->getDelivery_address()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_materiale()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE." = '".$thisSintesi_dati_progettoInfo->getData_consegna_materiale()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDich_origine()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE." = '".$thisSintesi_dati_progettoInfo->getDich_origine()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getColori_macchina()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA." = '".$thisSintesi_dati_progettoInfo->getColori_macchina()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getPenali_su_consegna()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA." = '".$thisSintesi_dati_progettoInfo->getPenali_su_consegna()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE." = '".$thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO." = '".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE." = '".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO." = '".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE." = '".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE." = '".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER." = '".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI." = '".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP." = '".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE." = '".$thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTraining_richiesto()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO." = '".$thisSintesi_dati_progettoInfo->getTraining_richiesto()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTraining_richiesto_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE." = '".$thisSintesi_dati_progettoInfo->getTraining_richiesto_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_training()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING." = '".$thisSintesi_dati_progettoInfo->getData_training()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_training_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_training_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA." = '".$thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getIncluso_pagamento()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO." = '".$thisSintesi_dati_progettoInfo->getIncluso_pagamento()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE." = '".$thisSintesi_dati_progettoInfo->getIncluso_pagamento_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getLingua_training()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING." = '".$thisSintesi_dati_progettoInfo->getLingua_training()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getInterno()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INTERNO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INTERNO." = '".$thisSintesi_dati_progettoInfo->getInterno()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getInterno_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE." = '".$thisSintesi_dati_progettoInfo->getInterno_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getCliente()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_CLIENTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_CLIENTE." = '".$thisSintesi_dati_progettoInfo->getCliente()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getCliente_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE." = '".$thisSintesi_dati_progettoInfo->getCliente_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getEsterno()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ESTERNO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ESTERNO." = '".$thisSintesi_dati_progettoInfo->getEsterno()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getEsterno_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE." = '".$thisSintesi_dati_progettoInfo->getEsterno_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI." = '".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE." = '".$thisSintesi_dati_progettoInfo->getTermine_di_consegna_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_training_in_sito()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO." = '".$thisSintesi_dati_progettoInfo->getData_training_in_sito()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_training_in_sito_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA." = '".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE." = '".$thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTermine_consegna_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE." = '".$thisSintesi_dati_progettoInfo->getTermine_consegna_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE." = '".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE." = '".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE." = '".$thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE." = '".$thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale()."'"; 
+      $i++;
+  }
+   if ($thisSintesi_dati_progettoInfo->getTermine_consegna()==null){
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA." = NULL";      $i++;
+    }else{
+    if($i>0) $sql.=" , ";
+      $sql .=  FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA." = '".$thisSintesi_dati_progettoInfo->getTermine_consegna()."'"; 
+      $i++;
+  }
+   $sql .= " WHERE ";
+   $sql .= FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO."  = '".$thisSintesi_dati_progettoInfo->getId_dati_progetto()."'";
+
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+         // Query could not execute. There was an error 
+         if ($result == false) { 
+
+                 // if Error occured in Application, handle error. 
+                 $thisError = new errorHandler();
+                 $thisError->setUserErrorMessage("A fatal error has occured while this application was trying to do some operation on the database. ");
+                 $thisError->setProgramErrorMessage("Error Occured when trying to do update on Sintesi_dati_progetto SQL Query : ".$sql);
+                 $thisError->setErrorPage($_SERVER['PHP_SELF']);
+                 //overiding application settings and quiting program on this error 
+                 $thisError->setQuitProgram(true);
+                 $thisError->handleError();
+                 return false; 
+         }
+         // Query Execution was successful
+         else
+          {
+                 return true; 
+         } 
+
+   
+
+} 
+
+function getFields(){
+ return array("Id_dati_progetto","Ragione_sociale_cliente","Area","Data_contratto","Scopo_fornitura","Numero_supercommessa_job","Acronimo_progetto","Pm_tt","Pm_customer","Email","Delivery_address","Data_consegna_materiale","Data_consegna_materiale_note","Dich_origine","Colori_macchina","Penali_su_consegna","Penali_su_consegna_note","Data_fine_smontaggio","Data_fine_smontaggio_note","Data_inizio_spedizione","Data_inizio_spedizione_note","Data_inizio_montaggio","Data_inizio_montaggio_note","Data_avviamento_da_contratto","Data_avviamento_da_contratto_note","Data_avviamento_atteso","Data_avviamento_atteso_note","Data_avviamento_effettivo","Data_avviamento_effettivo_note","Data_mesi_accettazione","Data_mesi_accettazione_note","Data_primo_invio_doc_cliente","Data_primo_invio_doc_cliente_note","Data_estrazione_doc_site_manager","Data_estrazione_doc_site_manager_note","Data_primo_invio_doc_disegni","Data_primo_invio_doc_disegni_note","Doc_training_tt_startup","Doc_training_tt_startup_note","Training_richiesto","Training_richiesto_note","Data_training","Data_training_note","Tipologia_training_richiesta","Incluso_pagamento","Incluso_pagamento_note","Lingua_training","Interno","Interno_note","Cliente","Cliente_note","Esterno","Esterno_note","Data_consegna_ricambi","Data_consegna_ricambi_note","termine_di_consegna_note","Data_training_in_sito","Data_training_in_sito_note","Data_consegna_lista_ricambi_definitiva","Data_consegna_lista_ricambi_definitiva_note","Termine_consegna_note","Garanzia_meccanica_contrattuale_note","Documentazione_contrattuale_note","Garanzia_meccanica_contrattuale","Documentazione_contrattuale","Termine_consegna");
+}
+
+function getKeys(){
+ return array("Id_dati_progetto");
+}
+
+/** 
+* @return returns true if delete if successful or false if failure  
+* @param A collection of searchItems of fields onSintesi_dati_progettoInfo) 
+* @desc Delete database table row from parameters of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function deleteSintesi_dati_progetto($thisSintesi_dati_progettoInfo,$thisSearchItems="")
+{ 
+
+   // Building SQL Statement for Deleting  Sintesi_dati_progettoInfo 
+   $sql = ""; 
+   $sql .= "DELETE FROM ".TABLE_SINTESI_DATI_PROGETTO; 
+   $sql .= " WHERE ";
+   $sql .= FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO." = '".$thisSintesi_dati_progettoInfo->getId_dati_progetto()."' "; 
+
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+         // Query could not execute. There was an error 
+         if ($result == false) { 
+                 // if Error occured in Application, handle error. 
+                 $thisError = new errorHandler();
+                 $thisError->setUserErrorMessage("A fatal error has occured while this application was trying to do some operation on the database.");
+                 $thisError->setProgramErrorMessage("Error Occured when trying to do delete on Sintesi_dati_progetto SQL Query : ".$sql);
+                 $thisError->setErrorPage($_SERVER['PHP_SELF']);
+                 //overiding application settings and quiting program on this error 
+                 $thisError->setQuitProgram(true);
+                 $thisError->handleError();
+                 return false; 
+         }
+         // Query Execution was successful
+         else 
+         {
+                 return true; 
+         } 
+
+   
+
+}
+
+/** 
+* @return returns a populated instance of (Sintesi_dati_progettoInfo) which it populates from an ADODB ResultSet  
+* @param an adodb ResultSet 
+* @desc Populates all matching fields of (Sintesi_dati_progettoInfo) object from a resultSet
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function searchSintesi_dati_progetto($searchItems="",$start="",$limit="",$fieldsToReturn="",
+                                                  $sortByField="",$sortOrder="")
+{ 
+
+		$thisSearchUtils = new searchUtils();
+
+		$thisSearchUtils->setSearchItems($searchItems);
+		$thisSearchUtils->setStart($start);
+		$thisSearchUtils->setLimit($limit);
+		$thisSearchUtils->setFieldsToReturn($fieldsToReturn);
+		$thisSearchUtils->setOrderByField($sortByField);
+		$thisSearchUtils->setOrderDirection($sortOrder);
+		$thisSearchUtils->setTable(TABLE_SINTESI_DATI_PROGETTO);
+		$sql = $thisSearchUtils->getSearchSQL();
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $thisDatabaseQuery->setStart($start);
+         $thisDatabaseQuery->setLimit($limit); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+          $thisDatabaseResultsInfo = new databaseResultsInfo(); 
+
+		if ($result==false)
+		{
+
+			return $thisDatabaseResultsInfo;
+
+		}
+		else
+		{
+
+     // Getting ResultSet from Query
+     $resultSet = $thisDatabaseQuery->getResultSet();
+     $thisSintesi_dati_progettoInfoArray = array(); 
+     $thisSintesi_dati_progettoInfo = new Sintesi_dati_progettoInfo();
+
+     while (!$resultSet->EOF) 
+     { 
+
+           $thisSintesi_dati_progettoInfo = $this->populateSintesi_dati_progettoInfoFromResultSet($resultSet);
+           $thisSintesi_dati_progettoInfoArray[] = $thisSintesi_dati_progettoInfo;
+
+           $resultSet->MoveNext(); 
+
+     } // end while 
+
+     $thisDatabaseResultsInfo->setResultsArray( $thisSintesi_dati_progettoInfoArray);
+     $thisDatabaseResultsInfo->setTotalNumberOfRows($thisDatabaseQuery->getTotalRows());
+     $thisDatabaseResultsInfo->setStart($thisDatabaseQuery->getStart());
+     $thisDatabaseResultsInfo->setLimit($thisDatabaseQuery->getLimit());
+     $thisDatabaseResultsInfo->setSortedBy($thisSearchUtils->getOrderByField());
+     $thisDatabaseResultsInfo->setSortOrder($thisSearchUtils->getOrderDirection());
+
+		return $thisDatabaseResultsInfo;
+
+	} // End of if result != false 
+
+}// End Function 
+
+/** 
+* @return returns a populated instance of (Sintesi_dati_progettoInfo) which it populates from an sql Query 
+* @param an sql Query 
+* @desc Populates all matching fields of (Sintesi_dati_progettoInfo) object from a query
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function searchSintesi_dati_progettoFromSql($sql="",$start="",$limit="")
+{ 
+
+         // Executing Query 
+         $thisDatabaseQuery = new databaseQuery(); 
+         $thisDatabaseQuery->setSqlQuery($sql); 
+         $thisDatabaseQuery->setStart($start);
+         $thisDatabaseQuery->setLimit($limit); 
+         $result = $thisDatabaseQuery->executeQuery(); 
+
+          $thisDatabaseResultsInfo = new databaseResultsInfo(); 
+
+		if ($result==false)
+		{
+
+			return $thisDatabaseResultsInfo;
+
+		}
+		else
+		{
+
+     // Getting ResultSet from Query
+     $resultSet = $thisDatabaseQuery->getResultSet();
+     $thisSintesi_dati_progettoInfoArray = array(); 
+     $thisSintesi_dati_progettoInfo = new Sintesi_dati_progettoInfo();
+
+     while (!$resultSet->EOF) 
+     { 
+
+           $thisSintesi_dati_progettoInfo = $this->populateSintesi_dati_progettoInfoFromResultSet($resultSet);
+           $thisSintesi_dati_progettoInfoArray[] = $thisSintesi_dati_progettoInfo;
+
+           $resultSet->MoveNext(); 
+
+     } // end while 
+
+     $thisDatabaseResultsInfo->setResultsArray( $thisSintesi_dati_progettoInfoArray);
+     $thisDatabaseResultsInfo->setTotalNumberOfRows($thisDatabaseQuery->getTotalRows());
+     $thisDatabaseResultsInfo->setStart($thisDatabaseQuery->getStart());
+     $thisDatabaseResultsInfo->setLimit($thisDatabaseQuery->getLimit());
+		return $thisDatabaseResultsInfo;
+
+	} // End of if result != false 
+
+}// End Function
+
+/** 
+* @return returns a populated instance of class (Sintesi_dati_progettoInfo) if found in db 
+* @param a populated instance of object - (Sintesi_dati_progettoInfo) 
+* @desc Searches and return a populated instance of (Sintesi_dati_progettoInfo) object 
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function getSintesi_dati_progettoByPK($Id_dati_progetto) 
+{ 
+
+   // Searches for the info object with the passed id 
+   $searchItems[] = new searchItem(FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO,$Id_dati_progetto); 
+
+   $dbResultsInfo =  $this->searchSintesi_dati_progetto($searchItems); 
+   $resultsArray =  $dbResultsInfo->getResultsArray(); 
+
+     // return false if no rows in resultSet 
+    if (count($resultsArray)==0) 
+    { 
+
+           return false;	 
+
+     } 
+     // if getById returns more than 1 row.. there could be something wrong.. deal with it accordingly 
+     else if (count($resultsArray)>1) 
+     {  
+                 // if Error occured in Application, handle error. 
+                 $thisError = new errorHandler();
+                 //NOTICE : Change to accomodate your business rules 
+                 //overiding application settings emailing admin about this duplicate id issue and sending user the first id 
+                 $thisError->setQuitProgram(true);
+                 $thisError->setDisplayError(true);
+                 $thisError->setEmailAdmin(true);
+                 $thisError->setUserErrorMessage("An error  has occured while this application was trying to do some operation on the database. ");
+                 $thisError->setProgramErrorMessage("Should get only one row of data. Program retreived more than row--> ".count($resultsArray)." Error Occured when trying to get Info by Id on Table -->Sintesi_dati_progetto ID --> : ".$pkValue);
+                 $thisError->setErrorPage($_SERVER['PHP_SELF']);
+                 $thisError->handleError();
+                 return false; 
+                 // return $resultsArray[0]; 
+       } 
+       // If resultset contains only one row by id.. then return that info object
+      else if (count($resultsArray)==1) 
+     { 
+               return $resultsArray[0]; 
+     } 
+   
+
+}
+
+/** 
+* @return returns a populated instance of (Sintesi_dati_progettoInfo) which it populates from an ADODB ResultSet  
+* @param an adodb ResultSet 
+* @desc Populates all matching fields of (Sintesi_dati_progettoInfo) object from a resultSet
+* @generationDate 2026-01-28
+* @version 1.1
+* @author Edoardo Pocci Delta Informatica <epocci@deltainf.it> 
+* @copyright Copyright &copy; 2026, Delta Informatica 
+*/ 
+function populateSintesi_dati_progettoInfoFromResultSet($result) 
+{ 
+
+           $thisSintesi_dati_progettoInfo = new Sintesi_dati_progettoInfo();
+
+           $thisSintesi_dati_progettoInfo->setId_dati_progetto($result->fields[FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO]); 
+           $thisSintesi_dati_progettoInfo->setRagione_sociale_cliente($result->fields[FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE]); 
+           $thisSintesi_dati_progettoInfo->setArea($result->fields[FIELD_SINTESI_DATI_PROGETTO_AREA]); 
+           $thisSintesi_dati_progettoInfo->setData_contratto($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO]); 
+           $thisSintesi_dati_progettoInfo->setScopo_fornitura($result->fields[FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA]); 
+           $thisSintesi_dati_progettoInfo->setNumero_supercommessa_job($result->fields[FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB]); 
+           $thisSintesi_dati_progettoInfo->setAcronimo_progetto($result->fields[FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO]); 
+           $thisSintesi_dati_progettoInfo->setPm_tt($result->fields[FIELD_SINTESI_DATI_PROGETTO_PM_TT]); 
+           $thisSintesi_dati_progettoInfo->setPm_customer($result->fields[FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER]); 
+           $thisSintesi_dati_progettoInfo->setEmail($result->fields[FIELD_SINTESI_DATI_PROGETTO_EMAIL]); 
+           $thisSintesi_dati_progettoInfo->setDelivery_address($result->fields[FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_materiale($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_materiale_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setDich_origine($result->fields[FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE]); 
+           $thisSintesi_dati_progettoInfo->setColori_macchina($result->fields[FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA]); 
+           $thisSintesi_dati_progettoInfo->setPenali_su_consegna($result->fields[FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA]); 
+           $thisSintesi_dati_progettoInfo->setPenali_su_consegna_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_fine_smontaggio($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO]); 
+           $thisSintesi_dati_progettoInfo->setData_fine_smontaggio_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_inizio_spedizione($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE]); 
+           $thisSintesi_dati_progettoInfo->setData_inizio_spedizione_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_inizio_montaggio($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO]); 
+           $thisSintesi_dati_progettoInfo->setData_inizio_montaggio_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_da_contratto($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_da_contratto_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_atteso($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_atteso_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_effettivo($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO]); 
+           $thisSintesi_dati_progettoInfo->setData_avviamento_effettivo_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_mesi_accettazione($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE]); 
+           $thisSintesi_dati_progettoInfo->setData_mesi_accettazione_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_primo_invio_doc_cliente($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE]); 
+           $thisSintesi_dati_progettoInfo->setData_primo_invio_doc_cliente_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_estrazione_doc_site_manager($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER]); 
+           $thisSintesi_dati_progettoInfo->setData_estrazione_doc_site_manager_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_primo_invio_doc_disegni($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI]); 
+           $thisSintesi_dati_progettoInfo->setData_primo_invio_doc_disegni_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setDoc_training_tt_startup($result->fields[FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP]); 
+           $thisSintesi_dati_progettoInfo->setDoc_training_tt_startup_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setTraining_richiesto($result->fields[FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO]); 
+           $thisSintesi_dati_progettoInfo->setTraining_richiesto_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_training($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING]); 
+           $thisSintesi_dati_progettoInfo->setData_training_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setTipologia_training_richiesta($result->fields[FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA]); 
+           $thisSintesi_dati_progettoInfo->setIncluso_pagamento($result->fields[FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO]); 
+           $thisSintesi_dati_progettoInfo->setIncluso_pagamento_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setLingua_training($result->fields[FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING]); 
+           $thisSintesi_dati_progettoInfo->setInterno($result->fields[FIELD_SINTESI_DATI_PROGETTO_INTERNO]); 
+           $thisSintesi_dati_progettoInfo->setInterno_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setCliente($result->fields[FIELD_SINTESI_DATI_PROGETTO_CLIENTE]); 
+           $thisSintesi_dati_progettoInfo->setCliente_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setEsterno($result->fields[FIELD_SINTESI_DATI_PROGETTO_ESTERNO]); 
+           $thisSintesi_dati_progettoInfo->setEsterno_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_ricambi($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_ricambi_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setTermine_di_consegna_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_training_in_sito($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO]); 
+           $thisSintesi_dati_progettoInfo->setData_training_in_sito_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_lista_ricambi_definitiva($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA]); 
+           $thisSintesi_dati_progettoInfo->setData_consegna_lista_ricambi_definitiva_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setTermine_consegna_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setGaranzia_meccanica_contrattuale_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setDocumentazione_contrattuale_note($result->fields[FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE]); 
+           $thisSintesi_dati_progettoInfo->setGaranzia_meccanica_contrattuale($result->fields[FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE]); 
+           $thisSintesi_dati_progettoInfo->setDocumentazione_contrattuale($result->fields[FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE]); 
+           $thisSintesi_dati_progettoInfo->setTermine_consegna($result->fields[FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA]); 
+
+           return $thisSintesi_dati_progettoInfo;
+
+} // End Function populate
+
+} // end of sintesi_dati_progettoGenDAO Class
+
+?>

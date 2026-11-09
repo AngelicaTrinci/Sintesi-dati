@@ -1,0 +1,765 @@
+.aampsKGR,
+.aampsKGR *
+{
+	margin:0px;
+	padding:0px;
+}
+
+.aampsKGR,
+.aampsKGR_UpdatePanel
+{
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+}
+
+.aampsKGR *,
+.aampsKGR input,
+.aampsKGR select,
+.aampsKGR textarea
+{
+	font-family:tahoma,verdana,arial,sans-serif;
+	font-size:11px;	
+}
+
+/*TableView*/
+.aampsKGR .kgrTableView
+{
+	/*overflow:hidden;*/
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #EEEEEE;
+	color:black;
+
+}
+
+
+.aampsKGR .kgrTable
+{
+	border-collapse:collapse;
+}
+
+.aampsKGR .kgrTable tr .kgrCell:first-child,
+.aampsKGR .kgrTable tr .kgrFilterCell:first-child,
+.aampsKGR .kgrTable tr .kgrHeader:first-child,
+.aampsKGR .kgrTable tr .kgrFooter:first-child
+{
+	border-left-style:none;
+}
+
+
+.aampsKGR .kgrDesc
+{
+	color:green;
+	padding-top:3px;
+	padding-bottom:3px;	
+}
+
+.aampsKGR .kgrDetailTablesPanel
+{
+	/*border-bottom:solid 1px #D0D7E5;*/
+        border-bottom:solid 1px #008D65;
+	padding-right:1px;
+}
+
+
+
+
+/*Header*/
+.aampsKGR .kgrHeader
+{
+	/*background:#D3DBE9 url(sprite.gif) repeat-x scroll 0 -200px;*/
+        background: #EEEEEE url(images/ui-bg_flat_75_EEEEEE_40x100.png) 50% 50% repeat-x;
+	border-bottom:1px solid #9EB6CE;
+	border-left:1px solid #9EB6CE;
+	font-weight:normal;
+	text-align:left;
+}
+
+.aampsKGR .kgrFilterCell
+{
+	background:#FAFAFA none repeat scroll 0 0;
+	border-style:none none solid solid;
+	border-width:1px;
+	border-color:black;
+}
+.aampsKGR .kgrSortHeaderText,
+.aampsDummyHeader .kgrSortHeaderText
+{
+	color:black;
+	font-size:12px;
+	text-decoration:none;
+}
+
+.aampsKGR .kgrIn,
+.aampsDummyHeader .kgrIn
+{
+	overflow:hidden;
+	margin:3px 4px 3px 4px;
+}
+
+
+.aampsKGR .kgrHeader .kgrIn,
+.aampsDummyHeader .kgrIn
+{
+	color:black;
+	font-size:12px;
+	cursor:default;	
+}
+
+.aampsKGR .kgrEditIn
+{
+	padding-right:4px;
+}
+
+.aampsKGR .kgrFilterCell .kgrIn div
+{
+	padding-bottom:1px;	
+}
+
+/*Data*/
+.aampsKGR .kgrCell
+{
+	border-style:none none solid solid;
+	border-width:1px;
+	border-color:#404745;
+}
+
+
+.aampsKGR .kgrRow .kgrCell .kgrIn
+{
+	margin:4px 4px 4px 4px;
+}
+
+.aampsKGR .kgrAltRow
+{
+	background:#AAFFDA none repeat scroll 0 0;
+}
+
+
+.aampsKGR .kgrRowEdit,
+.aampsKGR tr.kgrValidator
+{
+	background:#FFFFE1 none repeat scroll 0 0;	
+}
+
+.aampsKGR .kgrRowOver
+{
+	background:#F9D99F none repeat scroll 0 0;
+}
+
+
+.aampsKGR .kgrRowSelected
+{
+	background:#F1C15F url(sprite.gif) repeat-x scroll 0 -800px;	
+}
+
+.aampsKGR .kgrRowEdit input[type=text],
+.aampsKGR .kgrRowEdit select,
+.aampsKGR .kgrRowEdit textarea
+{
+	color:green;
+}
+
+
+.aampsKGR tr.kgrValidator .kgrIn
+{
+	color:red;
+}
+
+
+/*Grouping*/
+.aampsKGR .kgrGroup
+{
+	background-color:#E4ECF7;
+}
+.aampsKGR .kgrGroup .kgrCell
+{
+	border-style:none none solid none;
+}
+.aampsKGR .kgrGroup .kgrHeaderText
+{
+	color:black;
+	font-family:verdana,sans-serif;
+	font-size:12px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:normal;
+	cursor:pointer;
+}
+
+
+
+.aampsKGR .kgrGroupPanel
+{
+	background:#9EBDE5 url(sprite.gif) repeat-x scroll 0 0;
+	border-bottom:1px solid #688CAF;
+	color:#FFFFFF;
+	padding:3px 3px 2px 3px;
+	min-height:17px;
+	cursor:default;
+}
+.aampsKGR .kgrGroupItem,
+.aampsDummyGroupItem
+{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #325373;
+	cursor:move;
+}
+.aampsKGR .kgrGroupItem .kgrIn,
+.aampsDummyGroupItem .kgrIn
+{
+	white-space:nowrap;
+	font-family:tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:1px 1px 2px 4px;	
+	color:#000000;
+}
+.aampsDummyGroupItem
+{
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;	
+}
+
+
+.aampsKGR .kgrTopIndicator,
+.aampsKGR .kgrBottomIndicator
+{
+	width:9px;
+	height:12px;
+	background:url(sprite.gif) 0 -1232px no-repeat;
+        
+
+}
+.aampsKGR .kgrBottomIndicator
+{
+	background-position:-23px -1232px;
+}
+
+.aampsDummyHeader
+{
+	background:#D3DBE9 url(sprite.gif) repeat-x scroll 0 -200px;
+	border:1px solid #9EB6CE;
+	font-weight:normal;
+	text-align:left;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+		
+}
+.aampsDummyHeader .kgrIn
+{
+	color:black;
+	font-size:13px;
+	margin:3px 4px;
+	overflow:hidden;
+	font-family:tahoma,verdana,arial,sans-serif;
+}
+.aampsDummyHeader .kgrSortHeaderText 
+{
+	color:black;
+	font-size:12px;
+	text-decoration:none;
+}
+
+
+/*Footer*/
+.aampsKGR .kgrFooter
+{
+	border-style:none none solid solid;
+	border-width:1px;
+	cursor:default;
+	border-color:black;
+}
+
+
+
+
+/*Status*/
+.aampsKGR .kgrStatus,
+.aampsKGR .kgrPager
+{
+	/*background:#D7E5F7 url(sprite.gif) repeat-x scroll 0 -600px;
+        background: #00E29B url(images/ui-bg_glass_75_00E29B_1x400.png) 50% 50% repeat-x;*/
+        background: #EEEEEE url(images/ui-bg_flat_75_EEEEEE_40x100.png) 50% 50% repeat-x;
+	line-height:20px;
+	border-bottom:1px solid #FFFFFF;
+	border-top:1px solid #567DB0;
+	padding:1px 4px 2px;
+}
+.aampsKGR .kgrTop .kgrPager
+{
+	border-bottom:1px solid #567DB0;
+	border-top:1px solid #FFFFFF;
+}
+
+
+/*Pager*/
+
+.aampsKGR .kgrPager .kgrPageSize,
+.aampsKGR .kgrPager .kgrNav
+{
+	float:left;
+}
+.aampsKGR .kgrPager .kgrInfo
+{
+	float:right;
+}
+
+.aampsKGR .kgrPager .kgrPrev input,
+.aampsKGR .kgrPager .kgrNext input,
+.aampsKGR .kgrPager .kgrFirst input,
+.aampsKGR .kgrPager .kgrLast input
+{
+	background :transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:16px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;
+}
+.aampsKGR .kgrPager .kgrPrev input
+{
+	background-position:6px -1388px;
+}
+.aampsKGR .kgrPager .kgrNext input
+{
+	background-position:-22px -1388px;
+}
+
+.aampsKGR .kgrPager .kgrFirst input
+{
+	background-position:6px -1356px;
+}
+.aampsKGR .kgrPager .kgrLast input
+{
+	background-position:-22px -1356px;
+}
+
+
+
+.aampsKGR .kgrPager .kgrPrev a,
+.aampsKGR .kgrPager .kgrNext a,
+.aampsKGR .kgrPager .kgrFirst a,
+.aampsKGR .kgrPager .kgrLast a,
+.aampsKGR .kgrPager a.kgrNum
+{
+	color:black;
+	text-decoration:underline;	
+}
+.aampsKGR .kgrPager a.kgrNumSelected
+{
+	text-decoration:none;
+}
+
+.aampsKGR .kgrPager .kgrPageSize select
+{
+	font-family:tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+}
+
+.aampsKGR .kgrPager .kgrPageSize
+{
+	margin-right:4px;
+}
+
+/*FunctionPanel*/
+.aampsKGR .kgrFunctionPanel
+{
+	background:#FAFAFA none repeat scroll 0 0;
+	line-height:20px;
+	border-bottom:1px solid #FFFFFF;
+	padding:1px 4px 2px;
+	text-align:right;	
+}
+.aampsKGR .kgrTop .kgrFunctionPanel
+{
+	border-bottom:1px solid #D0D7E5;
+}
+
+/*For Chrome and Safari*/
+body:nth-of-type(1) .aampsKGR .kgrFunctionPanel
+{
+	border-top:1px solid #D0D7E5;
+}
+body:nth-of-type(1) .aampsKGR .kgrTop .kgrFunctionPanel
+{
+	border-top:1px solid #FFFFFF;
+}
+
+
+
+
+.aampsKGR .kgrRefresh input,
+.aampsKGR .kgrInsert input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+
+.aampsKGR .kgrRefresh input
+{
+	background-position:5px -1453px;
+}
+.aampsKGR .kgrInsert input
+{
+	background-position:1px -1424px;
+}
+
+.aampsKGR .kgrRefresh a,
+.aampsKGR .kgrInsert a
+{
+	color:#27413E;
+	text-decoration:underline;
+}
+
+
+
+/*Insert/Edit Form */
+.aampsKGR .kgrEditForm,
+.aampsKGR .kgrInsertForm
+{
+	padding:4px;
+	border-bottom:solid 1px #D0D7E5;
+	background:#FAFAFA;
+}
+
+.aampsKGR label.kgrCaption
+{
+	padding-right:5px;
+}
+
+.aampsKGR ul.kgrValidator
+{
+	padding:3px 5px 5px 4px;	
+	color:red;
+	list-style-type:decimal;
+}
+.aampsKGR ul.kgrValidator li
+{
+	margin-left:16px;	
+}
+
+.aampsKGR .kgrFormHeader
+{
+	color:#0066CC;
+	font-size:14px;
+	padding:4px;
+}
+.aampsKGR .kgrFormFooter
+{
+	text-align:right;
+}
+
+.aampsKGR .kgrCancel,
+.aampsKGR .kgrConfirm
+{
+	margin-left:1px;
+	margin-right:1px;
+}
+
+
+.aampsKGR .kgrCancel input,
+.aampsKGR .kgrConfirm input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+.aampsKGR .kgrCancel input
+{
+	background-position:2px -1582px;
+}
+.aampsKGR .kgrConfirm input
+{
+	background-position:2px -1550px;
+}
+
+.aampsKGR .kgrConfirm a,
+.aampsKGR .kgrCancel a
+{
+	color:#27413E;
+	text-decoration:underline;	
+}
+
+/*Columns*/
+
+.aampsKGR .kgrSortNone,
+.aampsKGR .kgrSortAsc,
+.aampsKGR .kgrSortDesc,
+.aampsDummyHeader .kgrSortNone,
+.aampsDummyHeader .kgrSortAsc,
+.aampsDummyHeader .kgrSortDesc,
+.aampsDummyGroupItem .kgrSortNone,
+.aampsDummyGroupItem .kgrSortAsc,
+.aampsDummyGroupItem .kgrSortDesc
+{
+	background-color:transparent;
+	background-image:url(sprite.gif);
+	background-repeat:no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:10px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;	
+}
+
+.aampsKGR .kgrSortNone,
+.aampsDummyHeader .kgrSortNone,
+.aampsDummyGroupItem .kgrSortNone
+{
+	height:11px;
+	background-position: 4px -1155px;
+}
+
+.aampsKGR .kgrSortAsc,
+.aampsDummyHeader .kgrSortAsc,
+.aampsDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1262px;
+}
+
+.aampsKGR .kgrSortDesc,
+.aampsDummyHeader .kgrSortDesc,
+.aampsDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1262px;
+}
+
+/*IE7 only*/
+
+*+html .aampsKGR .kgrSortNone,
+*+html .aampsDummyHeader .kgrSortNone,
+*+html .aampsDummyGroupItem .kgrSortNone
+{
+	height:11px;
+	background-position: 4px -1153px;
+}
+
+*+html .aampsKGR .kgrSortAsc,
+*+html .aampsDummyHeader .kgrSortAsc,
+*+html .aampsDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+*+html .aampsKGR .kgrSortDesc,
+*+html .aampsDummyHeader .kgrSortDesc,
+*+html .aampsDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE7 only*/
+
+/*IE6 only*/
+
+* html .aampsKGR .kgrSortNone,
+* html .aampsDummyHeader .kgrSortNone,
+* html .aampsDummyGroupItem .kgrSortNone
+{
+	height:11px;
+	background-position: 4px -1153px;
+}
+
+* html .aampsKGR .kgrSortAsc,
+* html .aampsDummyHeader .kgrSortAsc,
+* html .aampsDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+* html .aampsKGR .kgrSortDesc,
+* html .aampsDummyHeader .kgrSortDesc,
+* html .aampsDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE6 only*/
+
+
+
+.aampsKGR col.kgrColumnExpand,
+.aampsKGR col.kgrColumnGroup
+{
+	width:24px;
+}
+.aampsKGR col.kgrColumnSelect
+{
+	width:30px;
+}
+
+
+
+.aampsKGR .kgrExpand,
+.aampsKGR .kgrCollapse
+{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background:url(sprite.gif) 2px -1326px;
+	cursor:pointer;
+}
+
+.aampsKGR .kgrCollapse
+{
+	background-position:2px -1294px;
+}
+
+
+.aampsKGR .kgrPartHeader
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+.aampsKGR .kgrPartData
+{
+	overflow:scroll;
+}
+
+.aampsKGR .kgrFrozenScroller
+{
+	height:17px;
+	margin-right:17px;
+	overflow-y:hidden;
+	overflow-x:scroll;
+}
+
+.aampsKGR .kgrFrozenScroller div
+{
+	height:17px;
+}
+
+
+
+.aampsKGR .kgrScrollingIndicator
+{
+	border-radius:4px;
+	background:#AAAAAA;
+	border-color:#555555;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+	color:black;
+	display:inline-block;
+	position:absolute;
+	padding:3px;
+	font-weight:bold;
+}
+
+
+.aampsKGR .kgrPartFooter
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+
+.aampsKGR .kgrHidden
+{
+	display:none;
+}
+
+
+.aampsKGR .kgrStatus .kgrLoadingText
+{
+	display:none;
+}
+.aampsKGR .kgrLoading .kgrLoadingText
+{
+	display:inline;
+}
+.aampsKGR .kgrLoading .kgrDoneText
+{
+	display:none;
+}
+
+
+.aampsKGR .kgrHideGrid
+{
+	border:1px solid #3B5A82;
+}
+
+.aampsKGR .kgrFilterCell .kgrIn .kgrDateTimePickerOut,
+.aampsKGR .kgrFilterCell .kgrIn .kgrDateTimePickerIn
+{
+	padding:0px;	
+	margin:0px;
+	border:0px;
+	margin-bottom:-2px;
+}
+
+
+.aampsKGR .kgrDateTimePickerOpening
+{
+	height:21px;
+}
+
+.aampsKGR .kgrCell .kgrDateTimePickerOpening
+{
+	height:19px;
+}
+
+.aampsKGR .kgrIn .kgrDateTimePickerOpening .kgrDateTimePickerIn
+{
+	position:absolute;
+}
+.aampsKGR .kgrPager a,.aampsKGR .kgrPager span,.kgrInfo
+{
+    font-size: 14px;
+}
+.aampsKGR .kgrLinkEdit,
+.aampsKGR .kgrLinkDelete,
+.aampsKGR .kgrLinkConfirm,
+.aampsKGR .kgrLinkCancel
+{
+	font-size:1px;
+	text-indent:-4000px;
+	display:inline-block;
+	height:18px;
+	width:18px;
+	background:transparent url(sprite.png) no-repeat;
+	margin-left:1px;
+	margin-right:1px;
+}
+
+.aampsKGR .kgrLinkEdit
+{
+	background-position:0px -1700px;
+}
+
+.aampsKGR .kgrLinkDelete
+{
+	background-position:0px -1750px;
+}
+
+
+.aampsKGR .kgrLinkConfirm
+{
+	background-position:0px -1800px;
+	height:22px;
+	width:22px;	
+}
+
+.aampsKGR .kgrLinkCancel
+{
+	background-position:0px -1850px;
+	height:22px;
+	width:22px;
+}

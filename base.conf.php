@@ -1,0 +1,1 @@
+<? include_once("sintesi_dati_progetto.conf.php"); ?>

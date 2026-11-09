@@ -1,0 +1,281 @@
+
+            
+           .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{  /* */
+                display: block;
+                float: none;
+                text-align: right;
+            }
+            button.sx.sep.ui-button.ui-corner-all.ui-widget{
+                margin-left: 100px;
+            }
+            button.sx.ui-button.ui-corner-all.ui-widget{
+                float: left;
+            }  /* */
+            
+            *{
+                font-family: cust_titilium, Arial;
+                font-size: 12px;
+                color: #000000;
+                    margin:0;
+            }
+            body {
+                background-color: #eefbf8;
+            }
+            #delta-header{
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50px;
+                background-color: #8c857f;
+            }
+            #delta-header-top{
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50px;
+                background-color: #8c857f;
+            }
+            #delta-header .nome-app{
+                position: absolute;
+                left: 230px;
+                line-height: 40px;
+                top: 5px;
+                font-weight: bold;
+                font-size: 20px;
+                color: #fff;
+                padding-left: 20px;
+            }
+            #delta-header .nome-app .nome-funzione{
+                font-size: 20px;
+                color: #fff;
+                font-weight: normal;
+            }
+            #delta-header .nome-app .nome-funzione:before{
+                content: ":";
+                margin: 0 5px;
+            }
+            #delta-page .nome-app{  /* */
+                margin: 0 10px 10px 10px;
+                font-weight: bold;
+                font-size: 20px;
+                color: #000;
+            }
+            #delta-page .nome-app .nome-funzione{
+                font-size: 20px;
+                color: #000;
+                font-weight: normal;
+            }
+            #delta-page .nome-app .nome-funzione:before{
+                content: ":";
+                margin: 0 5px;
+            } /* */
+            #delta-header .logo{
+                width: 230px;
+                height: 50px;
+                /*background-image: url(images/logo.png); */
+                background-color: #3e3b38;        
+                background-size: auto 44px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            #delta-header .logout a:hover{
+                background-color: rgba(255,255,255,.3)
+            }
+            #delta-header .logout a{
+                position: absolute;
+                top: 0;
+                right: 0px;
+                padding: 5px;
+                width: 50px;
+                line-height: 40px;
+                color: #fff;
+                text-align: center;
+                cursor: pointer;
+            }
+            #delta-header-top .logo{
+                width: 230px;
+                height: 50px;
+                /*background-image: url(images/logo.png); */
+                background-color: #3e3b38;        
+                background-size: auto 44px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            #delta-header-top .logout a:hover{
+                background-color: rgba(255,255,255,.3)
+            }
+            #delta-header-top .logout a{
+                position: absolute;
+                top: 0;
+                right: 0px;
+                padding: 5px;
+                width: 50px;
+                line-height: 40px;
+                color: #fff;
+                text-align: center;
+                cursor: pointer;
+            }
+            #delta-header .utente{
+                position: absolute;
+                top: 0;
+                right: 80px;
+                padding: 5px;
+                width: 300px;
+                line-height: 40px;
+                color: #fff;
+                text-align: right;
+            }
+            #delta-header-top .utente{
+                position: absolute;
+                top: 0;
+                right: 80px;
+                padding: 5px;
+                width: 300px;
+                line-height: 40px;
+                color: #fff;
+                text-align: right;
+            }
+            #delta-header .utente img{
+                height: 40px;
+                border-radius: 20px;
+                background-color: rgba(255,255,255,.5);
+                vertical-align: middle;
+                margin-right:10px
+            }
+            #delta-header-top .utente img{
+                height: 40px;
+                border-radius: 20px;
+                background-color: rgba(255,255,255,.5);
+                vertical-align: middle;
+                margin-right:10px
+            }
+            #delta-menu{
+        
+                overflow: auto;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                bottom: 0;
+                width: 230px;
+                background-color: #dedede;
+            }
+            #delta-menu-top{ /* */
+                overflow: auto;
+                position: absolute;
+                top: 0;
+                left: 230px;
+                bottom: 0;
+                right: 380px;
+            }  /* */
+   
+           #delta-page.fullpage{ /* */
+                left: 0;
+            } /* */
+            .menu-header{
+                background-color: #bababa;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 15px;
+                        cursor:pointer;
+            }
+            img{
+                padding-top: 1px;
+                padding-bottom: 3px;
+
+            width: 17px;
+            display:block; 
+            float:left;
+            margin-right:10px;
+            }
+            .menu-voice {
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 15px;
+                font-weight: normal;
+                cursor:pointer;
+               
+                
+               
+            }
+             .menu-voice-orizzontale{
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 15px;
+                font-weight: normal;
+                 display:block;
+                float:left;
+               
+            }
+            .menu-voice:hover{
+                background-color: #b2b2b2;
+            }
+            #delta-menu ul{
+
+            }
+
+            .menu-grp>a>.menu-voice-grp{
+                position: relative;
+            }
+            .menu-grp>a>.menu-voice-grp:after{
+                content: "";
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                position: absolute;
+                right: 10px;
+                top: 15px;
+                width: 6px;
+                height: 6px;
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+            }
+
+            .menu-grp.expanded>a>.menu-voice{
+                background-color: rgba(0,0,0,.1);
+            }
+            #delta-menu a.selected div{
+                background-color: rgba(255,255,141,.5);
+            }
+            #delta-menu-top a .menu-voice{ /* */
+                color: #fff;
+            }
+            #delta-menu-top a{
+                display: inline-block;
+                line-height: 30px;
+                color: #fff;
+            }
+            #delta-menu-top div{
+                display: inline-block;
+                line-height: 30px;
+                color: #fff;
+            }
+            #delta-menu-top a.selected div{
+                background-color: rgba(255,255,141,.5);
+            }  /* */
+
+            .menu-grp.expanded>a>.menu-voice-grp:after{
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+            }
+
+            .menu-grp>.menu-sub{
+                display: none;
+                padding-left: 20px;
+            }
+
+            .menu-grp.expanded>.menu-sub{
+                display: block;
+                background-color: rgba(255,255,255,.5)
+            }
+            
+            .freccia{
+                display:block;
+                float:right;
+                padding-top: 5px;
+            }
+            
+            .padre-radice .menu-voice{
+               background-color: #dedede;
+            }

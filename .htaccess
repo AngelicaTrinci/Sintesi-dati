@@ -1,0 +1,11 @@
+# Inizio Redirect da http to https
+
+#RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L,NE]
+
+# Fine Redirect da http to https
+
+#Inizio Separatore di Sessione
+#php_value session.cookie_path "/ambiente_vuoto"
+#Fine Separatore di Sessione

@@ -1,0 +1,813 @@
+.alispedKGR,
+.alispedKGR *
+{
+	margin:0px;
+	padding:0px;
+}
+
+.alispedKGR,
+.alispedKGR_UpdatePanel
+{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.alispedKGR *,
+.alispedKGR input,
+.alispedKGR select,
+.alispedKGR textarea
+{
+	font-family:arial,verdana,arial,sans-serif;
+	font-size:12px;	
+}
+
+/*TableView*/
+.alispedKGR .kgrTableView
+{
+	/*overflow:hidden;*/
+	background:#FFFFFF none repeat scroll 0 0;
+	/*border:1px solid #aaa;*/
+	color:black;
+
+}
+
+
+.alispedKGR .kgrTable
+{
+	border-collapse:collapse;
+        border:1px solid #42877b;
+}
+
+.alispedKGR .kgrTable tr .kgrCell:first-child,
+.alispedKGR .kgrTable tr .kgrFilterCell:first-child,
+.alispedKGR .kgrTable tr .kgrHeader:first-child,
+.alispedKGR .kgrTable tr .kgrFooter:first-child
+{
+	border-left-style:none;
+}
+
+
+.alispedKGR .kgrDesc
+{
+	color:green;
+	padding-top:3px;
+	padding-bottom:3px;	
+}
+
+.alispedKGR .kgrDetailTablesPanel
+{
+	/*border-bottom:solid 1px #D0D7E5;*/
+    border-bottom:solid 1px #008D65;
+	padding-right:1px;
+}
+
+
+
+
+/*Header*/
+.alispedKGR .kgrHeader
+{
+	padding: 10px;
+	background: #42877b url("images/ui-bg_highlight-soft_40_42877b_1x100.png") 50% 50% repeat-x;
+	font-weight: bold;
+	color: #fff;
+	border-bottom:1px solid #42877b;
+	border-left:1px solid #42877b;
+/*	font-weight:normal;*/
+	text-align:left;
+}
+
+.alispedKGR .kgrFilterCell
+{
+	background:#FAFAFA none repeat scroll 0 0;
+	border-style:none none solid solid;
+	border-width:1px;
+	border-color:black;
+}
+.alispedKGR .kgrSortHeaderText,
+.alispedDummyHeader .kgrSortHeaderText
+{
+	color:#fff;
+	font-size:12px;
+	text-decoration:none;
+}
+
+.alispedKGR .kgrIn,
+.alispedDummyHeader .kgrIn
+{
+	overflow:hidden;
+}
+.kgrHeader  .kgrIn
+{
+	text-align: center !important;
+}
+
+
+.alispedKGR .kgrHeader .kgrIn,
+.alispedDummyHeader .kgrIn
+{
+	color:#fff;
+	font-size:12px;
+	cursor:default;	
+}
+
+.alispedKGR .kgrEditIn
+{
+	padding-right:4px;
+}
+
+.alispedKGR .kgrFilterCell
+{
+	background-color: #93cdc3;
+	border-color: #42877b;
+	padding: 2px 0;
+}
+
+/*Data*/
+.alispedKGR .kgrCell
+{
+	border-style:none none solid solid;
+	border-width:1px;
+	border-color:#aaa;
+	padding: 5px;
+}
+
+
+.alispedKGR .kgrRow .kgrCell .kgrIn
+{
+}
+
+.alispedKGR .kgrRow
+{
+	background:#fff none repeat scroll 0 0;
+}
+.alispedKGR .kgrAltRow
+{
+	background:#dce1e0 none repeat scroll 0 0;
+}
+
+
+.alispedKGR .kgrRowEdit,
+.alispedKGR tr.kgrValidator
+{
+	background:#FFFFE1 none repeat scroll 0 0;	
+}
+
+.alispedKGR .kgrRowOver
+{
+	background:#F9D99F none repeat scroll 0 0;
+}
+
+
+.alispedKGR .kgrRowSelected
+{
+	background:#F1C15F url(sprite.gif) repeat-x scroll 0 -800px;	
+}
+
+.alispedKGR .kgrRowEdit input[type=text],
+.alispedKGR .kgrRowEdit select,
+.alispedKGR .kgrRowEdit textarea
+{
+	color:green;
+}
+
+
+.alispedKGR tr.kgrValidator .kgrIn
+{
+	color:red;
+}
+
+
+/*Grouping*/
+.alispedKGR .kgrGroup
+{
+	background-color:#E4ECF7;
+}
+.alispedKGR .kgrGroup .kgrCell
+{
+	border-style:none none solid none;
+}
+.alispedKGR .kgrGroup .kgrHeaderText
+{
+	color:black;
+	font-family:arial,verdana,sans-serif;
+	font-size:12px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:normal;
+	cursor:pointer;
+}
+
+
+
+.alispedKGR .kgrGroupPanel
+{
+	background:#9EBDE5 url(sprite.gif) repeat-x scroll 0 0;
+	border-bottom:1px solid #688CAF;
+	color:#FFFFFF;
+	padding:3px 3px 2px 3px;
+	min-height:17px;
+	cursor:default;
+}
+.alispedKGR .kgrGroupItem,
+.alispedDummyGroupItem
+{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #325373;
+	cursor:move;
+}
+.alispedKGR .kgrGroupItem .kgrIn,
+.alispedDummyGroupItem .kgrIn
+{
+	white-space:nowrap;
+	font-family:arial,tahoma,verdana,arial,sans-serif;
+	font-size:12px;
+	font-weight:bold;	
+	color:#000000;
+}
+.alispedDummyGroupItem
+{
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;	
+}
+
+.alispedKGR .kgrTopIndicator,
+.alispedKGR .kgrBottomIndicator
+{
+	width:9px;
+	height:12px;
+	background:url(sprite.gif) 0 -1232px no-repeat;
+}
+.alispedKGR .kgrBottomIndicator
+{
+	background-position:-23px -1232px;
+}
+
+.alispedDummyHeader
+{
+	background:#D3DBE9 url(sprite.gif) repeat-x scroll 0 -200px;
+	border:1px solid #9EB6CE;
+	font-weight:normal;
+	text-align:left;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+		
+}
+.alispedDummyHeader .kgrIn
+{
+	color:black;
+	font-size:13px;
+	overflow:hidden;
+	font-family:arial,tahoma,verdana,arial,sans-serif;
+}
+.alispedDummyHeader .kgrSortHeaderText 
+{
+	color:black;
+	font-size:12px;
+	text-decoration:none;
+}
+
+
+/*Footer*/
+.alispedKGR .kgrFooter
+{
+	border-style:none none solid solid;
+	border-width:1px;
+	cursor:default;
+	border-color:black;
+}
+
+
+
+
+/*Status*/
+.alispedKGR .kgrStatus,
+.alispedKGR .kgrPager
+{
+	background: #42877b url("images/ui-bg_highlight-soft_40_42877b_1x100.png") 50% 50% repeat-x;
+	line-height:20px;
+	border-top:1px solid #567DB0;
+	padding:7px 4px 7px;
+	color:#fff;
+}
+.alispedKGR .kgrTop .kgrPager
+{
+	/* border-bottom:1px solid #567DB0;
+	border-top:1px solid #FFFFFF; */
+}
+
+
+/*Pager*/
+
+.alispedKGR .kgrPager .kgrPageSize,
+.alispedKGR .kgrPager .kgrNav
+{
+	float:left;
+}
+.alispedKGR .kgrPager .kgrInfo
+{
+	float:right;
+}
+
+.alispedKGR .kgrPager .kgrPrev input,
+.alispedKGR .kgrPager .kgrNext input,
+.alispedKGR .kgrPager .kgrFirst input,
+.alispedKGR .kgrPager .kgrLast input
+{
+	background :transparent url("sprite - 000.gif") no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:16px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;
+}
+.alispedKGR .kgrPager .kgrPrev input
+{
+	background-position:6px -1388px;
+}
+.alispedKGR .kgrPager .kgrNext input
+{
+	background-position:-22px -1388px;
+}
+
+.alispedKGR .kgrPager .kgrFirst input
+{
+	background-position:6px -1356px;
+}
+.alispedKGR .kgrPager .kgrLast input
+{
+	background-position:-22px -1356px;
+}
+
+
+
+.alispedKGR .kgrPager .kgrPrev,
+.alispedKGR .kgrPager .kgrNext,
+.alispedKGR .kgrPager .kgrFirst,
+.alispedKGR .kgrPager .kgrLast
+{
+	background: #93cdc3 url("images/ui-bg_highlight-soft_50_93cdc3_1x100.png") 50% 50% repeat-x;
+	color: #000;
+	border: 1px solid #42877b;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.alispedKGR .kgrPager .kgrPrev:hover,
+.alispedKGR .kgrPager .kgrNext:hover,
+.alispedKGR .kgrPager .kgrFirst:hover,
+.alispedKGR .kgrPager .kgrLast:hover
+{
+	border-color: #999;
+	background: #ccd232 url("images/ui-bg_highlight-soft_75_ccd232_1x100.png") 50% 50% repeat-x;
+}
+
+.alispedKGR .kgrPager .kgrPrev a,
+.alispedKGR .kgrPager .kgrNext a,
+.alispedKGR .kgrPager .kgrFirst a,
+.alispedKGR .kgrPager .kgrLast a
+{
+	display:none;
+	color:#000;
+	text-decoration:underline;
+}
+
+.alispedKGR .kgrPager a.kgrNum
+{
+	color:#fff;
+	text-decoration:underline;
+	margin-left:0px;
+	margin-right:0px;	
+}
+.alispedKGR .kgrPager a.kgrNumSelected
+{
+	text-decoration:none;
+}
+
+.alispedKGR .kgrPager a.kgrNum span
+{
+	padding-left:6px;
+	padding-right:6px;	
+}
+.alispedKGR .kgrPager a.kgrNum span:hover
+{
+	border: 1px solid #999;
+	border-radius: 4px;
+	background: #ccd232 url("images/ui-bg_highlight-soft_75_ccd232_1x100.png") 50% 50% repeat-x;
+	color: #000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	padding-right:5px;	
+}
+
+.alispedKGR .kgrPager a.kgrNumSelected span
+{
+	border: 1px solid #fff;
+	border-radius: 4px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	padding-right:5px;	
+}
+
+
+.alispedKGR .kgrPager .kgrPageSize select
+{
+	font-family:arial,tahoma,verdana,arial,sans-serif;
+	font-size:12px;
+}
+
+.alispedKGR .kgrPager .kgrPageSize
+{
+	margin-right:4px;
+}
+
+/*FunctionPanel*/
+.alispedKGR .kgrFunctionPanel
+{
+	background:rgb(238,238,238);
+        padding:10px;
+/*mod*/ border-bottom:0;
+	text-align:left;
+}
+.alispedKGR .kgrTop .kgrFunctionPanel
+{
+	border-top: 0;
+/*mod*/ border-right: 0;
+/*mod*/ border-bottom: 0;
+/*mod*/ border-left: 0;
+}
+
+/*For Chrome and Safari*/
+body:nth-of-type(1) .alispedKGR .kgrFunctionPanel
+{
+	/*border-top:1px solid #D0D7E5;*/
+}
+body:nth-of-type(1) .alispedKGR .kgrTop .kgrFunctionPanel
+{
+	/* border-top:1px solid #FFFFFF; */
+}
+
+.alispedKGR .kgrFunctionPanel .kgrInsert,
+.alispedKGR .kgrFunctionPanel .kgrRefresh
+{
+	background: #cce8dc;
+	color: #000;
+	border: 1px solid #507693;
+	padding: 5px;
+	border-radius: 4px;
+        width:80px
+}
+
+.alispedKGR .kgrFunctionPanel .kgrInsert:hover,
+.alispedKGR .kgrFunctionPanel .kgrRefresh:hover
+{
+	border-color: #999;
+	background: #f3e1bb url("images/ui-bg_highlight-soft_75_f3e1bb_1x100.png") 50% 50% repeat-x;
+}
+
+.alispedKGR .kgrFunctionPanel .kgrInsert a,
+.alispedKGR .kgrFunctionPanel .kgrRefresh a
+{
+	color:#466DA0;
+	text-decoration:none;
+}
+
+
+.alispedKGR .kgrRefresh input,
+.alispedKGR .kgrInsert input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+
+.alispedKGR .kgrRefresh input
+{
+	background-position:5px -1453px;
+}
+.alispedKGR .kgrInsert input
+{
+	background-position:1px -1424px;
+}
+
+.alispedKGR .kgrRefresh a,
+.alispedKGR .kgrInsert a
+{
+	color:#27413E;
+	text-decoration:underline;
+}
+
+
+
+/*Insert/Edit Form */
+.alispedKGR .kgrEditForm,
+.alispedKGR .kgrInsertForm
+{
+	padding:4px;
+	border-bottom:solid 1px #D0D7E5;
+	background:#FAFAFA;
+}
+
+.alispedKGR label.kgrCaption
+{
+	padding-right:5px;
+}
+
+.alispedKGR ul.kgrValidator
+{
+	padding:3px 5px 5px 4px;	
+	color:red;
+	list-style-type:decimal;
+}
+.alispedKGR ul.kgrValidator li
+{
+	margin-left:16px;	
+}
+
+.alispedKGR .kgrFormHeader
+{
+	color:#0066CC;
+	font-size:14px;
+	padding:4px;
+}
+.alispedKGR .kgrFormFooter
+{
+	text-align:right;
+}
+
+.alispedKGR .kgrCancel,
+.alispedKGR .kgrConfirm
+{
+	margin-left:1px;
+	margin-right:1px;
+}
+
+
+.alispedKGR .kgrCancel input,
+.alispedKGR .kgrConfirm input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+.alispedKGR .kgrCancel input
+{
+	background-position:2px -1582px;
+}
+.alispedKGR .kgrConfirm input
+{
+	background-position:2px -1550px;
+}
+
+.alispedKGR .kgrConfirm a,
+.alispedKGR .kgrCancel a
+{
+	color:#27413E;
+	text-decoration:underline;	
+}
+
+/*Columns*/
+
+.alispedKGR .kgrSortNone,
+.alispedKGR .kgrSortAsc,
+.alispedKGR .kgrSortDesc,
+.alispedDummyHeader .kgrSortNone,
+.alispedDummyHeader .kgrSortAsc,
+.alispedDummyHeader .kgrSortDesc,
+.alispedDummyGroupItem .kgrSortNone,
+.alispedDummyGroupItem .kgrSortAsc,
+.alispedDummyGroupItem .kgrSortDesc
+{
+	background-color:transparent;
+	background-image:url(sprite.gif);
+	background-repeat:no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:10px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;	
+}
+
+.alispedKGR .kgrSortNone,
+.alispedDummyHeader .kgrSortNone,
+.alispedDummyGroupItem .kgrSortNone
+{
+	height:12px;
+	background-position: 4px -1155px;
+}
+
+.alispedKGR .kgrSortAsc,
+.alispedDummyHeader .kgrSortAsc,
+.alispedDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1262px;
+}
+
+.alispedKGR .kgrSortDesc,
+.alispedDummyHeader .kgrSortDesc,
+.alispedDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1262px;
+}
+
+/*IE7 only*/
+
+*+html .alispedKGR .kgrSortNone,
+*+html .alispedDummyHeader .kgrSortNone,
+*+html .alispedDummyGroupItem .kgrSortNone
+{
+	height:12px;
+	background-position: 4px -1153px;
+}
+
+*+html .alispedKGR .kgrSortAsc,
+*+html .alispedDummyHeader .kgrSortAsc,
+*+html .alispedDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+*+html .alispedKGR .kgrSortDesc,
+*+html .alispedDummyHeader .kgrSortDesc,
+*+html .alispedDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE7 only*/
+
+/*IE6 only*/
+
+* html .alispedKGR .kgrSortNone,
+* html .alispedDummyHeader .kgrSortNone,
+* html .alispedDummyGroupItem .kgrSortNone
+{
+	height:12px;
+	background-position: 4px -1153px;
+}
+
+* html .alispedKGR .kgrSortAsc,
+* html .alispedDummyHeader .kgrSortAsc,
+* html .alispedDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+* html .alispedKGR .kgrSortDesc,
+* html .alispedDummyHeader .kgrSortDesc,
+* html .alispedDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE6 only*/
+
+
+
+.alispedKGR col.kgrColumnExpand,
+.alispedKGR col.kgrColumnGroup
+{
+	width:24px;
+}
+.alispedKGR col.kgrColumnSelect
+{
+	width:30px;
+}
+
+
+
+.alispedKGR .kgrExpand,
+.alispedKGR .kgrCollapse
+{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background:url(sprite.gif) 2px -1326px;
+	cursor:pointer;
+}
+
+.alispedKGR .kgrCollapse
+{
+	background-position:2px -1294px;
+}
+
+
+.alispedKGR .kgrPartHeader
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+.alispedKGR .kgrPartData
+{
+	overflow:scroll;
+}
+
+.alispedKGR .kgrFrozenScroller
+{
+	height:17px;
+	margin-right:17px;
+	overflow-y:hidden;
+	overflow-x:scroll;
+}
+
+.alispedKGR .kgrFrozenScroller div
+{
+	height:17px;
+}
+
+
+
+.alispedKGR .kgrScrollingIndicator
+{
+	border-radius:4px;
+	background:#AAAAAA;
+	border-color:#555555;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+	color:black;
+	display:inline-block;
+	position:absolute;
+	padding:3px;
+	font-weight:bold;
+}
+
+
+.alispedKGR .kgrPartFooter
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+
+.alispedKGR .kgrHidden
+{
+	display:none;
+}
+
+
+.alispedKGR .kgrStatus .kgrLoadingText
+{
+	display:none;
+}
+.alispedKGR .kgrLoading .kgrLoadingText
+{
+	display:inline;
+}
+.alispedKGR .kgrLoading .kgrDoneText
+{
+	display:none;
+}
+
+
+.alispedKGR .kgrHideGrid
+{
+	border:1px solid #3B5A82;
+}
+
+.alispedKGR .kgrFilterCell .kgrIn
+{
+	width: 90%;
+	margin: 0 auto;
+}
+.alispedKGR .kgrFilterCell .kgrIn .kgrDateTimePickerOut,
+.alispedKGR .kgrFilterCell .kgrIn .kgrDateTimePickerIn
+{
+	padding:0px;	
+	margin:0px;
+	border:0px;
+	margin-bottom:-2px;
+}
+
+
+.alispedKGR .kgrDateTimePickerOpening
+{
+	height:21px;
+}
+
+.alispedKGR .kgrCell .kgrDateTimePickerOpening
+{
+	height:19px;
+}
+
+.alispedKGR .kgrIn .kgrDateTimePickerOpening .kgrDateTimePickerIn
+{
+	position:absolute;
+}

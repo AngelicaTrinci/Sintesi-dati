@@ -1,0 +1,826 @@
+.delta_bluKGR,
+.delta_bluKGR *
+{
+	margin:0px;
+	padding:0px;
+}
+
+.delta_bluKGR,
+.delta_bluKGR_UpdatePanel
+{
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+}
+
+.delta_bluKGR *,
+.delta_bluKGR input,
+.delta_bluKGR select,
+.delta_bluKGR textarea
+{
+/*mod*/	font-family:arial,verdana,tahoma,sans-serif; 
+/*mod*/	font-size:12px;	
+}
+
+/*TableView*/
+.delta_bluKGR .kgrTableView
+{
+	/*overflow:hidden;*/
+/*mod*/	background:#d8d8e0;
+/*mod*/	/*border:1px solid #507693;*/
+/*mod*/	color:black;
+
+}
+
+
+.delta_bluKGR .kgrTable
+{
+	border-collapse:collapse;
+/*mod*/ border:1px solid #507693;
+}
+
+.delta_bluKGR .kgrTable tr .kgrCell:first-child,
+.delta_bluKGR .kgrTable tr .kgrFilterCell:first-child,
+.delta_bluKGR .kgrTable tr .kgrHeader:first-child,
+.delta_bluKGR .kgrTable tr .kgrFooter:first-child
+{
+	border-left-style:none;
+}
+
+
+.delta_bluKGR .kgrDesc
+{
+	color:green;
+	padding-top:3px;
+	padding-bottom:3px;	
+}
+
+.delta_bluKGR .kgrDetailTablesPanel
+{
+/*mod*/	border-bottom:solid 1px #008D65;
+	padding-right:1px;
+}
+
+
+
+
+/*Header*/
+.delta_bluKGR .kgrHeader
+{
+/*mod*/ padding: 10px;
+/*mod*/	background: #789cb7 url("images/ui-bg_highlight-soft_55_789cb7_1x100.png") 50% 50% repeat-x;
+/*mod*/ font-weight: bold;
+/*mod*/ color: #fff;
+/*mod*/	border-bottom:1px solid #507693;
+/*mod*/	border-left:1px solid #507693;
+	font-weight:normal;
+	text-align:left;
+}
+
+.delta_bluKGR .kgrFilterCell
+{
+	background:#FAFAFA none repeat scroll 0 0;
+	border-style:none none solid solid;
+	border-width:1px;
+/*mod*/	border-color:black;
+}
+.delta_bluKGR .kgrSortHeaderText,
+.delta_bluDummyHeader .kgrSortHeaderText
+{
+/*mod*/	color:#fff;
+	font-size:12px;
+	text-decoration:none;
+}
+
+.delta_bluKGR .kgrIn,
+.delta_bluDummyHeader .kgrIn
+{
+	overflow:hidden;
+/*mod*//* margin:3px 4px 3px 4px;*/
+}
+
+
+.delta_bluKGR .kgrHeader .kgrIn,
+.delta_bluDummyHeader .kgrIn
+{
+/*mod*/	color:#fff;
+	font-size:12px;
+	cursor:default;	
+}
+
+.delta_bluKGR .kgrEditIn
+{
+	padding-right:4px;
+}
+
+.delta_bluKGR .kgrFilterCell
+{
+/*mod*/	background-color: #789cb7 ;
+/*mod*/	border-color: #507693;
+/*mod*/	padding: 2px 0;
+}
+
+/*Data*/
+.delta_bluKGR .kgrCell
+{
+	border-style:none none solid solid;
+	border-width:1px;
+/*mod*/	border-color:#aaa;
+/*mod*/	padding: 5px;
+}
+
+
+.delta_bluKGR .kgrRow .kgrCell .kgrIn
+{
+/*mod*//* margin:4px 4px 4px 4px;*/
+}
+
+.delta_bluKGR .kgrRow
+{
+/*mod*/	background:#fff none repeat scroll 0 0;
+}
+.delta_bluKGR .kgrAltRow
+{
+/*mod*/ background:rgb(228,228,228) none repeat scroll 0 0;
+}
+
+
+.delta_bluKGR .kgrRowEdit,
+.delta_bluKGR tr.kgrValidator
+{
+	background:#FFFFE1 none repeat scroll 0 0;	
+}
+
+.delta_bluKGR .kgrRowOver
+{
+	background:#F9D99F none repeat scroll 0 0;
+}
+
+
+.delta_bluKGR .kgrRowSelected
+{
+	background:#F1C15F url(sprite.gif) repeat-x scroll 0 -800px;	
+}
+
+.delta_bluKGR .kgrRowEdit input[type=text],
+.delta_bluKGR .kgrRowEdit select,
+.delta_bluKGR .kgrRowEdit textarea
+{
+	color:green;
+}
+
+
+.delta_bluKGR tr.kgrValidator .kgrIn
+{
+	color:red;
+}
+
+
+/*Grouping*/
+.delta_bluKGR .kgrGroup
+{
+	background-color:#E4ECF7;
+}
+.delta_bluKGR .kgrGroup .kgrCell
+{
+	border-style:none none solid none;
+}
+.delta_bluKGR .kgrGroup .kgrHeaderText
+{
+/*mod*/	color:black;
+/*mod*/	font-family:arial,verdana,sans-serif;
+/*mod*/	font-size:12px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:normal;
+	cursor:pointer;
+}
+
+
+
+.delta_bluKGR .kgrGroupPanel
+{
+	background:#9EBDE5 url(sprite.gif) repeat-x scroll 0 0;
+	border-bottom:1px solid #688CAF;
+	color:#FFFFFF;
+	padding:3px 3px 2px 3px;
+	min-height:17px;
+	cursor:delta_blu;
+}
+.delta_bluKGR .kgrGroupItem,
+.delta_bluDummyGroupItem
+{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #325373;
+	cursor:move;
+}
+.delta_bluKGR .kgrGroupItem .kgrIn,
+.delta_bluDummyGroupItem .kgrIn
+{
+	white-space:nowrap;
+/*mod*/	font-family:arial,tahoma,verdana,arial,sans-serif;
+/*mod*/	font-size:12px;
+	font-weight:bold;
+/*mod*//*	margin:1px 1px 2px 4px;	*/
+	color:#000000;
+}
+.delta_bluDummyGroupItem
+{
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;	
+}
+
+
+.delta_bluKGR .kgrTopIndicator,
+.delta_bluKGR .kgrBottomIndicator
+{
+	width:9px;
+	height:12px;
+	background:url(sprite.gif) 0 -1232px no-repeat;
+}
+.delta_bluKGR .kgrBottomIndicator
+{
+	background-position:-23px -1232px;
+}
+
+.delta_bluDummyHeader
+{
+	background:#D3DBE9 url(sprite.gif) repeat-x scroll 0 -200px;
+	border:1px solid #9EB6CE;
+	font-weight:normal;
+	text-align:left;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+		
+}
+.delta_bluDummyHeader .kgrIn
+{
+/*mod*/	color:black;
+/*mod*/	font-size:13px;
+/*mod*//*	margin:3px 4px;*/
+	overflow:hidden;
+/*mod*/	font-family:arial,tahoma,verdana,arial,sans-serif;
+}
+.delta_bluDummyHeader .kgrSortHeaderText 
+{
+/*mod*/	color:black;
+	font-size:12px;
+	text-decoration:none;
+}
+
+
+/*Footer*/
+.delta_bluKGR .kgrFooter
+{
+	border-style:none none solid solid;
+	border-width:1px;
+	cursor:delta_blu;
+/*mod*/ border-color: #aaa;
+/*mod*/ padding:5px;
+
+}
+
+
+
+
+/*Status*/
+.delta_bluKGR .kgrStatus
+{
+/*mod*/ display: none;
+/*mod*/ background: #fff;
+/*mod*/ line-height:10px;
+/*mod*/ border-top:1px solid #567DB0;
+/*mod*/ padding: 5px;
+/*mod*/ color:#000;		
+}
+.delta_bluKGR .kgrPager
+{
+/*mod*/	background: #789cb7 url("images/ui-bg_highlight-soft_55_789cb7_1x100.png") 50% 60% repeat-x;
+	line-height:20px;
+	border-top:1px solid #567DB0;
+	border-right:1px solid #567DB0;
+	border-left:1px solid #567DB0;
+/*mod*/	padding:7px 4px 7px;
+/*mod*/	color:#fff;		
+}
+.delta_bluKGR .kgrTop .kgrPager
+{
+	border-bottom:1px solid #567DB0;
+	border-top:1px solid #FFFFFF;
+}
+
+
+/*Pager*/
+
+.delta_bluKGR .kgrPager .kgrPageSize,
+.delta_bluKGR .kgrPager .kgrNav
+{
+	float:left;
+}
+.delta_bluKGR .kgrPager .kgrInfo
+{
+	float:right;
+}
+
+.delta_bluKGR .kgrPager .kgrPrev input,
+.delta_bluKGR .kgrPager .kgrNext input,
+.delta_bluKGR .kgrPager .kgrFirst input,
+.delta_bluKGR .kgrPager .kgrLast input
+{
+/*mod*/	background :transparent url("sprite - 000.gif") no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:16px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;
+}
+.delta_bluKGR .kgrPager .kgrPrev input
+{
+	background-position:6px -1388px;
+}
+.delta_bluKGR .kgrPager .kgrNext input
+{
+	background-position:-22px -1388px;
+}
+
+.delta_bluKGR .kgrPager .kgrFirst input
+								 
+							  
+{
+	background-position:6px -1356px;
+							
+}
+.delta_bluKGR .kgrPager .kgrLast input
+{
+	background-position:-22px -1356px;
+}
+
+
+
+.delta_bluKGR .kgrPager .kgrPrev,
+.delta_bluKGR .kgrPager .kgrNext,
+.delta_bluKGR .kgrPager .kgrFirst,
+.delta_bluKGR .kgrPager .kgrLast
+{
+	background: #c5d9e9 url("images/ui-bg_highlight-soft_85_c5d9e9_1x100.png") 50% 50% repeat-x;
+	color: #000;
+	border: 1px solid #507693;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.delta_bluKGR .kgrPager .kgrPrev:hover,
+.delta_bluKGR .kgrPager .kgrNext:hover,
+.delta_bluKGR .kgrPager .kgrFirst:hover,
+.delta_bluKGR .kgrPager .kgrLast:hover
+{
+	border-color: #999;
+	background: #f3e1bb url("images/ui-bg_highlight-soft_75_f3e1bb_1x100.png") 50% 50% repeat-x;
+}
+
+.delta_bluKGR .kgrPager .kgrPrev a,
+.delta_bluKGR .kgrPager .kgrNext a,
+.delta_bluKGR .kgrPager .kgrFirst a,
+.delta_bluKGR .kgrPager .kgrLast a
+{
+	display:none;
+	color:#000;
+	text-decoration:underline;
+}
+
+.delta_bluKGR .kgrPager a.kgrNum
+{
+	color:#fff;
+	text-decoration:underline;
+	margin-left:0px;
+	margin-right:0px;	
+}
+.delta_bluKGR .kgrPager a.kgrNumSelected
+{
+	text-decoration:none;
+}
+
+.delta_bluKGR .kgrPager a.kgrNum span
+{
+	padding-left:6px;
+	padding-right:6px;	
+}
+.delta_bluKGR .kgrPager a.kgrNum span:hover
+{
+	border: 1px solid #999;
+	border-radius: 4px;
+	background: #f3e1bb url("images/ui-bg_highlight-soft_75_f3e1bb_1x100.png") 50% 50% repeat-x;
+	color: #000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	padding-right:5px;	
+}
+
+.delta_bluKGR .kgrPager a.kgrNumSelected span
+{
+	border: 1px solid #fff;
+	border-radius: 4px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	padding-right:5px;	
+}
+
+
+.delta_bluKGR .kgrPager .kgrPageSize select
+{
+	font-family:arial,tahoma,verdana,arial,sans-serif;
+	font-size:12px;
+}
+
+.delta_bluKGR .kgrPager .kgrPageSize
+{
+	margin-right:4px;
+}
+
+/*FunctionPanel*/
+.delta_bluKGR .kgrFunctionPanel
+{
+	background:#FAFAFA none repeat scroll 0 0;
+        padding:10px;
+/*mod*/ border-bottom:0;
+	text-align:left;
+}
+.delta_bluKGR .kgrTop .kgrFunctionPanel
+{
+/*mod*/ border-top: 0;
+/*mod*/ border-right: 0;
+/*mod*/ border-bottom: 0;
+/*mod*/ border-left: 0;
+}
+
+/*For Chrome and Safari*/
+body:nth-of-type(1) .delta_bluKGR .kgrFunctionPanel
+{
+	border-top:1px solid #D0D7E5;
+}
+body:nth-of-type(1) .delta_bluKGR .kgrTop .kgrFunctionPanel
+{
+	border-top:1px solid #FFFFFF;
+}
+
+
+
+
+
+
+.delta_bluKGR .kgrFunctionPanel .kgrInsert,
+.delta_bluKGR .kgrFunctionPanel .kgrRefresh
+{
+	background: #c5d9e9 url("images/ui-bg_highlight-soft_85_c5d9e9_1x100.png") 50% 50% repeat-x;
+	color: #000;
+	border: 1px solid #507693;
+	padding: 5px;
+	border-radius: 4px;
+        width:80px
+}
+
+.delta_bluKGR .kgrFunctionPanel .kgrInsert:hover,
+.delta_bluKGR .kgrFunctionPanel .kgrRefresh:hover
+{
+	border-color: #999;
+	background: #f3e1bb url("images/ui-bg_highlight-soft_75_f3e1bb_1x100.png") 50% 50% repeat-x;
+}
+
+.delta_bluKGR .kgrFunctionPanel .kgrInsert a,
+.delta_bluKGR .kgrFunctionPanel .kgrRefresh a
+{
+	color:#466DA0;
+	text-decoration:none;
+}
+
+
+
+
+
+
+
+
+.delta_bluKGR .kgrRefresh input,
+.delta_bluKGR .kgrInsert input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+
+.delta_bluKGR .kgrRefresh input
+{
+	background-position:5px -1453px;
+}
+.delta_bluKGR .kgrInsert input
+{
+	background-position:1px -1424px;
+}
+
+.delta_bluKGR .kgrRefresh a,
+.delta_bluKGR .kgrInsert a
+{
+	color:#27413E;
+	text-decoration:underline;
+}
+
+
+
+/*Insert/Edit Form */
+.delta_bluKGR .kgrEditForm,
+.delta_bluKGR .kgrInsertForm
+{
+	padding:4px;
+	border-bottom:solid 1px #D0D7E5;
+	background:#FAFAFA;
+}
+
+.delta_bluKGR label.kgrCaption
+{
+	padding-right:5px;
+}
+
+.delta_bluKGR ul.kgrValidator
+{
+	padding:3px 5px 5px 4px;	
+	color:red;
+	list-style-type:decimal;
+}
+.delta_bluKGR ul.kgrValidator li
+{
+	margin-left:16px;	
+}
+
+.delta_bluKGR .kgrFormHeader
+{
+	color:#0066CC;
+	font-size:14px;
+	padding:4px;
+}
+.delta_bluKGR .kgrFormFooter
+{
+	text-align:right;
+}
+
+.delta_bluKGR .kgrCancel,
+.delta_bluKGR .kgrConfirm
+{
+	margin-left:1px;
+	margin-right:1px;
+}
+
+
+.delta_bluKGR .kgrCancel input,
+.delta_bluKGR .kgrConfirm input
+{
+	height:16px;
+	width:16px;
+	background:transparent url(sprite.gif) no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	padding:0;
+	vertical-align:middle;
+}
+.delta_bluKGR .kgrCancel input
+{
+	background-position:2px -1582px;
+}
+.delta_bluKGR .kgrConfirm input
+{
+	background-position:2px -1550px;
+}
+
+.delta_bluKGR .kgrConfirm a,
+.delta_bluKGR .kgrCancel a
+{
+	color:#27413E;
+	text-decoration:underline;	
+}
+
+/*Columns*/
+
+.delta_bluKGR .kgrSortNone,
+.delta_bluKGR .kgrSortAsc,
+.delta_bluKGR .kgrSortDesc,
+.delta_bluDummyHeader .kgrSortNone,
+.delta_bluDummyHeader .kgrSortAsc,
+.delta_bluDummyHeader .kgrSortDesc,
+.delta_bluDummyGroupItem .kgrSortNone,
+.delta_bluDummyGroupItem .kgrSortAsc,
+.delta_bluDummyGroupItem .kgrSortDesc
+{
+	background-color:transparent;
+	background-image:url(sprite.gif);
+	background-repeat:no-repeat;
+	border:0 none;
+	cursor:pointer;
+	font-size:1px;
+	height:10px;
+	padding:0;
+	vertical-align:middle;
+	width:16px;	
+}
+
+.delta_bluKGR .kgrSortNone,
+.delta_bluDummyHeader .kgrSortNone,
+.delta_bluDummyGroupItem .kgrSortNone
+{
+	height:12px;
+	background-position: 4px -1155px;
+}
+.delta_bluKGR .kgrSortAsc,
+.delta_bluDummyHeader .kgrSortAsc,
+.delta_bluDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1262px;
+}
+
+.delta_bluKGR .kgrSortDesc,
+.delta_bluDummyHeader .kgrSortDesc,
+.delta_bluDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1262px;
+}
+
+/*IE7 only*/
+*+html .delta_bluKGR .kgrSortAsc,
+*+html .delta_bluDummyHeader .kgrSortAsc,
+*+html .delta_bluDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+*+html .delta_bluKGR .kgrSortDesc,
+*+html .delta_bluDummyHeader .kgrSortDesc,
+*+html .delta_bluDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE7 only*/
+
+/*IE6 only*/
+* html .delta_bluKGR .kgrSortAsc,
+* html .delta_bluDummyHeader .kgrSortAsc,
+* html .delta_bluDummyGroupItem .kgrSortAsc
+{
+	background-position: -21px -1260px;
+}
+* html .delta_bluKGR .kgrSortDesc,
+* html .delta_bluDummyHeader .kgrSortDesc,
+* html .delta_bluDummyGroupItem .kgrSortDesc
+{
+	background-position: 4px -1260px;
+}
+/*IE6 only*/
+
+
+
+.delta_bluKGR col.kgrColumnExpand,
+.delta_bluKGR col.kgrColumnGroup
+{
+	width:24px;
+}
+.delta_bluKGR col.kgrColumnSelect
+{
+	width:30px;
+}
+
+
+
+.delta_bluKGR .kgrExpand,
+.delta_bluKGR .kgrCollapse
+{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background:url(sprite.gif) 2px -1326px;
+	cursor:pointer;
+}
+
+.delta_bluKGR .kgrCollapse
+{
+	background-position:2px -1294px;
+}
+
+
+.delta_bluKGR .kgrPartHeader
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+.delta_bluKGR .kgrPartData
+{
+	overflow:scroll;
+}
+
+.delta_bluKGR .kgrFrozenScroller
+{
+	height:17px;
+	margin-right:17px;
+	overflow-y:hidden;
+	overflow-x:scroll;
+}
+
+.delta_bluKGR .kgrFrozenScroller div
+{
+	height:17px;
+}
+
+
+
+.delta_bluKGR .kgrScrollingIndicator
+{
+	border-radius:4px;
+	background:#AAAAAA;
+	border-color:#555555;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity:0.5;
+	color:black;
+	display:inline-block;
+	position:absolute;
+	padding:3px;
+	font-weight:bold;
+}
+.delta_bluKGR .kgrPartFooter
+{
+	overflow:hidden;
+	margin-right:17px;
+}
+
+
+.delta_bluKGR .kgrHidden
+{
+	display:none;
+}
+
+
+.delta_bluKGR .kgrStatus .kgrLoadingText
+{
+	display:none;
+}
+.delta_bluKGR .kgrLoading .kgrLoadingText
+{
+	display:inline;
+}
+.delta_bluKGR .kgrLoading .kgrDoneText
+{
+	display:none;
+}
+
+
+.delta_bluKGR .kgrHideGrid
+{
+	border:1px solid #3B5A82;
+}
+
+.delta_bluKGR .kgrFilterCell .kgrIn
+{
+	width: 90%;
+	margin: 0 auto;
+}
+.delta_bluKGR .kgrFilterCell .kgrIn .kgrDateTimePickerOut,
+.delta_bluKGR .kgrFilterCell .kgrIn .kgrDateTimePickerIn
+{
+	padding:0px;	
+	margin:0px;
+	border:0px;
+	margin-bottom:-2px;
+}
+
+
+.delta_bluKGR .kgrDateTimePickerOpening
+{
+	height:21px;
+}
+
+.delta_bluKGR .kgrCell .kgrDateTimePickerOpening
+{
+	height:19px;
+}
+
+.delta_bluKGR .kgrIn .kgrDateTimePickerOpening .kgrDateTimePickerIn
+{
+	position:absolute;
+}
+
+.kgrFooter *
+{
+    font-weight: bold;
+    font-size: 14px;
+    font-family: arial;
+}

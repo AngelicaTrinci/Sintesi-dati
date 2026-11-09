@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localization xmlns="koolcalendar:localization-schema">
+	<Commands
+		Today			= "Oggi"
+		OK 				= "OK"
+		Cancel 			= "Cancella"
+	/>
+	<Months_Full
+		January			= "Gennaio"
+		February		= "Febbraio"
+		March			= "Marzo"
+		April			= "Aprile"
+		May			= "Maggio"
+		June			= "Giugno"
+		July			= "Luglio"
+		August			= "Agosto"
+		September		= "Settembre"
+		October			= "Ottobre"
+		November		= "Novembre"
+		December		= "Dicembre"
+	/>
+	<Months_Short
+		January			= "Gen"
+		February		= "Feb"
+		March			= "Mar"
+		April			= "Apr"
+		May			= "Mag"
+		June			= "Giu"
+		July			= "Lug"
+		August			= "Ago"
+		September		= "Set"
+		October			= "Ott"
+		November		= "Nov"
+		December		= "Dic"
+	/>
+	<DaysOfWeek_Full
+		Sunday			= "Domenica"
+		Monday			= "Lunedì"
+		Tuesday			= "Martedì"
+		Wednesday		= "Mercoledì"
+		Thursday		= "Giovedì"
+		Friday			= "Venerdì"
+		Saturday		= "Sabato"
+	/>
+	<DaysOfWeek_Short
+		Sunday			= "Dom"
+		Monday			= "Lun"
+		Tuesday			= "Mar"
+		Wednesday		= "Mer"
+		Thursday		= "Gio"
+		Friday			= "Ven"
+		Saturday		= "Sab"
+	/>
+	<DaysOfWeek_Shortest
+		Sunday			= "D"
+		Monday			= "L"
+		Tuesday			= "M"
+		Wednesday		= "M"
+		Thursday		= "G"
+		Friday			= "V"
+		Saturday		= "S"
+	/>
+</localization>

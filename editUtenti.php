@@ -1,0 +1,988 @@
+<?php
+session_start();
+	include_once("base.conf.php");
+
+include_once(CONFIG_FILE);
+include_once(CLASS_UTENTI_MANAGER);
+include_once(CLASS_REQUEST_UTILS);
+require_once "KoolControls/KoolGrid/koolgrid.php";
+require_once "KoolControls/KoolAjax/koolajax.php";
+require_once "config.php";
+include_once("include/utility.php");
+include_once("include/autorizzazioni.php");
+
+
+?>
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+      <!--<meta charset="iso-8859-1"> -->
+       
+        <!-- no cache headers -->
+ <meta http-equiv="Pragma" content="no-cache" />
+ <meta http-equiv="Expires" content="-1" />
+ <meta http-equiv="Cache-Control" content="no-cache" />
+ <!-- end no cache headers -->
+        <link rel="shortcut icon" href="<?php echo URL_ROOT_ADDRESS; ?>/favicon.ico" />
+        <link rel="icon" href="<?php echo URL_ROOT_ADDRESS; ?>/favicon.ico" />
+        <title>Progetto Vuoto</title>
+        <link rel="stylesheet" type="text/css" href="./css/style.css" />
+        <link rel="stylesheet" type="text/css" href="./css/custom-theme/menu-dd.css">
+         <link rel="stylesheet" type="text/css" media="all" href="./css/jsDatePick_ltr.min.css" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="./scripts/menu.js"></script>
+        <script src="js/delta_dialog_o.js" type="text/javascript"></script> 
+        <link type="text/css" href="css/custom-theme/jquery-ui.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="js/jsDatePick.min.1.3.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/livevalidation_standalone.js"></script>
+        <script src="js/jquery.iframe-auto-height.plugin.js">
+        </script>
+            <script type="text/javascript">
+                      $.ajaxSetup({ cache: false });                          
+            $(function(){
+                $('#dialog').dialog({
+                    autoOpen: false,
+                    width: 400,
+                    height: 200,
+                    modal: true,
+                    close: function(event, ui) { var frame = document.getElementById("FrameModifica");
+                        frame.src="";
+                        if (typeof grid !== 'undefined') {
+                            grid.refresh();
+                            grid.commit();
+                        }else
+                            window.location=window.location;
+                    }
+                });
+                $("#connetti").button();
+            });
+            
+  
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+  </script>
+  </head>
+<body onload="campi()">
+<?php
+
+	$return = requestUtils::getRequestObject('Return');
+        $Op = requestUtils::getRequestObject('Op');
+	$submit = requestUtils::getRequestObject('submit');
+
+        if ($submit == "Copia"){$Op = "Inserisci";}
+?>
+<script> 
+
+$(function(){ 
+
+    delta_dialog.SetOptions({ 
+
+        title: "<? if( $Op=="Inserisci" ) echo $Op; else echo "Modifica"; ?> utenti", 
+
+        width: 620, 
+
+        height: 600 
+
+    }); 
+
+    delta_dialog.setButtons({ 
+
+    <? if ($Op == "Inserisci") { ?> 
+
+            "Inserisci": function(){ submit2("Inserisci"); }, 
+
+    <? } else { ?> 
+
+            "Modifica":  function(){ submit2("Modifica"); }, 
+
+            "Copia":     function(){ submit2("Copia"); }, 
+
+            "Elimina":   function(){ submit2("Elimina"); }, 
+
+    <? } ?> 
+
+        "Chiudi":    function(){ 
+
+            delta_dialog.close("done"); 
+
+        } 
+
+    }); 
+
+}); 
+
+function doRedirect() { 
+
+      delta_dialog.close("done"); 
+
+} 
+
+</script> 
+<style>     
+    
+   
+    
+    .chbx{
+         font-size:12px;
+         margin-left: 95px;
+        
+    }
+    .chbxSpan{
+         margin-left:5px;
+        
+    }
+    
+    
+  
+    
+    .selezione-multipla{
+                border: 1px solid #c0c0c0;
+            }
+            .selezione-multipla label{
+                cursor: pointer;
+                display: block;
+                padding: 5px 15px;
+            }
+                        .selezione-multipla label .note{
+                margin-left: 29px;
+                    font-size: 11px;
+                    text-align:left;
+            }
+            #selezionaTutto{
+                font-size: 13px;
+            }
+                        .selezione-multipla label .descrizione{
+                          
+                            margin-left:5px;
+                font-size: 16px;
+            }
+            .selezione-multipla label input[type="checkbox"]{
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                margin-right: 5px;
+        }
+            .selezione-multipla label:hover{
+                background-color: rgba(255,255,100,.3);
+            }
+            .selezione-multipla .valore {
+                border-bottom: 1px solid #c0c0c0;
+            }
+            .selezione-multipla .valore.tutto {
+                background-color: #eee;
+</style>
+
+<?php
+
+ 
+
+        function controlloUsername($utente, $dominio,$tipoLogin) {
+          if($tipoLogin=="1" || $tipoLogin=="0"){
+    $result = getValore("SELECT utente FROM Utenti WHERE utente='" . $utente . "' AND TipoLogin='" . $tipoLogin . "'");
+
+    if ($result != "") {
+        return false;
+    } else {
+        return true;
+    }
+    
+            }else if($tipoLogin=="2"){
+                
+                $result = getValore("SELECT utente FROM Utenti WHERE utente='" . $utente . "' AND Dominio='".$dominio."' AND TipoLogin='" . $tipoLogin . "'");
+
+    if ($result != "") {
+        return false;
+    } else {
+        return true;
+    }
+                
+            }else{
+                return true;
+            }
+    
+}
+
+	$thisId_utente = stripslashes(requestUtils::getRequestObject('Id_utente'));
+	$thisUtente_creazione = stripslashes(requestUtils::getRequestObject('Utente_creazione'));
+	$thisData_ora_creazione = stripslashes(requestUtils::getRequestObject('Data_ora_creazione'));
+	$thisUtente_modifica = stripslashes(requestUtils::getRequestObject('Utente_modifica'));
+	$thisData_ora_modifica = stripslashes(requestUtils::getRequestObject('Data_ora_modifica'));
+	$thisNome = stripslashes(requestUtils::getRequestObject('Nome'));
+	$thisCognome = stripslashes(requestUtils::getRequestObject('Cognome'));
+	$thisEmail = stripslashes(requestUtils::getRequestObject('Email'));
+	$thisUtente = stripslashes(requestUtils::getRequestObject('Utente'));
+	$thisDominio = stripslashes(requestUtils::getRequestObject('Dominio'));
+	$thisPassword = stripslashes(requestUtils::getRequestObject('Password'));
+	$thisPassword1 = stripslashes(requestUtils::getRequestObject('Password1'));
+	$thisObbligo_cambio_password = stripslashes(requestUtils::getRequestObject('Obbligo_cambio_password'));
+	$thisReset_password = stripslashes(requestUtils::getRequestObject('Reset_password'));
+        $thisData_password = stripslashes(requestUtils::getRequestObject('Data_password'));
+	$thisTipoLogin = stripslashes(requestUtils::getRequestObject('TipoLogin'));
+	$thisAttivo = stripslashes(requestUtils::getRequestObject('Attivo'));
+	$thisAmministratore = stripslashes(requestUtils::getRequestObject('Amministratore'));
+    $thisInvia_mail_modifiche = stripslashes(requestUtils::getRequestObject('Invia_mail_modifiche'));
+   
+        $utentePrecedente= getValore("select utente from utenti where Id_utente='".$thisId_utente."'");
+        
+        if($thisPassword!="" && $thisPassword1!=""){ 
+             if($thisPassword==$thisPassword1){
+                 
+                $pwDiversa=false;
+            }else{
+                $pwDiversa=true;
+            }
+        }
+            
+     
+        
+        if($thisUtente!="" ){
+            $utenteLibero= controlloUsername($thisUtente,$thisDominio,$thisTipoLogin);
+        }else{
+            $utenteLibero=true;
+        }
+        
+        if($utentePrecedente==$thisUtente){
+            $utenteLibero=true;
+        }
+        
+	$thisUtentiManager = new UtentiManager();
+	$thisUtentiInfo = $thisUtentiManager->getUtentiByPK(escapeDBVariabile($thisId_utente));
+        
+	if ($Op == "Inserisci"){
+            $thisUtentiInfo = new utentiInfo();
+        if($utenteLibero){
+    
+		
+    
+		$thisUtentiInfo->Id_utente = $thisId_utente ;
+		$thisUtentiInfo->Utente_creazione = $thisUtente_creazione ;
+		$thisUtentiInfo->Data_ora_creazione = $thisData_ora_creazione ;
+		$thisUtentiInfo->Utente_modifica = $thisUtente_modifica ;
+		$thisUtentiInfo->Data_ora_modifica = $thisData_ora_modifica ;
+		$thisUtentiInfo->Nome = $thisNome ;
+		$thisUtentiInfo->Cognome = $thisCognome ;
+		$thisUtentiInfo->Email = $thisEmail ;
+		$thisUtentiInfo->Utente = $thisUtente ;
+		$thisUtentiInfo->Dominio = $thisDominio ;
+		$thisUtentiInfo->Password = $thisPassword ;
+		$thisUtentiInfo->Obbligo_cambio_password = $thisObbligo_cambio_password ;
+                $thisUtentiInfo->Reset_password = $thisReset_password ;
+		$thisUtentiInfo->Data_password = $thisData_password ;
+		$thisUtentiInfo->TipoLogin = $thisTipoLogin ;
+		$thisUtentiInfo->Attivo = $thisAttivo ;
+		$thisUtentiInfo->Amministratore = $thisAmministratore ;
+        $thisUtentiInfo->Invia_mail_modifiche = $thisInvia_mail_modifiche ;
+            }else{         
+        
+       echo "<b> Impossibile inserire l'utente, utente già esistente</b><br/>"; 
+      
+    }
+                
+	}
+if($submit=="Inserisci"){
+
+       if($utenteLibero && !$pwDiversa){
+ 
+	if ($thisUtentiInfo == false){
+            
+            $thisUtentiInfo = new utentiInfo();
+		
+
+		$thisUtentiInfo->Id_utente = $thisId_utente ;
+       
+		$thisUtentiInfo->Utente_creazione = $utente->Id_utente ;
+		$thisUtentiInfo->Data_ora_creazione = date("Y-m-d H:i:s") ;
+		$thisUtentiInfo->Utente_modifica = $thisUtente_modifica ;
+		$thisUtentiInfo->Data_ora_modifica = $thisData_ora_modifica ;
+		$thisUtentiInfo->Nome = $thisNome ;
+		$thisUtentiInfo->Cognome = $thisCognome ;
+		$thisUtentiInfo->Email = $thisEmail ;
+		$thisUtentiInfo->Utente = $thisUtente ;
+		$thisUtentiInfo->Dominio = $thisDominio ;
+	//	$thisUtentiInfo->Password = md5($thisPassword) ;
+                 if($thisTipoLogin=="1"){
+		$thisUtentiInfo->Password = password_hash($thisPassword,PASSWORD_DEFAULT);
+               
+		$thisUtentiInfo->Obbligo_cambio_password = $thisObbligo_cambio_password ;
+                $thisUtentiInfo->Reset_password = $thisReset_password ;
+                
+                }else{
+                    $thisUtentiInfo->Obbligo_cambio_password = "N" ;
+                $thisUtentiInfo->Reset_password = "N" ;
+                $thisUtentiInfo->Password="";
+                
+                }
+		$thisUtentiInfo->Data_password = date("Y-m-d");
+		$thisUtentiInfo->TipoLogin = $thisTipoLogin ;
+		$thisUtentiInfo->Attivo = $thisAttivo ;
+		$thisUtentiInfo->Amministratore = $thisAmministratore ;
+        $thisUtentiInfo->Invia_mail_modifiche = $thisInvia_mail_modifiche ;
+                $thisUtentiManager->createUtenti(escapeDB(clone $thisUtentiInfo)); 
+                 salva_assegnazioni_gruppi();
+	
+?><script>window.setTimeout("doRedirect()", 1500);</script>
+<?php
+	echo "<b> Utente Inserito</b><br/>"; 
+         }else{
+	echo "<b> Utente Gia Presente, Cambiare la Chiave</b><br/>"; 
+	}
+        
+                  }else if($pwDiversa){
+                      
+                  echo "<b> Password non corrispondenti</b><br/>";
+                  
+               
+                  ?><script>window.setTimeout("doRedirect()", 1500);</script>
+<?php
+                     exit;
+                  }else{
+        
+       echo "<b> Impossibile inserire l'utente, utente già esistente</b><br/>"; 
+      
+    }
+        
+}
+	if ($thisUtentiInfo == false )
+	{
+?>
+Utenti Non Trovato,Campi Chiave Errati 
+<?php
+		exit;
+	}
+if($submit=="Modifica"){
+   if($utenteLibero && !$pwDiversa){
+		$thisUtentiInfo->Id_utente = $thisId_utente ;
+		$thisUtentiInfo->Utente_creazione = $thisUtente_creazione ;
+		$thisUtentiInfo->Data_ora_creazione = $thisData_ora_creazione ;
+		$thisUtentiInfo->Utente_modifica = $utente->Id_utente ;
+		$thisUtentiInfo->Data_ora_modifica = date("Y-m-d H:i:s") ;
+		$thisUtentiInfo->Nome = $thisNome ;
+		$thisUtentiInfo->Cognome = $thisCognome ;
+		$thisUtentiInfo->Email = $thisEmail ;
+		$thisUtentiInfo->Dominio = $thisDominio ;
+		if($thisPassword!=""){
+             
+                $thisUtentiInfo->Password = password_hash($thisPassword,PASSWORD_DEFAULT);
+            }
+		$thisUtentiInfo->Obbligo_cambio_password = $thisObbligo_cambio_password ;
+                $thisUtentiInfo->Reset_password = $thisReset_password ;
+                if($thisPassword!="" && $thisPassword1!="" && ($thisPassword==$thisPassword1) ){
+                 $thisUtentiInfo->Data_password = date("Y-m-d") ;
+                }else{
+                $thisUtentiInfo->Data_password = $thisData_password ; }
+                 
+                      if($thisTipoLogin=="1"){
+		$thisUtentiInfo->Obbligo_cambio_password = $thisObbligo_cambio_password ;
+                $thisUtentiInfo->Reset_password = $thisReset_password ;
+                
+                }else{
+                $thisUtentiInfo->Obbligo_cambio_password = "N" ;
+                $thisUtentiInfo->Reset_password = "N" ;
+                
+                }
+		$thisUtentiInfo->TipoLogin = $thisTipoLogin ;
+		$thisUtentiInfo->Attivo = $thisAttivo ;
+		$thisUtentiInfo->Amministratore = $thisAmministratore ;
+        $thisUtentiInfo->Invia_mail_modifiche = $thisInvia_mail_modifiche ;
+                      salva_assegnazioni_gruppi($thisId_utente);
+	$thisUtentiManager->updateUtenti(escapeDB(clone $thisUtentiInfo)); 
+?><script>window.setTimeout("doRedirect()", 1500);</script>
+<?php
+	echo "<b> Utenti Modificato</b><br/>"; 
+        
+              }else if($pwDiversa){
+                  echo "<b> Password non corrispondenti</b><br/>";
+                  window.setTimeout("doRedirect()", 1500);
+                  exit;
+                  
+              }else{
+        
+       echo "<b> Impossibile inserire l'utente, utente già esistente</b><br/>"; 
+      
+    }
+        
+}
+if($submit=="Elimina"){
+	$Op="Inserisci"; 
+	$thisUtentiManager->deleteUtenti(escapeDB(clone $thisUtentiInfo)); 
+?><script>window.setTimeout("doRedirect()", 1500);</script>
+<?php
+	echo "<b> Utenti Eliminato</b><br/>"; 
+}
+?>
+
+<form autocomplete="new-password" name="utentiEditForm"  id="utentiEditForm" method="POST" action="editUtenti.php" onsubmit='if(document.getElementById("submit").value=="Elimina") return window.confirm("Sei sicuro di volerlo Eliminare ?"); else return true;' >
+<input type="hidden" name="Return" value="<?php echo $return; ?>"></input>
+<table cellspacing="8" cellpadding="0" border="0">
+    <input type="hidden" id="Id_utente" name="Id_utente" value="<?php echo htmlentities ($thisUtentiInfo->getId_utente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="11" maxlength="11"> 		
+  <tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Nome e cognome : </b> </td>
+		<td> <input type="text" id="NomeCognome" name="NomeCognome" value="<?php echo htmlentities ($thisUtentiInfo->getNome(),ENT_QUOTES|ENT_IGNORE,"UTF-8")." ".htmlentities ($thisUtentiInfo->getCognome(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250" disabled> </td>
+
+        </tr>
+	
+	<tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Utente : </b> </td>
+                  
+                <td> <input type="text" id="Utente" name="Utente" value="<?php echo htmlentities ($thisUtentiInfo->getUtente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250"  > </td>
+
+        </tr>
+        
+</table>
+<div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Dati generali</a></li>
+                    <li><a href="#tabs-2" >Gruppi</a></li>
+                    <li><a href="#tabs-3">Info</a></li>
+                </ul>
+                <div id="tabs-1" class="tab">
+                    <table cellspacing="4" id="elenco_attivita">
+                        <tbody>
+                  <div id="Bordato" style ="float:left">
+<input type="hidden" name="Return" value="<?php echo $return; ?>"></input>
+<table cellspacing="8" cellpadding="0" border="0">
+	
+			 <!--<input type="hidden" id="Id_utente" name="Id_utente" value="<?php //echo htmlentities ($thisUtentiInfo->getId_utente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="11" maxlength="11">--> 		
+
+        </tr>
+        <tr valign="top" height="20">
+		<td  id="BordatoTitolo" align="right"> <b> Nome : </b> </td>
+
+		<td> <input autocomplete="new-password" type="text" id="Nome" name="Nome" value="<?php echo htmlentities ($thisUtentiInfo->getNome(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250"> </td>
+	 
+        </tr>
+
+	<tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Cognome : </b> </td>
+		<td> <input autocomplete="new-password"  type="text" id="Cognome" name="Cognome" value="<?php echo htmlentities ($thisUtentiInfo->getCognome(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250"> </td>
+	 
+        </tr>
+                <tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Email : </b> </td>
+
+		<td> <input autocomplete="new-password" type="text" id="Email" name="Email" value="<?php echo htmlentities ($thisUtentiInfo->getEmail(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250"> </td>
+	 
+        </tr>
+	      <tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Tipo Login : </b> </td>
+                <td> <select id="TipoLogin" name="TipoLogin" style="width:200px" onchange="campi()">
+                        <option value="0" <?=($thisUtentiInfo->getTipoLogin()=="0")?"selected":"";?>>Nessun login</option>
+                        <? if(LOGIN_MANUALE=="S"){ ?><option value="1" <?=($thisUtentiInfo->getTipoLogin()=="1")?"selected":"";?>>Utente e Password</option><? } ?>
+                        <? if(LOGIN_LDAP=="S"){ ?><option value="2" <?=($thisUtentiInfo->getTipoLogin()=="2")?"selected":"";?>>Active Directory</option><? } ?>
+                    </select> </td>
+	</tr> 
+        
+
+        <script> 
+
+function checkPW(){
+     var TipoLogin=$("#TipoLogin").val();
+  
+            $.ajax({
+                url:"mostraCampi.php",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    "TipoLogin":TipoLogin
+                },
+                success:function(data){
+                if(data.Campo==="0"){
+                                    $("#Password").val("");
+                                    $("#Password1").val("");  
+                             
+                                
+                                }else if(data.Campo==="2"){
+                                     $("#Password").val("");
+                                    $("#Password1").val("");          
+        }
+                },
+                error:function(){
+                    $("#Password").style.display = 'none';
+                                    $("#Password1").style.display = 'none';
+                                    $("#Dominio").style.display = 'none';
+                }  
+            })
+}
+
+ function campi(){
+            var TipoLogin=$("#TipoLogin").val();
+  
+            $.ajax({
+                url:"mostraCampi.php",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    "TipoLogin":TipoLogin
+                },
+                success:function(data){
+                if(data.Campo==="0"){
+                                    $("#pw").hide();
+                                    $("#pw1").hide();
+                                    $("#Password").val("");
+                                    $("#Password1").val("");
+                                    $("#dmn").hide();
+                                    $("#obbCambioPw").hide();
+                                    $("#resPw").hide();
+                                    $("#dataPw").hide();
+                                
+                                }else if(data.Campo==="1"){
+                                        $("#dmn").hide();
+                                        $("#pw").show();
+                                        $("#pw1").show();
+                                        $("#obbCambioPw").show();
+                                        $("#resPw").show();
+                                        $("#dataPw").show();
+//                                        $("#check_Obbligo_cambio_password").prop("checked", false);
+//                                        $("#check_Reset_password").prop("checked", false);
+                                        
+                                }else if(data.Campo==="2"){
+                                    $("#pw").hide();
+                                    $("#pw1").hide();
+                                    $("#Password").val("");
+                                    $("#Password1").val("");
+                                    $("#dmn").show();
+                                    $("#obbCambioPw").hide();
+                                    $("#resPw").hide();
+                                    $("#dataPw").hide();
+                                    
+                                    
+        }
+                },
+                error:function(){
+                    $("#Password").style.display = 'none';
+                                    $("#Password1").style.display = 'none';
+                                    $("#Dominio").style.display = 'none';
+                }  
+            })
+        }
+        </script>
+		<tr  id="dmn" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Dominio : </b> </td>
+                <td> <select id="Dominio" name="Dominio" style="width:200px">
+                        <option value=""></option>
+                        <?
+                        $servers    = explode(",", IMP_LDAP_SRVAUT);
+                        $domini_int = explode(",", IMP_LDAP_DOMINT);
+                        $domini_est = explode(",", IMP_LDAP_DOMEST);
+                        ?>
+                        <? foreach($domini_est as $k => $dominio_est){ ?>
+                        <option value="<?=$domini_int[$k];?>" <?=(trim($thisUtentiInfo->getDominio())==$domini_int[$k])?"selected":"";?>><?=$domini_est[$k];?></option>
+                        <? } ?>
+                    </select> </td>
+	</tr><?php 
+         if( $Op=="Inserisci" ){
+        ?>
+	<tr id="pw" valign="top" height="20" >
+		<td id="BordatoTitolo" align="right"> <b> Nuova Password : </b> </td>
+		<td> <input autocomplete="new-password" type="password" id="Password" name="Password"  pattern="<?=PATTERN_CRITERI?>" size="50"  maxlength="255" title="<?=CRITERI?>"   > </td>
+	</tr>
+	<tr id="pw1" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Conferma Password : </b> </td>
+		<td> <input autocomplete="new-password" type="password" id="Password1" name="Password1"  pattern="<?=PATTERN_CRITERI?>"  size="50"  maxlength="255" title="<?=CRITERI?>"   > </td>
+	</tr>
+        <?php 
+         }else{
+        ?><tr id="pw" valign="top" height="20" >
+		<td id="BordatoTitolo" align="right"> <b> Nuova Password : </b> </td>
+		<td> <input autocomplete="new-password" type="password" id="Password" name="Password"  pattern="<?=PATTERN_CRITERI?>" size="50"  maxlength="255" title="<?=CRITERI?>"   > </td>
+	</tr>
+	<tr id="pw1" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Conferma Password : </b> </td>
+		<td> <input autocomplete="new-password" type="password" id="Password1" name="Password1"  pattern="<?=PATTERN_CRITERI?>"  size="50"  maxlength="255" title="<?=CRITERI?>"   > </td>
+	</tr>
+         <?php 
+         }
+        ?>
+                   
+	<tr  id="dataPw" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b> Data password : </b> </td>
+		<td> <?php echo htmlentities ($thisUtentiInfo->getData_password(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?> </td>
+	</tr>
+                      
+                    <tr id="obbCambioPw" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b>  </b> </td>
+                <td> 
+                    
+                    <input type="hidden" id="Obbligo_cambio_password" name="Obbligo_cambio_password" 
+                           value="<?php echo htmlentities ($thisUtentiInfo->getObbligo_cambio_password(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>">
+                    
+                    <label for="check_Obbligo_cambio_password" style="cursor:pointer;">
+                    <input style="cursor:pointer;" type="checkbox" id="check_Obbligo_cambio_password" <? if($thisUtentiInfo->getObbligo_cambio_password()=="S"){ echo "checked"; }?>>
+                    <span class="chbxSpan"> Obbligo cambio password</span></label>
+                    <script>
+                        $('#check_Obbligo_cambio_password').change(function(){
+                            if($('#check_Obbligo_cambio_password').is(':checked')){
+                                $('#Obbligo_cambio_password').val("S");
+                            }
+                            else{
+                                $('#Obbligo_cambio_password').val("N");
+                            }
+                        });
+                    </script>
+                </td>
+	</tr>
+        
+                    <tr id="resPw" valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b>  </b> </td>
+                <td> 
+                    
+                    <input type="hidden" id="Reset_password" name="Reset_password" 
+                           value="<?php echo htmlentities ($thisUtentiInfo->getReset_password(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>">
+                    
+                    <label for="check_Reset_password" style="cursor:pointer;">
+                    <input  style="cursor:pointer;" type="checkbox" id="check_Reset_password" <? if($thisUtentiInfo->getReset_password()=="S"){ echo "checked";}?>>
+                     <span class="chbxSpan" >Reset password </span> </label>
+                    <script>
+                        $('#check_Reset_password').change(function(){
+                            if($('#check_Reset_password').is(':checked')){
+                                $('#Reset_password').val("S");
+                            }
+                            else{
+                                $('#Reset_password').val("N");
+                            }
+                        });
+                    </script>
+                </td>
+	</tr>
+        
+    
+            <script>   
+            function title(pattern){
+                if(pattern=='(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$%&?@]).{8,}'){
+                    document.getElementById('Password').setAttribute('title','Deve contentere almeno un numero, una lettera maiuscola, una lettera minuscola, un carattere speciale e deve esser di almeno 8 caratteri');
+                }
+            }
+            </script>
+       
+            <tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b>  </b> </td>
+                <td> 
+	
+                    <input type="hidden" id="Attivo" name="Attivo" 
+                           value="<?php if($Op=="Inserisci"){echo "S";}else{ echo htmlentities ($thisUtentiInfo->getAttivo(),ENT_QUOTES|ENT_IGNORE,"UTF-8");} ?>">
+           <label for="check_Attivo" style="cursor:pointer;">
+                        <input style="cursor:pointer;" type="checkbox" id="check_Attivo" <?if($thisUtentiInfo->getAttivo()=="S" || $Op=="Inserisci"){ echo "checked";}?>>
+                   <span class="chbxSpan" >Attivo</span>  </label> 
+                    <script>
+                        $('#check_Attivo').change(function(){
+                            if($('#check_Attivo').is(':checked')){
+                                $('#Attivo').val("S");
+                            }
+                            else{
+                                $('#Attivo').val("N");
+                            }
+                        });
+                        
+                    </script>
+                    
+                            </td>
+	</tr>
+                  <tr valign="top" height="20">
+		<td id="BordatoTitolo" align="right"> <b>  </b> </td>
+                <td> 
+                    <input type="hidden" id="Amministratore" name="Amministratore" 
+                           value="<?php echo htmlentities ($thisUtentiInfo->getAmministratore(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>">
+                    
+                    <label for="check_Amministratore" style="cursor:pointer;">
+                    <input style="cursor:pointer;" type="checkbox" id="check_Amministratore" <? if($thisUtentiInfo->getAmministratore()=="S"){ echo "checked";}?>>
+                   <span class="chbxSpan" style="margin-left:5px">Amministratore</span></label>
+                    <script>
+                        $('#check_Amministratore').change(function(){
+                            if($('#check_Amministratore').is(':checked')){
+                                $('#Amministratore').val("S");
+                            }
+                            else{
+                                $('#Amministratore').val("N");
+                            }
+                        });
+                    </script>
+                     </td>
+	</tr>
+    <tr>
+        <td id="BordatoTitolo" align="right"><b></b></td>
+        <td>
+            <label><input type="checkbox" id="Invia_mail_modifiche" name="Invia_mail_modifiche" value="S" <?= ($thisUtentiInfo->getInvia_mail_modifiche() == 'S') ? "checked" : ""; ?>> Invia mail modifiche</label>
+        </td>
+    </tr>
+                 
+                      </tbody>
+                    </table>
+                
+                    <script>
+                        
+                        function set_stato_righe(){
+                            $("#elenco_attivita tbody tr").each(function(){
+                                var stato = $(this).find(".stato_attivita").val();
+                                $(this).removeAttr("class");
+                                $(this).addClass("stato_attivita_"+stato);
+                            });
+                        }
+                        
+                        $(function(){
+                            
+                            set_stato_righe();
+                            $(".stato_attivita").change( set_stato_righe );
+                            
+                        });
+                        
+                    </script>
+                </div>
+                <div id="tabs-2" class="tab">
+                 
+                         <?php
+        
+        if($thisId_utente==""){
+            $thisId_utente= getValore("SELECT Id_utente FROM Utenti");
+            $thisId_utente= $thisId_utente+1;
+        }
+                         
+?>
+                    
+                  <div id="tabs-2">
+                  <div class="ui-widget ui-widget-content ui-corner-all" style="padding:1 3 1 1;">
+
+            <div class="selezione-multipla">
+                    <script>
+                function seleziona_tutto(){
+                    if($('#seleziona-tutto').prop("checked")){
+                        
+                   $(".selezione ").prop("checked",true);
+                  
+                    }else{
+                         $(".selezione").prop("checked",false);
+               }
+                }
+            </script>
+            <div class="valore tutto"><label><input class="seleziona-tutto" id="seleziona-tutto"  type="checkbox" onchange="seleziona_tutto()" >Seleziona tutto</label></div>
+            <?
+            $db = open_DatabaseQuery();
+            $query = "SELECT Id_gruppo,Descrizione,Note "
+               . "FROM  utenti_gruppi  ";
+            
+            $rs = $db->executeDirectQuery($query);
+            if( $rs ){
+                $rows = $rs->GetRows(-1);
+                foreach( $rows as $row ){
+                    ?> 
+                <div id="listaGruppi" class="valore"><label ><input class="selezione" type="checkbox" name="gruppo_assegnato[<?=$row["Id_gruppo"];?>]" value="<?=$row["Id_gruppo"];?>" 
+                <? if( gruppo_assegnato($thisId_utente,$row["Id_gruppo"])){ echo "checked"; } ?>><span class="descrizione"><b><? echo htmlentities($row["Descrizione"])?></b></span><br>
+                        <div class="note" style="margin-left:29px;"><i><? echo htmlentities($row["Note"]);?></i></div></label></div>
+                    <?
+                }
+            }
+            
+            function gruppo_assegnato($Id_utente,$Id_gruppo){
+                if(getValore("SELECT Id_gruppo FROM utenti_gruppi_assegnati WHERE Id_utente=".$Id_utente." AND Id_gruppo=".$Id_gruppo." ")!=""){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+            
+ 
+            ?>
+            </div>
+            
+        </div>          
+                    
+                    
+<script type="text/javascript">
+function OnBeforeStartInsert()
+	{
+           OpenDiv("editUtenti_gruppi_assegnati.php?Return=Close&Op=Inserisci&Id_utente=<?=$thisId_utente?>");
+		return false; // Approve action
+	}
+        function DoubleClick(sender,args)
+	{
+		var row = args["Row"];
+                var dataitem = row.getDataItem();
+                OpenEdit(dataitem["Id_gruppo"]);
+	}
+       function OpenEdit(Id_gruppo)
+        {
+            OpenDiv("editUtenti_gruppi_assegnati.php?Return=Close&Id_gruppo="+Id_gruppo+"&Id_utente=<?=$thisId_utente?>");
+        }
+      
+</script>
+
+            <?php //echo $grid->Render();?>
+            </div>
+                </div>
+                        
+                        
+                <div id="tabs-3" class="tab">
+                   
+                        <table cellspacing="8" cellpadding="0" border="0">
+                            
+                            <tr valign="top" height="20">
+		<td> <b> Utente creazione : </b> </td>
+		<td><?php
+                    
+                    $query = new databaseQuery();
+                    $str = "Select Nome, Cognome from Utenti where Id_utente = ?";
+                    $par = array($thisUtentiInfo->getUtente_creazione());
+                    $rs = $query->executeDirectQueryPar($str, $par);
+                    $rows = $rs->getRows(-1);
+         
+                    echo $rows[0]["Nome"]," ",$rows[0]["Cognome"];
+                   
+                    ?>
+                    <input type="hidden" readonly="readonly" id="Utente_creazione" name="Utente_creazione" value="<?php echo htmlentities ($thisUtentiInfo->getUtente_creazione(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="60"> 
+                </td>
+	</tr>
+	<tr valign="top" height="20">
+		<td> <b> Data e ora creazione : </b> </td>
+		<td><?php
+                    function convertiDataOraDbToIt2($data) {
+
+                        if ($data == null)
+                            return null;
+                        if (DATABASE_SERVER_TO_USE == "mysql" || DATABASE_SERVER_TO_USE == "mysqli") {
+                        } else if (DATABASE_SERVER_TO_USE == "mssqlnative") {
+                            $format = 'Y-m-d H:i:s';
+                            $date = new DateTime($data);
+                            $data = $date->format($format);
+                        }
+                        else {
+                            $format = 'Y-m-d H:i:s';
+                            $date = DateTime::createFromFormat($format, $data);
+                            $fuso = -((integer) (date("O") / 100));
+                            if ($fuso >= 0)
+                                $fuso = "+" . $fuso;
+                            $date->modify($fuso . " hours");
+                            $data = $date->format($format);
+                        }
+                        $d = explode(" ", $data);
+                        return convertiDataDbToIt($d[0]) . " " . convertiTimeToOra($d[1]);
+                    }
+                    echo convertiDataOraDbToIt2($thisUtentiInfo->getData_ora_creazione());
+                    ?>
+                    <input type="hidden" readonly="readonly" id="Data_ora_creazione" name="Data_ora_creazione" value="<?php echo htmlentities ($thisUtentiInfo->getData_ora_creazione(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288"> 
+                </td>
+	</tr>
+        <tr valign="top" height="20">
+		<td > <b> Utente modifica : </b> </td>
+		<td> 
+                   
+                    <?
+                        $str_mod = "Select nome, cognome from Utenti where Id_utente = ?";
+                        $par_mod = array($thisUtentiInfo->getUtente_modifica());
+                        $rs_mod = $query->executeDirectQueryPar($str_mod, $par_mod);
+                        $rows_mod = $rs_mod->getRows(-1);
+                    
+                    echo $rows_mod[0]["nome"]." ".$rows_mod[0]["cognome"]; ?>
+                    <input type="hidden" readonly="" id="Utente_modifica" name="Utente_modifica" value="<?php echo htmlentities ($thisUtentiInfo->getUtente_modifica(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="60"> 
+                </td>
+                <td><?php
+//                    
+//                    $query = new databaseQuery();
+//                    $str = "Select Nome, Cognome from Utenti where Id_utente = ?";
+//                    $par = array($thisUtentiInfo->getUtente_creazione());
+//                    $rs = $query->executeDirectQueryPar($str, $par);
+//                    $rows = $rs->getRows(-1);
+//         
+//                    echo $rows[0]["Nome"]," ",$rows[0]["Cognome"];
+//                   
+//                    ?>
+                    <!--<input type="hidden" readonly="readonly" id="Utente_creazione" name="Utente_creazione" value="<?php echo htmlentities ($thisUtentiInfo->getUtente_creazione(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="60">--> 
+                </td>
+	</tr>
+	<tr valign="top" height="20">
+		<td > <b> Data e ora modifica : </b> </td>
+		<td> 
+                    <?php echo convertiDataOraDbToIt2($thisUtentiInfo->getData_ora_modifica());?>
+                    <input type="hidden" readonly="" id="Data_ora_modifica" name="Data_ora_modifica" value="<?php echo htmlentities ($thisUtentiInfo->getData_ora_modifica(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288"> 
+                </td>
+	</tr>
+                            
+                        </table>
+      
+                </div>
+                        
+                        
+                        
+            </div>
+<input type="hidden" id="submit" name="submit" value=""/> 
+<script> 
+
+
+function submit2(valore)  {  
+    
+    checkPW();
+    submit=valore;  
+    document.getElementById("submit").value=valore;  
+    var form = document.getElementById("utentiEditForm"); 
+    if (form){ 
+        if(form.onsubmit()){ 
+        HTMLFormElement.prototype.submit.call(form); 
+    } 
+    } 
+    return true;  
+} 
+
+function ripristina() 
+{ 
+window.location=window.location; 
+} 
+</script> 
+</form>
+
+     </div>
+            <div id="dialog" title="<?php echo $titleMod; ?>">
+                <div id="FrameModifica-contenitore" style="position: absolute; top:2px; left:2px; bottom:2px; right:2px; overflow:hidden;">
+                    <iframe id="FrameModifica" src="" scrolling="auto"  frameborder="no" allowtransparency="yes" style="width:100%;height:100%">
+                    </iframe>
+                </div>
+            </div>
+        <script>
+
+            if(document.getElementById("loading")!=null)
+                document.getElementById("loading").style.display="none";
+        </script>
+        </body>
+</html>
+ <?
+            function salva_assegnazioni_gruppi( $Id_utente="" ){
+       if($Id_utente==""){
+           $db = open_DatabaseQuery();
+                
+            $result = $db->executeDirectQuery("SELECT Id_utente FROM Utenti ORDER BY Id_utente DESC  ");
+                 $rows = $result->GetRows(-1); 
+                if($rows[0]!=""){
+                    $Id_utente=(int)$rows[0]["Id_utente"];
+           
+       }
+       }
+        
+    eseguiQuery2("DELETE FROM utenti_gruppi_assegnati where Id_utente=$Id_utente");
+    $gruppo_assegnato = $_REQUEST["gruppo_assegnato"];
+     
+    if(is_array($gruppo_assegnato)){
+        foreach($gruppo_assegnato as $Id_gruppo){
+      
+             $query = "insert into utenti_gruppi_assegnati ( Id_utente, Id_gruppo ) values ($Id_utente,$Id_gruppo)";
+      $db = open_DatabaseQuery();
+        
+    $db->executeDirectQuery($query);
+        }
+         
+    }else if($gruppo_assegnato!=""){
+         $query = "insert into utenti_gruppi_assegnati ( Id_utente, Id_gruppo ) values ($Id_utente,$abilitato_turno)";
+      $db = open_DatabaseQuery();
+    $db->executeDirectQuery($query);
+    }
+    
+}
+
+            
+session_commit(); ob_end_flush();
+?>

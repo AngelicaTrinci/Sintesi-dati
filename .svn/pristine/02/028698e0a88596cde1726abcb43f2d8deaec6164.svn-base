@@ -1,0 +1,290 @@
+<?
+// phpCodeGen - versione 14/09/2022
+include_once("sintesi_dati_progetto.conf.php");
+?>
+<?php
+
+// pm_toscotec Table
+define("TABLE_PM_TOSCOTEC","pm_toscotec");
+// Primary Key for Table pm_toscotec
+define("FIELD_PM_TOSCOTEC_PK","Array");
+// Field Name Mapping for Table pm_toscotec
+define("FIELD_PM_TOSCOTEC_ID","Id");
+define("FIELD_PM_TOSCOTEC_NOME","Nome");
+// Display Labels of Field for Table pm_toscotec
+define("LABEL_PM_TOSCOTEC_ID","Id");
+define("LABEL_PM_TOSCOTEC_NOME","Nome");
+
+// utenti Table
+define("TABLE_UTENTI","utenti");
+// Primary Key for Table utenti
+define("FIELD_UTENTI_PK","Array");
+// Field Name Mapping for Table utenti
+define("FIELD_UTENTI_ID_UTENTE","Id_utente");
+define("FIELD_UTENTI_UTENTE_CREAZIONE","Utente_creazione");
+define("FIELD_UTENTI_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("FIELD_UTENTI_UTENTE_MODIFICA","Utente_modifica");
+define("FIELD_UTENTI_DATA_ORA_MODIFICA","Data_ora_modifica");
+define("FIELD_UTENTI_NOME","Nome");
+define("FIELD_UTENTI_COGNOME","Cognome");
+define("FIELD_UTENTI_EMAIL","Email");
+define("FIELD_UTENTI_UTENTE","Utente");
+define("FIELD_UTENTI_DOMINIO","Dominio");
+define("FIELD_UTENTI_PASSWORD","Password");
+define("FIELD_UTENTI_OBBLIGO_CAMBIO_PASSWORD","Obbligo_cambio_password");
+define("FIELD_UTENTI_RESET_PASSWORD","Reset_password");
+define("FIELD_UTENTI_DATA_PASSWORD","Data_password");
+define("FIELD_UTENTI_TIPOLOGIN","TipoLogin");
+define("FIELD_UTENTI_ATTIVO","Attivo");
+define("FIELD_UTENTI_AMMINISTRATORE","Amministratore");
+// Display Labels of Field for Table utenti
+define("LABEL_UTENTI_ID_UTENTE","Id_utente");
+define("LABEL_UTENTI_UTENTE_CREAZIONE","Utente_creazione");
+define("LABEL_UTENTI_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("LABEL_UTENTI_UTENTE_MODIFICA","Utente_modifica");
+define("LABEL_UTENTI_DATA_ORA_MODIFICA","Data_ora_modifica");
+define("LABEL_UTENTI_NOME","Nome");
+define("LABEL_UTENTI_COGNOME","Cognome");
+define("LABEL_UTENTI_EMAIL","Email");
+define("LABEL_UTENTI_UTENTE","Utente");
+define("LABEL_UTENTI_DOMINIO","Dominio");
+define("LABEL_UTENTI_PASSWORD","Password");
+define("LABEL_UTENTI_OBBLIGO_CAMBIO_PASSWORD","Obbligo_cambio_password");
+define("LABEL_UTENTI_RESET_PASSWORD","Reset_password");
+define("LABEL_UTENTI_DATA_PASSWORD","Data_password");
+define("LABEL_UTENTI_TIPOLOGIN","Tipologin");
+define("LABEL_UTENTI_ATTIVO","Attivo");
+define("LABEL_UTENTI_AMMINISTRATORE","Amministratore");
+define("LABEL_UTENTI_INVIA_MAIL_MODIFICHE","Invia_mail_modifiche");
+
+
+// utenti_gruppi Table
+define("TABLE_UTENTI_GRUPPI","utenti_gruppi");
+// Primary Key for Table utenti_gruppi
+define("FIELD_UTENTI_GRUPPI_PK","Array");
+// Field Name Mapping for Table utenti_gruppi
+define("FIELD_UTENTI_GRUPPI_ID_GRUPPO","Id_gruppo");
+define("FIELD_UTENTI_GRUPPI_DESCRIZIONE","Descrizione");
+define("FIELD_UTENTI_GRUPPI_NOTE","Note");
+define("FIELD_UTENTI_GRUPPI_UTENTE_CREAZIONE","Utente_creazione");
+define("FIELD_UTENTI_GRUPPI_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("FIELD_UTENTI_GRUPPI_UTENTE_MODIFICA","Utente_modifica");
+define("FIELD_UTENTI_GRUPPI_DATA_ORA_MODIFICA","Data_ora_modifica");
+// Display Labels of Field for Table utenti_gruppi
+define("LABEL_UTENTI_GRUPPI_ID_GRUPPO","Id_gruppo");
+define("LABEL_UTENTI_GRUPPI_DESCRIZIONE","Descrizione");
+define("LABEL_UTENTI_GRUPPI_NOTE","Note");
+define("LABEL_UTENTI_GRUPPI_UTENTE_CREAZIONE","Utente_creazione");
+define("LABEL_UTENTI_GRUPPI_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("LABEL_UTENTI_GRUPPI_UTENTE_MODIFICA","Utente_modifica");
+define("LABEL_UTENTI_GRUPPI_DATA_ORA_MODIFICA","Data_ora_modifica");
+
+
+// utenti_gruppi_assegnati Table
+define("TABLE_UTENTI_GRUPPI_ASSEGNATI","utenti_gruppi_assegnati");
+// Primary Key for Table utenti_gruppi_assegnati
+define("FIELD_UTENTI_GRUPPI_ASSEGNATI_PK","Array");
+// Field Name Mapping for Table utenti_gruppi_assegnati
+define("FIELD_UTENTI_GRUPPI_ASSEGNATI_ID_GRUPPO","Id_gruppo");
+define("FIELD_UTENTI_GRUPPI_ASSEGNATI_ID_UTENTE","Id_utente");
+// Display Labels of Field for Table utenti_gruppi_assegnati
+define("LABEL_UTENTI_GRUPPI_ASSEGNATI_ID_GRUPPO","Id_gruppo");
+define("LABEL_UTENTI_GRUPPI_ASSEGNATI_ID_UTENTE","Id_utente");
+
+// utenti_token_accesso Table
+define("TABLE_UTENTI_TOKEN_ACCESSO","utenti_token_accesso");
+// Primary Key for Table utenti_token_accesso
+define("FIELD_UTENTI_TOKEN_ACCESSO_PK","Array");
+// Field Name Mapping for Table utenti_token_accesso
+define("FIELD_UTENTI_TOKEN_ACCESSO_TOKEN","Token");
+define("FIELD_UTENTI_TOKEN_ACCESSO_ID_UTENTE","Id_utente");
+define("FIELD_UTENTI_TOKEN_ACCESSO_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("FIELD_UTENTI_TOKEN_ACCESSO_UTENTE_MODIFICA","Utente_modifica");
+define("FIELD_UTENTI_TOKEN_ACCESSO_DATA_ORA_MODIFICA","Data_ora_modifica");
+define("FIELD_UTENTI_TOKEN_ACCESSO_INFO","Info");
+define("FIELD_UTENTI_TOKEN_ACCESSO_ATTIVO","Attivo");
+// Display Labels of Field for Table utenti_token_accesso
+define("LABEL_UTENTI_TOKEN_ACCESSO_TOKEN","Token");
+define("LABEL_UTENTI_TOKEN_ACCESSO_ID_UTENTE","Id_utente");
+define("LABEL_UTENTI_TOKEN_ACCESSO_DATA_ORA_CREAZIONE","Data_ora_creazione");
+define("LABEL_UTENTI_TOKEN_ACCESSO_UTENTE_MODIFICA","Utente_modifica");
+define("LABEL_UTENTI_TOKEN_ACCESSO_DATA_ORA_MODIFICA","Data_ora_modifica");
+define("LABEL_UTENTI_TOKEN_ACCESSO_INFO","Info");
+define("LABEL_UTENTI_TOKEN_ACCESSO_ATTIVO","Attivo");
+
+
+// voci_menu Table
+define("TABLE_VOCI_MENU","voci_menu");
+// Primary Key for Table voci_menu
+define("FIELD_VOCI_MENU_PK","Array");
+// Field Name Mapping for Table voci_menu
+define("FIELD_VOCI_MENU_ID_VOCE","Id_voce");
+define("FIELD_VOCI_MENU_VOCE","Voce");
+define("FIELD_VOCI_MENU_FILE_PHP","File_php");
+define("FIELD_VOCI_MENU_TIPO","Tipo");
+define("FIELD_VOCI_MENU_ID_VOCE_PADRE","Id_voce_padre");
+define("FIELD_VOCI_MENU_POSIZIONE","Posizione");
+define("FIELD_VOCI_MENU_ATTIVO","Attivo");
+define("FIELD_VOCI_MENU_IMMAGINE","Immagine");
+// Display Labels of Field for Table voci_menu
+define("LABEL_VOCI_MENU_ID_VOCE","Id_voce");
+define("LABEL_VOCI_MENU_VOCE","Voce");
+define("LABEL_VOCI_MENU_FILE_PHP","File_php");
+define("LABEL_VOCI_MENU_TIPO","Tipo");
+define("LABEL_VOCI_MENU_ID_VOCE_PADRE","Id_voce_padre");
+define("LABEL_VOCI_MENU_POSIZIONE","Posizione");
+define("LABEL_VOCI_MENU_ATTIVO","Attivo");
+define("LABEL_VOCI_MENU_IMMAGINE","Immagine");
+
+// sintesi_dati_progetto Table
+define("TABLE_SINTESI_DATI_PROGETTO","sintesi_dati_progetto");
+// Primary Key for Table sintesi_dati_progetto
+define("FIELD_SINTESI_DATI_PROGETTO_PK","Array");
+// Field Name Mapping for Table sintesi_dati_progetto
+define("FIELD_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO","Id_dati_progetto");
+define("FIELD_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE","Ragione_sociale_cliente");
+define("FIELD_SINTESI_DATI_PROGETTO_AREA","Area");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONTRATTO","Data_contratto");
+define("FIELD_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA","Scopo_fornitura");
+define("FIELD_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB","Numero_supercommessa_job");
+define("FIELD_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO","Acronimo_progetto");
+define("FIELD_SINTESI_DATI_PROGETTO_PM_TT","Pm_tt");
+define("FIELD_SINTESI_DATI_PROGETTO_PM_CUSTOMER","Pm_customer");
+define("FIELD_SINTESI_DATI_PROGETTO_EMAIL","Email");
+define("FIELD_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS","Delivery_address");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE","Data_consegna_materiale");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE","Data_consegna_materiale_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DICH_ORIGINE","Dich_origine");
+define("FIELD_SINTESI_DATI_PROGETTO_COLORI_MACCHINA","Colori_macchina");
+define("FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA","Penali_su_consegna");
+define("FIELD_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE","Penali_su_consegna_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO","Data_fine_smontaggio");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE","Data_fine_smontaggio_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE","Data_inizio_spedizione");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE","Data_inizio_spedizione_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO","Data_inizio_montaggio");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE","Data_inizio_montaggio_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO","Data_avviamento_da_contratto");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE","Data_avviamento_da_contratto_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO","Data_avviamento_atteso");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE","Data_avviamento_atteso_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO","Data_avviamento_effettivo");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE","Data_avviamento_effettivo_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE","Data_mesi_accettazione");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE","Data_mesi_accettazione_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE","Data_primo_invio_doc_cliente");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE","Data_primo_invio_doc_cliente_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER","Data_estrazione_doc_site_manager");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE","Data_estrazione_doc_site_manager_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI","Data_primo_invio_doc_disegni");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE","Data_primo_invio_doc_disegni_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP","Doc_training_tt_startup");
+define("FIELD_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE","Doc_training_tt_startup_note");
+define("FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO","Training_richiesto");
+define("FIELD_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE","Training_richiesto_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING","Data_training");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE","Data_training_note");
+define("FIELD_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA","Tipologia_training_richiesta");
+define("FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO","Incluso_pagamento");
+define("FIELD_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE","Incluso_pagamento_note");
+define("FIELD_SINTESI_DATI_PROGETTO_LINGUA_TRAINING","Lingua_training");
+define("FIELD_SINTESI_DATI_PROGETTO_INTERNO","Interno");
+define("FIELD_SINTESI_DATI_PROGETTO_INTERNO_NOTE","Interno_note");
+define("FIELD_SINTESI_DATI_PROGETTO_CLIENTE","Cliente");
+define("FIELD_SINTESI_DATI_PROGETTO_CLIENTE_NOTE","Cliente_note");
+define("FIELD_SINTESI_DATI_PROGETTO_ESTERNO","Esterno");
+define("FIELD_SINTESI_DATI_PROGETTO_ESTERNO_NOTE","Esterno_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI","Data_consegna_ricambi");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE","Data_consegna_ricambi_note");
+define("FIELD_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE","termine_di_consegna_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO","Data_training_in_sito");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE","Data_training_in_sito_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA","Data_consegna_lista_ricambi_definitiva");
+define("FIELD_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE","Data_consegna_lista_ricambi_definitiva_note");
+define("FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE","Termine_consegna_note");
+define("FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE","Garanzia_meccanica_contrattuale_note");
+define("FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE","Documentazione_contrattuale_note");
+define("FIELD_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE","Garanzia_meccanica_contrattuale");
+define("FIELD_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE","Documentazione_contrattuale");
+define("FIELD_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA","Termine_consegna");
+// Display Labels of Field for Table sintesi_dati_progetto
+define("LABEL_SINTESI_DATI_PROGETTO_ID_DATI_PROGETTO","Id_dati_progetto");
+define("LABEL_SINTESI_DATI_PROGETTO_RAGIONE_SOCIALE_CLIENTE","Ragione_sociale_cliente");
+define("LABEL_SINTESI_DATI_PROGETTO_AREA","Area");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONTRATTO","Data_contratto");
+define("LABEL_SINTESI_DATI_PROGETTO_SCOPO_FORNITURA","Scopo_fornitura");
+define("LABEL_SINTESI_DATI_PROGETTO_NUMERO_SUPERCOMMESSA_JOB","Numero_supercommessa_job");
+define("LABEL_SINTESI_DATI_PROGETTO_ACRONIMO_PROGETTO","Acronimo_progetto");
+define("LABEL_SINTESI_DATI_PROGETTO_PM_TT","Pm_tt");
+define("LABEL_SINTESI_DATI_PROGETTO_PM_CUSTOMER","Pm_customer");
+define("LABEL_SINTESI_DATI_PROGETTO_EMAIL","Email");
+define("LABEL_SINTESI_DATI_PROGETTO_DELIVERY_ADDRESS","Delivery_address");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE","Data_consegna_materiale");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_MATERIALE_NOTE","Data_consegna_materiale_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DICH_ORIGINE","Dich_origine");
+define("LABEL_SINTESI_DATI_PROGETTO_COLORI_MACCHINA","Colori_macchina");
+define("LABEL_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA","Penali_su_consegna");
+define("LABEL_SINTESI_DATI_PROGETTO_PENALI_SU_CONSEGNA_NOTE","Penali_su_consegna_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO","Data_fine_smontaggio");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_FINE_SMONTAGGIO_NOTE","Data_fine_smontaggio_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE","Data_inizio_spedizione");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_INIZIO_SPEDIZIONE_NOTE","Data_inizio_spedizione_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO","Data_inizio_montaggio");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_INIZIO_MONTAGGIO_NOTE","Data_inizio_montaggio_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO","Data_avviamento_da_contratto");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_DA_CONTRATTO_NOTE","Data_avviamento_da_contratto_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO","Data_avviamento_atteso");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_ATTESO_NOTE","Data_avviamento_atteso_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO","Data_avviamento_effettivo");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_AVVIAMENTO_EFFETTIVO_NOTE","Data_avviamento_effettivo_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE","Data_mesi_accettazione");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_MESI_ACCETTAZIONE_NOTE","Data_mesi_accettazione_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE","Data_primo_invio_doc_cliente");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_CLIENTE_NOTE","Data_primo_invio_doc_cliente_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER","Data_estrazione_doc_site_manager");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_ESTRAZIONE_DOC_SITE_MANAGER_NOTE","Data_estrazione_doc_site_manager_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI","Data_primo_invio_doc_disegni");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_PRIMO_INVIO_DOC_DISEGNI_NOTE","Data_primo_invio_doc_disegni_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP","Doc_training_tt_startup");
+define("LABEL_SINTESI_DATI_PROGETTO_DOC_TRAINING_TT_STARTUP_NOTE","Doc_training_tt_startup_note");
+define("LABEL_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO","Training_richiesto");
+define("LABEL_SINTESI_DATI_PROGETTO_TRAINING_RICHIESTO_NOTE","Training_richiesto_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_TRAINING","Data_training");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_TRAINING_NOTE","Data_training_note");
+define("LABEL_SINTESI_DATI_PROGETTO_TIPOLOGIA_TRAINING_RICHIESTA","Tipologia_training_richiesta");
+define("LABEL_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO","Incluso_pagamento");
+define("LABEL_SINTESI_DATI_PROGETTO_INCLUSO_PAGAMENTO_NOTE","Incluso_pagamento_note");
+define("LABEL_SINTESI_DATI_PROGETTO_LINGUA_TRAINING","Lingua_training");
+define("LABEL_SINTESI_DATI_PROGETTO_INTERNO","Interno");
+define("LABEL_SINTESI_DATI_PROGETTO_INTERNO_NOTE","Interno_note");
+define("LABEL_SINTESI_DATI_PROGETTO_CLIENTE","Cliente");
+define("LABEL_SINTESI_DATI_PROGETTO_CLIENTE_NOTE","Cliente_note");
+define("LABEL_SINTESI_DATI_PROGETTO_ESTERNO","Esterno");
+define("LABEL_SINTESI_DATI_PROGETTO_ESTERNO_NOTE","Esterno_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI","Data_consegna_ricambi");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_RICAMBI_NOTE","Data_consegna_ricambi_note");
+define("LABEL_SINTESI_DATI_PROGETTO_TERMINE_DI_CONSEGNA_NOTE","Termine_di_consegna_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO","Data_training_in_sito");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_TRAINING_IN_SITO_NOTE","Data_training_in_sito_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA","Data_consegna_lista_ricambi_definitiva");
+define("LABEL_SINTESI_DATI_PROGETTO_DATA_CONSEGNA_LISTA_RICAMBI_DEFINITIVA_NOTE","Data_consegna_lista_ricambi_definitiva_note");
+define("LABEL_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA_NOTE","Termine_consegna_note");
+define("LABEL_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE_NOTE","Garanzia_meccanica_contrattuale_note");
+define("LABEL_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE_NOTE","Documentazione_contrattuale_note");
+define("LABEL_SINTESI_DATI_PROGETTO_GARANZIA_MECCANICA_CONTRATTUALE","Garanzia_meccanica_contrattuale");
+define("LABEL_SINTESI_DATI_PROGETTO_DOCUMENTAZIONE_CONTRATTUALE","Documentazione_contrattuale");
+define("LABEL_SINTESI_DATI_PROGETTO_TERMINE_CONSEGNA","Termine_consegna");
+
+
+// termini_di_consegna Table
+define("TABLE_TERMINI_DI_CONSEGNA","termini_di_consegna");
+// Primary Key for Table termini_di_consegna
+define("FIELD_TERMINI_DI_CONSEGNA_PK","Array");
+// Field Name Mapping for Table termini_di_consegna
+define("FIELD_TERMINI_DI_CONSEGNA_CODICE","codice");
+define("FIELD_TERMINI_DI_CONSEGNA_DESCRIZIONE","descrizione");
+// Display Labels of Field for Table termini_di_consegna
+define("LABEL_TERMINI_DI_CONSEGNA_CODICE","Codice");
+define("LABEL_TERMINI_DI_CONSEGNA_DESCRIZIONE","Descrizione");
+
+?>

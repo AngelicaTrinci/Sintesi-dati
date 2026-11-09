@@ -1,0 +1,1691 @@
+<?
+session_start();
+// phpCodeGen - versione 14/09/2022
+include_once("sintesi_dati_progetto.conf.php");
+?>
+<?
+include_once(CONFIG_FILE);
+include_once(CLASS_SINTESI_DATI_PROGETTO_MANAGER);
+include_once(CLASS_REQUEST_UTILS);
+include_once("include/utility.php");
+include_once("autorizzazioni_applicativo.php");
+include_once("select/selectAcronimoProgetto.php");
+?>
+<?
+$return = requestUtils::getRequestObject('Return');
+$Op     = requestUtils::getRequestObject('Op');
+$submit = requestUtils::getRequestObject('submit');
+$autorizzazioni = new Autorizzazioni_applicativo();
+
+$thisId_dati_progetto         = stripslashes(requestUtils::getRequestObject('Id_dati_progetto'));
+$thisRagione_sociale_cliente  = stripslashes(requestUtils::getRequestObject('Ragione_sociale_cliente'));
+$thisArea                     = stripslashes(requestUtils::getRequestObject('Area'));
+$thisData_contratto           = stripslashes(requestUtils::getRequestObject('Data_contratto'));
+$thisScopo_fornitura          = stripslashes(requestUtils::getRequestObject('Scopo_fornitura'));
+$thisNumero_supercommessa_job = stripslashes(requestUtils::getRequestObject('Numero_supercommessa_job'));
+$thisAcronimo_progetto        = stripslashes(requestUtils::getRequestObject('Acronimo_progetto'));
+$thisPm_tt                    = stripslashes(requestUtils::getRequestObject('Pm_tt'));
+$thisPm_customer              = stripslashes(requestUtils::getRequestObject('Pm_customer'));
+$thisEmail                    = stripslashes(requestUtils::getRequestObject('Email'));
+$thisDelivery_address         = stripslashes(requestUtils::getRequestObject('Delivery_address'));
+$thisData_consegna_materiale  = stripslashes(requestUtils::getRequestObject('Data_consegna_materiale'));
+$thisData_consegna_materiale_note = stripslashes(requestUtils::getRequestObject('Data_consegna_materiale_note'));
+$thisTermine_consegna         = stripslashes(requestUtils::getRequestObject('Termine_consegna'));
+$thisDich_origine             = stripslashes(requestUtils::getRequestObject('Dich_origine'));
+$thisColori_macchina          = stripslashes(requestUtils::getRequestObject('Colori_macchina'));
+$thisPenali_su_consegna       = stripslashes(requestUtils::getRequestObject('Penali_su_consegna'));
+$thisPenali_su_consegna_note  = stripslashes(requestUtils::getRequestObject('Penali_su_consegna_note'));
+$thisData_fine_smontaggio     = stripslashes(requestUtils::getRequestObject('Data_fine_smontaggio'));
+$thisData_fine_smontaggio_note = stripslashes(requestUtils::getRequestObject('Data_fine_smontaggio_note'));
+$thisData_inizio_spedizione   = stripslashes(requestUtils::getRequestObject('Data_inizio_spedizione'));
+$thisData_inizio_spedizione_note = stripslashes(requestUtils::getRequestObject('Data_inizio_spedizione_note'));
+$thisData_inizio_montaggio    = stripslashes(requestUtils::getRequestObject('Data_inizio_montaggio'));
+$thisData_inizio_montaggio_note = stripslashes(requestUtils::getRequestObject('Data_inizio_montaggio_note'));
+$thisData_avviamento_da_contratto = stripslashes(requestUtils::getRequestObject('Data_avviamento_da_contratto'));
+$thisData_avviamento_da_contratto_note = stripslashes(requestUtils::getRequestObject('Data_avviamento_da_contratto_note'));
+$thisData_avviamento_atteso   = stripslashes(requestUtils::getRequestObject('Data_avviamento_atteso'));
+$thisData_avviamento_atteso_note = stripslashes(requestUtils::getRequestObject('Data_avviamento_atteso_note'));
+$thisData_avviamento_effettivo = stripslashes(requestUtils::getRequestObject('Data_avviamento_effettivo'));
+$thisData_avviamento_effettivo_note = stripslashes(requestUtils::getRequestObject('Data_avviamento_effettivo_note'));
+$thisData_mesi_accettazione   = stripslashes(requestUtils::getRequestObject('Data_mesi_accettazione'));
+$thisData_mesi_accettazione_note = stripslashes(requestUtils::getRequestObject('Data_mesi_accettazione_note'));
+$thisGaranzia_meccanica_contrattuale = stripslashes(requestUtils::getRequestObject('Garanzia_meccanica_contrattuale'));
+$thisDocumentazione_contrattuale = stripslashes(requestUtils::getRequestObject('Documentazione_contrattuale'));
+$thisData_primo_invio_doc_cliente = stripslashes(requestUtils::getRequestObject('Data_primo_invio_doc_cliente'));
+$thisData_primo_invio_doc_cliente_note = stripslashes(requestUtils::getRequestObject('Data_primo_invio_doc_cliente_note'));
+$thisData_estrazione_doc_site_manager = stripslashes(requestUtils::getRequestObject('Data_estrazione_doc_site_manager'));
+$thisData_estrazione_doc_site_manager_note = stripslashes(requestUtils::getRequestObject('Data_estrazione_doc_site_manager_note'));
+$thisData_primo_invio_doc_disegni = stripslashes(requestUtils::getRequestObject('Data_primo_invio_doc_disegni'));
+$thisData_primo_invio_doc_disegni_note = stripslashes(requestUtils::getRequestObject('Data_primo_invio_doc_disegni_note'));
+$thisDoc_training_tt_startup  = stripslashes(requestUtils::getRequestObject('Doc_training_tt_startup'));
+$thisDoc_training_tt_startup_note = stripslashes(requestUtils::getRequestObject('Doc_training_tt_startup_note'));
+$thisTraining_richiesto       = stripslashes(requestUtils::getRequestObject('Training_richiesto'));
+$thisTraining_richiesto_note  = stripslashes(requestUtils::getRequestObject('Training_richiesto_note'));
+$thisData_training            = stripslashes(requestUtils::getRequestObject('Data_training'));
+$thisData_training_note       = stripslashes(requestUtils::getRequestObject('Data_training_note'));
+$thisTipologia_training_richiesta = stripslashes(requestUtils::getRequestObject('Tipologia_training_richiesta'));
+$thisIncluso_pagamento        = stripslashes(requestUtils::getRequestObject('Incluso_pagamento'));
+$thisIncluso_pagamento_note   = stripslashes(requestUtils::getRequestObject('Incluso_pagamento_note'));
+$thisLingua_training          = stripslashes(requestUtils::getRequestObject('Lingua_training'));
+$thisInterno                  = stripslashes(requestUtils::getRequestObject('Interno'));
+$thisInterno_note             = stripslashes(requestUtils::getRequestObject('Interno_note'));
+$thisCliente                  = stripslashes(requestUtils::getRequestObject('Cliente'));
+$thisCliente_note             = stripslashes(requestUtils::getRequestObject('Cliente_note'));
+$thisEsterno                  = stripslashes(requestUtils::getRequestObject('Esterno'));
+$thisEsterno_note             = stripslashes(requestUtils::getRequestObject('Esterno_note'));
+$thisData_consegna_ricambi    = stripslashes(requestUtils::getRequestObject('Data_consegna_ricambi'));
+$thisData_consegna_ricambi_note = stripslashes(requestUtils::getRequestObject('Data_consegna_ricambi_note'));
+$thisGaranzia_meccanica_contrattuale_note = stripslashes(requestUtils::getRequestObject("Garanzia_meccanica_contrattuale_note"));
+$thisDocumentazione_contrattuale_note = stripslashes(requestUtils::getRequestObject("Documentazione_contrattuale_note"));
+$thisData_training_in_sito      = stripslashes(requestUtils::getRequestObject('Data_training_in_sito'));
+$thisData_training_in_sito_note = stripslashes(requestUtils::getRequestObject('Data_training_in_sito_note'));
+$thisData_consegna_lista_ricambi_definitiva = stripslashes(requestUtils::getRequestObject('Data_consegna_lista_ricambi_definitiva'));
+$thisData_consegna_lista_ricambi_definitiva_note = stripslashes(requestUtils::getRequestObject('Data_consegna_lista_ricambi_definitiva_note'));
+$thisTermine_consegna_note = stripslashes(requestUtils::getRequestObject("Termine_consegna_note"));
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+        <!--<meta charset="iso-8859-1"> -->
+        <!-- no cache headers -->
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>Gestione Sintesi_dati_progetto</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/delta_dialog_o.js" type="text/javascript"></script>
+        <!--<script type="text/javascript" src="js/livevalidation_standalone.js"></script>-->
+        <style>
+            .Titolo {
+                margin-left: 10px;
+                font-size: 15px;
+            }
+            input[readonly] {
+                background-color:rgb(231, 231, 231);
+            }
+        </style>
+    </head>
+    <body>
+<?
+$thisSintesi_dati_progettoManager = new Sintesi_dati_progettoManager();
+// Leggo il record richiesto
+$thisSintesi_dati_progettoInfo = $thisSintesi_dati_progettoManager->getSintesi_dati_progettoByPK(escapeDBVariabile($thisId_dati_progetto));
+// Se richiesta la copia, forzo l'opzione inserimento
+if ($submit == "Copia"){
+    $Op = "Inserisci";
+}
+
+// Inizializzazione dei valori in caso di visualizzazione del pannello per l'inserimento
+if ($Op == "Inserisci"){
+    $thisSintesi_dati_progettoInfo = new sintesi_dati_progettoInfo();
+
+    $thisSintesi_dati_progettoInfo->Id_dati_progetto         = $thisId_dati_progetto ;
+    $thisSintesi_dati_progettoInfo->Ragione_sociale_cliente  = $thisRagione_sociale_cliente ;
+    $thisSintesi_dati_progettoInfo->Area                     = $thisArea ;
+    $thisSintesi_dati_progettoInfo->Data_contratto           = $thisData_contratto ;
+    $thisSintesi_dati_progettoInfo->Scopo_fornitura          = $thisScopo_fornitura ;
+    $thisSintesi_dati_progettoInfo->Numero_supercommessa_job = $thisNumero_supercommessa_job ;
+    $thisSintesi_dati_progettoInfo->Acronimo_progetto        = $thisAcronimo_progetto ;
+    $thisSintesi_dati_progettoInfo->Pm_tt                    = $thisPm_tt ;
+    $thisSintesi_dati_progettoInfo->Pm_customer              = $thisPm_customer ;
+    $thisSintesi_dati_progettoInfo->Email                    = $thisEmail ;
+    $thisSintesi_dati_progettoInfo->Delivery_address         = $thisDelivery_address ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale  = $thisData_consegna_materiale ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale_note = $thisData_consegna_materiale_note ;
+    $thisSintesi_dati_progettoInfo->Termine_consegna         = $thisTermine_consegna ;
+    $thisSintesi_dati_progettoInfo->Dich_origine             = $thisDich_origine ;
+    $thisSintesi_dati_progettoInfo->Colori_macchina          = $thisColori_macchina ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna       = $thisPenali_su_consegna ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna_note  = $thisPenali_su_consegna_note ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio     = $thisData_fine_smontaggio ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio_note = $thisData_fine_smontaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione   = $thisData_inizio_spedizione ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione_note = $thisData_inizio_spedizione_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio    = $thisData_inizio_montaggio ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio_note = $thisData_inizio_montaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto = $thisData_avviamento_da_contratto ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto_note = $thisData_avviamento_da_contratto_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso   = $thisData_avviamento_atteso ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso_note = $thisData_avviamento_atteso_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo = $thisData_avviamento_effettivo ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo_note = $thisData_avviamento_effettivo_note ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione   = $thisData_mesi_accettazione ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione_note = $thisData_mesi_accettazione_note ;
+    $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale = $thisGaranzia_meccanica_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale = $thisDocumentazione_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente = $thisData_primo_invio_doc_cliente ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente_note = $thisData_primo_invio_doc_cliente_note ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager = $thisData_estrazione_doc_site_manager ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager_note = $thisData_estrazione_doc_site_manager_note ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni = $thisData_primo_invio_doc_disegni ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni_note = $thisData_primo_invio_doc_disegni_note ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup  = $thisDoc_training_tt_startup ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup_note = $thisDoc_training_tt_startup_note ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto       = $thisTraining_richiesto ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto_note  = $thisTraining_richiesto_note ;
+    $thisSintesi_dati_progettoInfo->Data_training            = $thisData_training ;
+    $thisSintesi_dati_progettoInfo->Data_training_note       = $thisData_training_note ;
+    $thisSintesi_dati_progettoInfo->Tipologia_training_richiesta = $thisTipologia_training_richiesta ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento        = $thisIncluso_pagamento ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento_note   = $thisIncluso_pagamento_note ;
+    $thisSintesi_dati_progettoInfo->Lingua_training          = $thisLingua_training ;
+    $thisSintesi_dati_progettoInfo->Interno                  = $thisInterno ;
+    $thisSintesi_dati_progettoInfo->Interno_note             = $thisInterno_note ;
+    $thisSintesi_dati_progettoInfo->Cliente                  = $thisCliente ;
+    $thisSintesi_dati_progettoInfo->Cliente_note             = $thisCliente_note ;
+    $thisSintesi_dati_progettoInfo->Esterno                  = $thisEsterno ;
+    $thisSintesi_dati_progettoInfo->Esterno_note             = $thisEsterno_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi    = $thisData_consegna_ricambi ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi_note = $thisData_consegna_ricambi_note ;
+    $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale_note = $thisGaranzia_meccanica_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale_note = $thisDocumentazione_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito      = $thisData_training_in_sito ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito_note = $thisData_training_in_sito_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva = $thisData_consegna_lista_ricambi_definitiva ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva_note = $thisData_consegna_lista_ricambi_definitiva_note ;
+    // ===========================================
+    // EDIT POINT
+    // Inizializzare qui i valori di default da mostrare all'apertura del pannello in inserimento
+    // ===========================================
+    
+}
+
+// Esecuzione dell'inserimento
+if($submit=="Inserisci"){
+    // Eseguo l'inserimento solo se non ho trovato il record con la chiave primaria
+    if ($thisSintesi_dati_progettoInfo == false){
+        $thisSintesi_dati_progettoInfo = new sintesi_dati_progettoInfo();
+
+        $flag_modifica = false;
+    $lista_valori = [];
+    $lista_campi = [];
+    if(trim($thisSintesi_dati_progettoInfo->Acronimo_progetto) != trim($thisAcronimo_progetto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Acronimo progetto");
+        array_push($lista_valori, $thisAcronimo_progetto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()) != trim($thisRagione_sociale_cliente)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Ragione sociale cliente");
+        array_push($lista_valori, $thisRagione_sociale_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getArea()) != trim($thisArea)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Area");
+        array_push($lista_valori, $thisArea);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_contratto()) != trim($thisData_contratto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data contratto");
+        array_push($lista_valori, date("d/m/Y", strtotime($thisData_contratto)));
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getScopo_fornitura()) != trim($thisScopo_fornitura)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Scopo fornitura");
+        array_push($lista_valori, $thisScopo_fornitura);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()) != trim($thisNumero_supercommessa_job)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Numero supercommessa / job");
+        array_push($lista_valori, $thisNumero_supercommessa_job);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_tt()) != trim($thisPm_tt)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM TT");
+        array_push($lista_valori, $thisPm_tt);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_customer()) != trim($thisPm_customer)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM Customer");
+        array_push($lista_valori, $thisPm_customer);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEmail()) != trim($thisEmail)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Email");
+        array_push($lista_valori, $thisEmail);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDelivery_address()) != trim($thisDelivery_address)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Delivery address");
+        array_push($lista_valori, $thisDelivery_address);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale()) != trim($thisData_consegna_materiale)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()) != trim($thisData_consegna_materiale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna materiale");
+        $data_consegna_materiale = date("d/m/Y", strtotime($thisData_consegna_materiale)) . " " . $thisData_consegna_materiale_note;
+        array_push($lista_valori, $data_consegna_materiale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTermine_consegna()) != trim($thisTermine_consegna)
+        || trim($thisSintesi_dati_progettoInfo->getTermine_consegna_note()) != trim($thisTermine_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Termine consegna");
+        $termine_consegna = $thisTermine_consegna . " " . $thisTermine_consegna_note;
+        array_push($lista_valori, $termine_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDich_origine()) != trim($thisDich_origine)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Dich origine");
+        array_push($lista_valori, $thisDich_origine);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getColori_macchina()) != trim($thisColori_macchina)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Colori macchina");
+        array_push($lista_valori, $thisColori_macchina);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna()) != trim($thisPenali_su_consegna) 
+        || trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()) != trim($thisPenali_su_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Penali su consegna");
+        switch($thisPenali_su_consegna) {
+            case "S":
+                $var = "Si";
+                break;
+            case "N":
+                $var = "No";
+                break;
+        }
+        $penali_su_consegna = $var . " " . $thisPenali_su_consegna_note;
+        array_push($lista_valori, $penali_su_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()) != trim($thisData_fine_smontaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()) != trim($thisData_fine_smontaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data fine smontaggio macchina in toscotec");
+        $data_fine_smontaggio = date("d/m/Y", strtotime($thisData_fine_smontaggio)) . " " . $thisData_fine_smontaggio_note;
+        array_push($lista_valori, $data_fine_smontaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()) != trim($thisData_inizio_spedizione)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()) != trim($thisData_inizio_spedizione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio spedizione macchina");
+        $data_inizio_spedizione = date("d/m/Y", strtotime($thisData_inizio_spedizione)) . " " . $thisData_inizio_spedizione_note;
+        array_push($lista_valori, $data_inizio_spedizione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()) != trim($thisData_inizio_montaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()) != trim($thisData_inizio_montaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio montaggio presso Cliente");
+        $data_inizio_montaggio = date("d/m/Y", strtotime($thisData_inizio_montaggio)) . " " . $thisData_inizio_montaggio_note;
+        array_push($lista_valori, $data_inizio_montaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()) != trim($thisData_avviamento_da_contratto)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()) != trim($thisData_avviamento_da_contratto_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento da contratto");
+        $data_avviamento_contratto = date("d/m/Y", strtotime($thisData_avviamento_da_contratto)) . " " . $thisData_avviamento_da_contratto_note;
+        array_push($lista_valori, $data_avviamento_contratto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()) != trim($thisData_avviamento_atteso)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()) != trim($thisData_avviamento_atteso_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di avviamento atteso");
+        $data_avviamento_atteso = date("d/m/Y", strtotime($thisData_avviamento_atteso)) . " " . $thisData_avviamento_atteso_note;
+        array_push($lista_valori, $data_avviamento_atteso);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()) != trim($thisData_avviamento_effettivo)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()) != trim($thisData_avviamento_effettivo_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento effettivo");
+        $data_avviamento_effettivo = date("d/m/Y", strtotime($thisData_avviamento_effettivo)) . " " . $thisData_avviamento_effettivo_note;
+        array_push($lista_valori, $data_avviamento_effettivo);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()) != trim($thisData_mesi_accettazione)
+        || trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()) != trim($thisData_mesi_accettazione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data / mesi entro cui ottenere accettazione");
+        $data_mesi_accettazione = date("d/m/Y", strtotime($thisData_mesi_accettazione)) . " " . $thisData_mesi_accettazione_note;
+        array_push($lista_valori, $data_mesi_accettazione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()) != trim($thisGaranzia_meccanica_contrattuale)
+        || trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()) != trim($thisGaranzia_meccanica_contrattuale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Garanzia meccanica contrattuale");
+        $garanzia_meccanica_contrattuale = date("d/m/Y", strtotime($thisGaranzia_meccanica_contrattuale)) . " " . $thisGaranzia_meccanica_contrattuale_note;
+        array_push($lista_valori, $garanzia_meccanica_contrattuale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()) != trim($thisData_primo_invio_doc_cliente)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()) != trim($thisData_primo_invio_doc_cliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione cliente");
+        $data_primo_invio_doc_cliente = date("d/m/Y", strtotime($thisData_primo_invio_doc_cliente)) . " " . $thisData_primo_invio_doc_cliente_note;
+        array_push($lista_valori, $data_primo_invio_doc_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()) != trim($thisData_estrazione_doc_site_manager)
+        || trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()) != trim($thisData_estrazione_doc_site_manager_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di estrazione documentazione site manager");
+        $data_estrazione_doc_site_manager = date("d/m/Y", strtotime($thisData_estrazione_doc_site_manager)) . " " . $thisData_estrazione_doc_site_manager_note;
+        array_push($lista_valori, $data_estrazione_doc_site_manager);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()) != trim($thisData_primo_invio_doc_disegni)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()) != trim($thisData_primo_invio_doc_disegni_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione per disegni costruttivi e procurement cliente");
+        $data_primo_invio_doc_disegni = date("d/m/Y", strtotime($thisData_primo_invio_doc_disegni)) . " " . $thisData_primo_invio_doc_disegni_note;
+        array_push($lista_valori, $data_primo_invio_doc_disegni);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training()) != trim($thisData_training)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_note()) != trim($thisData_training_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training TT");
+        $data_training = date("d/m/Y", strtotime($thisData_training)) . " " . $thisData_training_note;
+        array_push($lista_valori, $data_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training_in_sito()) != trim($thisData_training_in_sito)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()) != trim($thisData_training_in_sito_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training in sito");
+        $data_training_in_sito = date("d/m/Y", strtotime($thisData_training_in_sito)) . " " . $thisData_training_in_sito_note;
+        array_push($lista_valori, $data_training_in_sito);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()) != trim($thisTipologia_training_richiesta)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Tipologia di training richiesto");
+        array_push($lista_valori, $thisTipologia_training_richiesta);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getLingua_training()) != trim($thisLingua_training)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Lingua training");
+        array_push($lista_valori, $thisLingua_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getInterno()) != trim($thisInterno)
+        || trim($thisSintesi_dati_progettoInfo->getInterno_note()) != trim($thisInterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Interno");
+        $interno = date("d/m/Y", strtotime($thisInterno)) . " " . $thisInterno_note;
+        array_push($lista_valori, $interno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getCliente()) != trim($thisCliente)
+        || trim($thisSintesi_dati_progettoInfo->getCliente_note()) != trim($thisCliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Cliente");
+        $cliente = date("d/m/Y", strtotime($thisCliente)) . " " . $thisCliente_note;
+        array_push($lista_valori, $cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEsterno()) != trim($thisEsterno)
+        || trim($thisSintesi_dati_progettoInfo->getEsterno_note()) != trim($thisEsterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Esterno");
+        $esterno = date("d/m/Y", strtotime($thisEsterno)) . " " . $thisEsterno_note;
+        array_push($lista_valori, $esterno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()) != trim($thisData_consegna_ricambi)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()) != trim($thisData_consegna_ricambi_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi preliminare");
+        $data_consegna_ricambi = date("d/m/Y", strtotime($thisData_consegna_ricambi)) . " " . $thisData_consegna_ricambi_note;
+        array_push($lista_valori, $data_consegna_ricambi);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()) != trim($thisData_consegna_lista_ricambi_definitiva)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()) != trim($thisData_consegna_lista_ricambi_definitiva_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi definitiva");
+        $data_consegna_lista_ricambi_definitiva = date("d/m/Y", strtotime($thisData_consegna_lista_ricambi_definitiva)) . " " . $thisData_consegna_lista_ricambi_definitiva_note;
+        array_push($lista_valori, $data_consegna_lista_ricambi_definitiva);
+    }
+
+    if($flag_modifica) {
+        if(!filter_var($autorizzazioni->email, FILTER_VALIDATE_EMAIL) || trim($autorizzazioni->email) == "") {
+            $mittente = EMAIL;
+            $nome_mittente = EMAIL;
+        } else {
+            $mittente = $autorizzazioni->email;
+            $nome_mittente = $autorizzazioni->nome;
+        }
+
+        $db = open_DatabaseQuery();
+        $query = "SELECT Email FROM utenti WHERE Email <> '' AND Invia_mail_modifiche = 'S'";
+        $rs = $db->executeDirectQuery($query);
+        if($rs) {
+            $righe = $rs->GetRows(-1);
+            $destinatario = [];
+            foreach($righe as $riga) {
+                array_push($destinatario, $riga["Email"]);
+            }
+        }
+
+        $oggetto = "Aggiornamento file Sintesi Date Progetto - " . trim($thisAcronimo_progetto) . " - " . trim($thisRagione_sociale_cliente);
+        
+        for($i = 0; $i < count($lista_campi); $i++) {
+            $testo .= "Modificata voce <b>" . $lista_campi[$i] . "</b>. Nuovo valore <b>" . trim($lista_valori[$i]) . "</b>;<br>";
+        }
+
+        $risultato = inviaMail_nuovo($destinatario, $oggetto, $testo, $mittente, $nome_mittente);
+    }
+        // ===========================================
+        // EDIT POINT
+        // Eseguire qui le azioni prima dell'inserimento del record (pre sovrascrittura da input)
+        // ===========================================
+        
+        $thisSintesi_dati_progettoInfo->Id_dati_progetto         = $thisId_dati_progetto ;
+        $thisSintesi_dati_progettoInfo->Ragione_sociale_cliente  = $thisRagione_sociale_cliente ;
+        $thisSintesi_dati_progettoInfo->Area                     = $thisArea ;
+        $thisSintesi_dati_progettoInfo->Data_contratto           = $thisData_contratto ;
+        $thisSintesi_dati_progettoInfo->Scopo_fornitura          = $thisScopo_fornitura ;
+        $thisSintesi_dati_progettoInfo->Numero_supercommessa_job = $thisNumero_supercommessa_job ;
+        $thisSintesi_dati_progettoInfo->Acronimo_progetto        = $thisAcronimo_progetto ;
+        $thisSintesi_dati_progettoInfo->Pm_tt                    = $thisPm_tt ;
+        $thisSintesi_dati_progettoInfo->Pm_customer              = $thisPm_customer ;
+        $thisSintesi_dati_progettoInfo->Email                    = $thisEmail ;
+        $thisSintesi_dati_progettoInfo->Delivery_address         = $thisDelivery_address ;
+        $thisSintesi_dati_progettoInfo->Data_consegna_materiale  = $thisData_consegna_materiale ;
+        $thisSintesi_dati_progettoInfo->Data_consegna_materiale_note = $thisData_consegna_materiale_note ;
+        $thisSintesi_dati_progettoInfo->Termine_consegna         = $thisTermine_consegna ;
+        $thisSintesi_dati_progettoInfo->Dich_origine             = $thisDich_origine ;
+        $thisSintesi_dati_progettoInfo->Colori_macchina          = $thisColori_macchina ;
+        $thisSintesi_dati_progettoInfo->Penali_su_consegna       = $thisPenali_su_consegna ;
+        $thisSintesi_dati_progettoInfo->Penali_su_consegna_note  = $thisPenali_su_consegna_note ;
+        $thisSintesi_dati_progettoInfo->Data_fine_smontaggio     = $thisData_fine_smontaggio ;
+        $thisSintesi_dati_progettoInfo->Data_fine_smontaggio_note = $thisData_fine_smontaggio_note ;
+        $thisSintesi_dati_progettoInfo->Data_inizio_spedizione   = $thisData_inizio_spedizione ;
+        $thisSintesi_dati_progettoInfo->Data_inizio_spedizione_note = $thisData_inizio_spedizione_note ;
+        $thisSintesi_dati_progettoInfo->Data_inizio_montaggio    = $thisData_inizio_montaggio ;
+        $thisSintesi_dati_progettoInfo->Data_inizio_montaggio_note = $thisData_inizio_montaggio_note ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto = $thisData_avviamento_da_contratto ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto_note = $thisData_avviamento_da_contratto_note ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_atteso   = $thisData_avviamento_atteso ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_atteso_note = $thisData_avviamento_atteso_note ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo = $thisData_avviamento_effettivo ;
+        $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo_note = $thisData_avviamento_effettivo_note ;
+        $thisSintesi_dati_progettoInfo->Data_mesi_accettazione   = $thisData_mesi_accettazione ;
+        $thisSintesi_dati_progettoInfo->Data_mesi_accettazione_note = $thisData_mesi_accettazione_note ;
+        $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale = $thisGaranzia_meccanica_contrattuale ;
+        $thisSintesi_dati_progettoInfo->Documentazione_contrattuale = $thisDocumentazione_contrattuale ;
+        $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente = $thisData_primo_invio_doc_cliente ;
+        $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente_note = $thisData_primo_invio_doc_cliente_note ;
+        $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager = $thisData_estrazione_doc_site_manager ;
+        $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager_note = $thisData_estrazione_doc_site_manager_note ;
+        $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni = $thisData_primo_invio_doc_disegni ;
+        $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni_note = $thisData_primo_invio_doc_disegni_note ;
+        $thisSintesi_dati_progettoInfo->Doc_training_tt_startup  = $thisDoc_training_tt_startup ;
+        $thisSintesi_dati_progettoInfo->Doc_training_tt_startup_note = $thisDoc_training_tt_startup_note ;
+        $thisSintesi_dati_progettoInfo->Training_richiesto       = $thisTraining_richiesto ;
+        $thisSintesi_dati_progettoInfo->Training_richiesto_note  = $thisTraining_richiesto_note ;
+        $thisSintesi_dati_progettoInfo->Data_training            = $thisData_training ;
+        $thisSintesi_dati_progettoInfo->Data_training_note       = $thisData_training_note ;
+        $thisSintesi_dati_progettoInfo->Tipologia_training_richiesta = $thisTipologia_training_richiesta ;
+        $thisSintesi_dati_progettoInfo->Incluso_pagamento        = $thisIncluso_pagamento ;
+        $thisSintesi_dati_progettoInfo->Incluso_pagamento_note   = $thisIncluso_pagamento_note ;
+        $thisSintesi_dati_progettoInfo->Lingua_training          = $thisLingua_training ;
+        $thisSintesi_dati_progettoInfo->Interno                  = $thisInterno ;
+        $thisSintesi_dati_progettoInfo->Interno_note             = $thisInterno_note ;
+        $thisSintesi_dati_progettoInfo->Cliente                  = $thisCliente ;
+        $thisSintesi_dati_progettoInfo->Cliente_note             = $thisCliente_note ;
+        $thisSintesi_dati_progettoInfo->Esterno                  = $thisEsterno ;
+        $thisSintesi_dati_progettoInfo->Esterno_note             = $thisEsterno_note ;
+        $thisSintesi_dati_progettoInfo->Data_consegna_ricambi    = $thisData_consegna_ricambi ;
+        $thisSintesi_dati_progettoInfo->Data_consegna_ricambi_note = $thisData_consegna_ricambi_note ;
+            $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale_note = $thisGaranzia_meccanica_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale_note = $thisDocumentazione_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito      = $thisData_training_in_sito ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito_note = $thisData_training_in_sito_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva = $thisData_consegna_lista_ricambi_definitiva ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva_note = $thisData_consegna_lista_ricambi_definitiva_note ;
+    $thisSintesi_dati_progettoInfo->Termine_consegna_note = $thisTermine_consegna_note ;
+        // ===========================================
+        // EDIT POINT
+        // Eseguire qui le azioni prima dell'inserimento del record (post sovrascrittura da input)
+        // ===========================================
+        
+        $thisSintesi_dati_progettoManager->createSintesi_dati_progetto(escapeDB(clone $thisSintesi_dati_progettoInfo)); 
+        // ===========================================
+        // EDIT POINT
+        // Eseguire qui le azioni post inserimento del record
+        // ===========================================
+        
+        ?><script> window.setTimeout("doRedirect()", 1500);</script> <?
+        echo "<b> Sintesi_dati_progetto Inserito</b><br/>"; 
+    }
+    else{
+        echo "<b> Sintesi_dati_progetto Gia Presente, Cambiare la Chiave</b><br/>"; 
+    }
+}
+
+// Se non esiste il record: Visualizzazione errore
+if ($thisSintesi_dati_progettoInfo == false){
+    ?> Sintesi_dati_progetto Non Trovato,Campi Chiave Errati <?
+    exit;
+}
+
+// Esecuzione della modifica
+if($submit=="Salva_e_chiudi"){
+    $flag_modifica = false;
+    $lista_valori = [];
+    $lista_campi = [];
+    if(trim($thisSintesi_dati_progettoInfo->Acronimo_progetto) != trim($thisAcronimo_progetto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Acronimo progetto");
+        array_push($lista_valori, $thisAcronimo_progetto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()) != trim($thisRagione_sociale_cliente)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Ragione sociale cliente");
+        array_push($lista_valori, $thisRagione_sociale_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getArea()) != trim($thisArea)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Area");
+        array_push($lista_valori, $thisArea);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_contratto()) != trim($thisData_contratto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data contratto");
+        array_push($lista_valori, date("d/m/Y", strtotime($thisData_contratto)));
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getScopo_fornitura()) != trim($thisScopo_fornitura)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Scopo fornitura");
+        array_push($lista_valori, $thisScopo_fornitura);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()) != trim($thisNumero_supercommessa_job)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Numero supercommessa / job");
+        array_push($lista_valori, $thisNumero_supercommessa_job);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_tt()) != trim($thisPm_tt)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM TT");
+        array_push($lista_valori, $thisPm_tt);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_customer()) != trim($thisPm_customer)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM Customer");
+        array_push($lista_valori, $thisPm_customer);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEmail()) != trim($thisEmail)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Email");
+        array_push($lista_valori, $thisEmail);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDelivery_address()) != trim($thisDelivery_address)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Delivery address");
+        array_push($lista_valori, $thisDelivery_address);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale()) != trim($thisData_consegna_materiale)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()) != trim($thisData_consegna_materiale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna materiale");
+        $data_consegna_materiale = date("d/m/Y", strtotime($thisData_consegna_materiale)) . " " . $thisData_consegna_materiale_note;
+        array_push($lista_valori, $data_consegna_materiale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTermine_consegna()) != trim($thisTermine_consegna)
+        || trim($thisSintesi_dati_progettoInfo->getTermine_consegna_note()) != trim($thisTermine_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Termine consegna");
+        $termine_consegna = $thisTermine_consegna . " " . $thisTermine_consegna_note;
+        array_push($lista_valori, $termine_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDich_origine()) != trim($thisDich_origine)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Dich origine");
+        array_push($lista_valori, $thisDich_origine);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getColori_macchina()) != trim($thisColori_macchina)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Colori macchina");
+        array_push($lista_valori, $thisColori_macchina);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna()) != trim($thisPenali_su_consegna) 
+        || trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()) != trim($thisPenali_su_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Penali su consegna");
+        switch($thisPenali_su_consegna) {
+            case "S":
+                $var = "Si";
+                break;
+            case "N":
+                $var = "No";
+                break;
+        }
+        $penali_su_consegna = $var . " " . $thisPenali_su_consegna_note;
+        array_push($lista_valori, $penali_su_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()) != trim($thisData_fine_smontaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()) != trim($thisData_fine_smontaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data fine smontaggio macchina in toscotec");
+        $data_fine_smontaggio = date("d/m/Y", strtotime($thisData_fine_smontaggio)) . " " . $thisData_fine_smontaggio_note;
+        array_push($lista_valori, $data_fine_smontaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()) != trim($thisData_inizio_spedizione)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()) != trim($thisData_inizio_spedizione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio spedizione macchina");
+        $data_inizio_spedizione = date("d/m/Y", strtotime($thisData_inizio_spedizione)) . " " . $thisData_inizio_spedizione_note;
+        array_push($lista_valori, $data_inizio_spedizione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()) != trim($thisData_inizio_montaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()) != trim($thisData_inizio_montaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio montaggio presso Cliente");
+        $data_inizio_montaggio = date("d/m/Y", strtotime($thisData_inizio_montaggio)) . " " . $thisData_inizio_montaggio_note;
+        array_push($lista_valori, $data_inizio_montaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()) != trim($thisData_avviamento_da_contratto)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()) != trim($thisData_avviamento_da_contratto_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento da contratto");
+        $data_avviamento_contratto = date("d/m/Y", strtotime($thisData_avviamento_da_contratto)) . " " . $thisData_avviamento_da_contratto_note;
+        array_push($lista_valori, $data_avviamento_contratto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()) != trim($thisData_avviamento_atteso)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()) != trim($thisData_avviamento_atteso_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di avviamento atteso");
+        $data_avviamento_atteso = date("d/m/Y", strtotime($thisData_avviamento_atteso)) . " " . $thisData_avviamento_atteso_note;
+        array_push($lista_valori, $data_avviamento_atteso);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()) != trim($thisData_avviamento_effettivo)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()) != trim($thisData_avviamento_effettivo_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento effettivo");
+        $data_avviamento_effettivo = date("d/m/Y", strtotime($thisData_avviamento_effettivo)) . " " . $thisData_avviamento_effettivo_note;
+        array_push($lista_valori, $data_avviamento_effettivo);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()) != trim($thisData_mesi_accettazione)
+        || trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()) != trim($thisData_mesi_accettazione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data / mesi entro cui ottenere accettazione");
+        $data_mesi_accettazione = date("d/m/Y", strtotime($thisData_mesi_accettazione)) . " " . $thisData_mesi_accettazione_note;
+        array_push($lista_valori, $data_mesi_accettazione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()) != trim($thisGaranzia_meccanica_contrattuale)
+        || trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()) != trim($thisGaranzia_meccanica_contrattuale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Garanzia meccanica contrattuale");
+        $garanzia_meccanica_contrattuale = date("d/m/Y", strtotime($thisGaranzia_meccanica_contrattuale)) . " " . $thisGaranzia_meccanica_contrattuale_note;
+        array_push($lista_valori, $garanzia_meccanica_contrattuale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()) != trim($thisData_primo_invio_doc_cliente)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()) != trim($thisData_primo_invio_doc_cliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione cliente");
+        $data_primo_invio_doc_cliente = date("d/m/Y", strtotime($thisData_primo_invio_doc_cliente)) . " " . $thisData_primo_invio_doc_cliente_note;
+        array_push($lista_valori, $data_primo_invio_doc_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()) != trim($thisData_estrazione_doc_site_manager)
+        || trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()) != trim($thisData_estrazione_doc_site_manager_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di estrazione documentazione site manager");
+        $data_estrazione_doc_site_manager = date("d/m/Y", strtotime($thisData_estrazione_doc_site_manager)) . " " . $thisData_estrazione_doc_site_manager_note;
+        array_push($lista_valori, $data_estrazione_doc_site_manager);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()) != trim($thisData_primo_invio_doc_disegni)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()) != trim($thisData_primo_invio_doc_disegni_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione per disegni costruttivi e procurement cliente");
+        $data_primo_invio_doc_disegni = date("d/m/Y", strtotime($thisData_primo_invio_doc_disegni)) . " " . $thisData_primo_invio_doc_disegni_note;
+        array_push($lista_valori, $data_primo_invio_doc_disegni);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training()) != trim($thisData_training)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_note()) != trim($thisData_training_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training TT");
+        $data_training = date("d/m/Y", strtotime($thisData_training)) . " " . $thisData_training_note;
+        array_push($lista_valori, $data_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training_in_sito()) != trim($thisData_training_in_sito)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()) != trim($thisData_training_in_sito_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training in sito");
+        $data_training_in_sito = date("d/m/Y", strtotime($thisData_training_in_sito)) . " " . $thisData_training_in_sito_note;
+        array_push($lista_valori, $data_training_in_sito);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()) != trim($thisTipologia_training_richiesta)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Tipologia di training richiesto");
+        array_push($lista_valori, $thisTipologia_training_richiesta);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getLingua_training()) != trim($thisLingua_training)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Lingua training");
+        array_push($lista_valori, $thisLingua_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getInterno()) != trim($thisInterno)
+        || trim($thisSintesi_dati_progettoInfo->getInterno_note()) != trim($thisInterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Interno");
+        $interno = date("d/m/Y", strtotime($thisInterno)) . " " . $thisInterno_note;
+        array_push($lista_valori, $interno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getCliente()) != trim($thisCliente)
+        || trim($thisSintesi_dati_progettoInfo->getCliente_note()) != trim($thisCliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Cliente");
+        $cliente = date("d/m/Y", strtotime($thisCliente)) . " " . $thisCliente_note;
+        array_push($lista_valori, $cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEsterno()) != trim($thisEsterno)
+        || trim($thisSintesi_dati_progettoInfo->getEsterno_note()) != trim($thisEsterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Esterno");
+        $esterno = date("d/m/Y", strtotime($thisEsterno)) . " " . $thisEsterno_note;
+        array_push($lista_valori, $esterno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()) != trim($thisData_consegna_ricambi)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()) != trim($thisData_consegna_ricambi_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi preliminare");
+        $data_consegna_ricambi = date("d/m/Y", strtotime($thisData_consegna_ricambi)) . " " . $thisData_consegna_ricambi_note;
+        array_push($lista_valori, $data_consegna_ricambi);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()) != trim($thisData_consegna_lista_ricambi_definitiva)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()) != trim($thisData_consegna_lista_ricambi_definitiva_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi definitiva");
+        $data_consegna_lista_ricambi_definitiva = date("d/m/Y", strtotime($thisData_consegna_lista_ricambi_definitiva)) . " " . $thisData_consegna_lista_ricambi_definitiva_note;
+        array_push($lista_valori, $data_consegna_lista_ricambi_definitiva);
+    }
+
+    if($flag_modifica) {
+        if(!filter_var($autorizzazioni->email, FILTER_VALIDATE_EMAIL) || trim($autorizzazioni->email) == "") {
+            $mittente = EMAIL;
+            $nome_mittente = EMAIL;
+        } else {
+            $mittente = $autorizzazioni->email;
+            $nome_mittente = $autorizzazioni->nome;
+        }
+
+        $db = open_DatabaseQuery();
+        $query = "SELECT Email FROM utenti WHERE Email <> '' AND Invia_mail_modifiche = 'S'";
+        $rs = $db->executeDirectQuery($query);
+        if($rs) {
+            $righe = $rs->GetRows(-1);
+            $destinatario = [];
+            foreach($righe as $riga) {
+                array_push($destinatario, $riga["Email"]);
+            }
+        }
+
+        $oggetto = "Aggiornamento file Sintesi Date Progetto - " . trim($thisAcronimo_progetto) . " - " . trim($thisRagione_sociale_cliente);
+        
+        for($i = 0; $i < count($lista_campi); $i++) {
+            $testo .= "Modificata voce <b>" . $lista_campi[$i] . "</b>. Nuovo valore <b>" . trim($lista_valori[$i]) . "</b>;<br>";
+        }
+
+        $risultato = inviaMail_nuovo($destinatario, $oggetto, $testo, $mittente, $nome_mittente);
+    }
+        
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni prima della modifica del record (pre sovrascrittura da input)
+    // ===========================================
+    
+    $thisSintesi_dati_progettoInfo->Id_dati_progetto         = $thisId_dati_progetto ;
+    $thisSintesi_dati_progettoInfo->Ragione_sociale_cliente  = $thisRagione_sociale_cliente ;
+    $thisSintesi_dati_progettoInfo->Area                     = $thisArea ;
+    $thisSintesi_dati_progettoInfo->Data_contratto           = $thisData_contratto ;
+    $thisSintesi_dati_progettoInfo->Scopo_fornitura          = $thisScopo_fornitura ;
+    $thisSintesi_dati_progettoInfo->Numero_supercommessa_job = $thisNumero_supercommessa_job ;
+    $thisSintesi_dati_progettoInfo->Acronimo_progetto        = $thisAcronimo_progetto ;
+    $thisSintesi_dati_progettoInfo->Pm_tt                    = $thisPm_tt ;
+    $thisSintesi_dati_progettoInfo->Pm_customer              = $thisPm_customer ;
+    $thisSintesi_dati_progettoInfo->Email                    = $thisEmail ;
+    $thisSintesi_dati_progettoInfo->Delivery_address         = $thisDelivery_address ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale  = $thisData_consegna_materiale ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale_note = $thisData_consegna_materiale_note ;
+    $thisSintesi_dati_progettoInfo->Termine_consegna         = $thisTermine_consegna ;
+    $thisSintesi_dati_progettoInfo->Dich_origine             = $thisDich_origine ;
+    $thisSintesi_dati_progettoInfo->Colori_macchina          = $thisColori_macchina ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna       = $thisPenali_su_consegna ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna_note  = $thisPenali_su_consegna_note ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio     = $thisData_fine_smontaggio ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio_note = $thisData_fine_smontaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione   = $thisData_inizio_spedizione ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione_note = $thisData_inizio_spedizione_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio    = $thisData_inizio_montaggio ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio_note = $thisData_inizio_montaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto = $thisData_avviamento_da_contratto ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto_note = $thisData_avviamento_da_contratto_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso   = $thisData_avviamento_atteso ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso_note = $thisData_avviamento_atteso_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo = $thisData_avviamento_effettivo ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo_note = $thisData_avviamento_effettivo_note ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione   = $thisData_mesi_accettazione ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione_note = $thisData_mesi_accettazione_note ;
+    $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale = $thisGaranzia_meccanica_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale = $thisDocumentazione_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente = $thisData_primo_invio_doc_cliente ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente_note = $thisData_primo_invio_doc_cliente_note ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager = $thisData_estrazione_doc_site_manager ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager_note = $thisData_estrazione_doc_site_manager_note ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni = $thisData_primo_invio_doc_disegni ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni_note = $thisData_primo_invio_doc_disegni_note ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup  = $thisDoc_training_tt_startup ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup_note = $thisDoc_training_tt_startup_note ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto       = $thisTraining_richiesto ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto_note  = $thisTraining_richiesto_note ;
+    $thisSintesi_dati_progettoInfo->Data_training            = $thisData_training ;
+    $thisSintesi_dati_progettoInfo->Data_training_note       = $thisData_training_note ;
+    $thisSintesi_dati_progettoInfo->Tipologia_training_richiesta = $thisTipologia_training_richiesta ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento        = $thisIncluso_pagamento ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento_note   = $thisIncluso_pagamento_note ;
+    $thisSintesi_dati_progettoInfo->Lingua_training          = $thisLingua_training ;
+    $thisSintesi_dati_progettoInfo->Interno                  = $thisInterno ;
+    $thisSintesi_dati_progettoInfo->Interno_note             = $thisInterno_note ;
+    $thisSintesi_dati_progettoInfo->Cliente                  = $thisCliente ;
+    $thisSintesi_dati_progettoInfo->Cliente_note             = $thisCliente_note ;
+    $thisSintesi_dati_progettoInfo->Esterno                  = $thisEsterno ;
+    $thisSintesi_dati_progettoInfo->Esterno_note             = $thisEsterno_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi    = $thisData_consegna_ricambi ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi_note = $thisData_consegna_ricambi_note ;
+        $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale_note = $thisGaranzia_meccanica_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale_note = $thisDocumentazione_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito      = $thisData_training_in_sito ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito_note = $thisData_training_in_sito_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva = $thisData_consegna_lista_ricambi_definitiva ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva_note = $thisData_consegna_lista_ricambi_definitiva_note ;
+    $thisSintesi_dati_progettoInfo->Termine_consegna_note = $thisTermine_consegna_note ;
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni prima della modifica del record (post sovrascrittura da input)
+    // ===========================================
+    
+    $thisSintesi_dati_progettoManager->updateSintesi_dati_progetto(escapeDB(clone $thisSintesi_dati_progettoInfo)); 
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni post aggiornamento del record
+    // ===========================================
+    
+    ?><script>window.setTimeout("doRedirect()", 1500);</script><?
+    echo "<b> Sintesi_dati_progetto Modificato</b><br/>"; 
+}
+if($submit=="Salva"){
+        $flag_modifica = false;
+    $lista_valori = [];
+    $lista_campi = [];
+    if(trim($thisSintesi_dati_progettoInfo->Acronimo_progetto) != trim($thisAcronimo_progetto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Acronimo progetto");
+        array_push($lista_valori, $thisAcronimo_progetto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente()) != trim($thisRagione_sociale_cliente)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Ragione sociale cliente");
+        array_push($lista_valori, $thisRagione_sociale_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getArea()) != trim($thisArea)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Area");
+        array_push($lista_valori, $thisArea);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_contratto()) != trim($thisData_contratto)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data contratto");
+        array_push($lista_valori, date("d/m/Y", strtotime($thisData_contratto)));
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getScopo_fornitura()) != trim($thisScopo_fornitura)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Scopo fornitura");
+        array_push($lista_valori, $thisScopo_fornitura);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job()) != trim($thisNumero_supercommessa_job)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Numero supercommessa / job");
+        array_push($lista_valori, $thisNumero_supercommessa_job);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_tt()) != trim($thisPm_tt)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM TT");
+        array_push($lista_valori, $thisPm_tt);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPm_customer()) != trim($thisPm_customer)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "PM Customer");
+        array_push($lista_valori, $thisPm_customer);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEmail()) != trim($thisEmail)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Email");
+        array_push($lista_valori, $thisEmail);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDelivery_address()) != trim($thisDelivery_address)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Delivery address");
+        array_push($lista_valori, $thisDelivery_address);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale()) != trim($thisData_consegna_materiale)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note()) != trim($thisData_consegna_materiale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna materiale");
+        $data_consegna_materiale = date("d/m/Y", strtotime($thisData_consegna_materiale)) . " " . $thisData_consegna_materiale_note;
+        array_push($lista_valori, $data_consegna_materiale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTermine_consegna()) != trim($thisTermine_consegna)
+        || trim($thisSintesi_dati_progettoInfo->getTermine_consegna_note()) != trim($thisTermine_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Termine consegna");
+        $termine_consegna = $thisTermine_consegna . " " . $thisTermine_consegna_note;
+        array_push($lista_valori, $termine_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getDich_origine()) != trim($thisDich_origine)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Dich origine");
+        array_push($lista_valori, $thisDich_origine);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getColori_macchina()) != trim($thisColori_macchina)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Colori macchina");
+        array_push($lista_valori, $thisColori_macchina);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna()) != trim($thisPenali_su_consegna) 
+        || trim($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note()) != trim($thisPenali_su_consegna_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Penali su consegna");
+        switch($thisPenali_su_consegna) {
+            case "S":
+                $var = "Si";
+                break;
+            case "N":
+                $var = "No";
+                break;
+        }
+        $penali_su_consegna = $var . " " . $thisPenali_su_consegna_note;
+        array_push($lista_valori, $penali_su_consegna);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio()) != trim($thisData_fine_smontaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note()) != trim($thisData_fine_smontaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data fine smontaggio macchina in toscotec");
+        $data_fine_smontaggio = date("d/m/Y", strtotime($thisData_fine_smontaggio)) . " " . $thisData_fine_smontaggio_note;
+        array_push($lista_valori, $data_fine_smontaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione()) != trim($thisData_inizio_spedizione)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note()) != trim($thisData_inizio_spedizione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio spedizione macchina");
+        $data_inizio_spedizione = date("d/m/Y", strtotime($thisData_inizio_spedizione)) . " " . $thisData_inizio_spedizione_note;
+        array_push($lista_valori, $data_inizio_spedizione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio()) != trim($thisData_inizio_montaggio)
+        || trim($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note()) != trim($thisData_inizio_montaggio_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data inizio montaggio presso Cliente");
+        $data_inizio_montaggio = date("d/m/Y", strtotime($thisData_inizio_montaggio)) . " " . $thisData_inizio_montaggio_note;
+        array_push($lista_valori, $data_inizio_montaggio);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto()) != trim($thisData_avviamento_da_contratto)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note()) != trim($thisData_avviamento_da_contratto_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento da contratto");
+        $data_avviamento_contratto = date("d/m/Y", strtotime($thisData_avviamento_da_contratto)) . " " . $thisData_avviamento_da_contratto_note;
+        array_push($lista_valori, $data_avviamento_contratto);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso()) != trim($thisData_avviamento_atteso)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note()) != trim($thisData_avviamento_atteso_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di avviamento atteso");
+        $data_avviamento_atteso = date("d/m/Y", strtotime($thisData_avviamento_atteso)) . " " . $thisData_avviamento_atteso_note;
+        array_push($lista_valori, $data_avviamento_atteso);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo()) != trim($thisData_avviamento_effettivo)
+        || trim($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note()) != trim($thisData_avviamento_effettivo_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data avviamento effettivo");
+        $data_avviamento_effettivo = date("d/m/Y", strtotime($thisData_avviamento_effettivo)) . " " . $thisData_avviamento_effettivo_note;
+        array_push($lista_valori, $data_avviamento_effettivo);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione()) != trim($thisData_mesi_accettazione)
+        || trim($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note()) != trim($thisData_mesi_accettazione_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data / mesi entro cui ottenere accettazione");
+        $data_mesi_accettazione = date("d/m/Y", strtotime($thisData_mesi_accettazione)) . " " . $thisData_mesi_accettazione_note;
+        array_push($lista_valori, $data_mesi_accettazione);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale()) != trim($thisGaranzia_meccanica_contrattuale)
+        || trim($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note()) != trim($thisGaranzia_meccanica_contrattuale_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Garanzia meccanica contrattuale");
+        $garanzia_meccanica_contrattuale = date("d/m/Y", strtotime($thisGaranzia_meccanica_contrattuale)) . " " . $thisGaranzia_meccanica_contrattuale_note;
+        array_push($lista_valori, $garanzia_meccanica_contrattuale);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente()) != trim($thisData_primo_invio_doc_cliente)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note()) != trim($thisData_primo_invio_doc_cliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione cliente");
+        $data_primo_invio_doc_cliente = date("d/m/Y", strtotime($thisData_primo_invio_doc_cliente)) . " " . $thisData_primo_invio_doc_cliente_note;
+        array_push($lista_valori, $data_primo_invio_doc_cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager()) != trim($thisData_estrazione_doc_site_manager)
+        || trim($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note()) != trim($thisData_estrazione_doc_site_manager_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di estrazione documentazione site manager");
+        $data_estrazione_doc_site_manager = date("d/m/Y", strtotime($thisData_estrazione_doc_site_manager)) . " " . $thisData_estrazione_doc_site_manager_note;
+        array_push($lista_valori, $data_estrazione_doc_site_manager);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni()) != trim($thisData_primo_invio_doc_disegni)
+        || trim($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note()) != trim($thisData_primo_invio_doc_disegni_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data di primo invio documentazione per disegni costruttivi e procurement cliente");
+        $data_primo_invio_doc_disegni = date("d/m/Y", strtotime($thisData_primo_invio_doc_disegni)) . " " . $thisData_primo_invio_doc_disegni_note;
+        array_push($lista_valori, $data_primo_invio_doc_disegni);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training()) != trim($thisData_training)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_note()) != trim($thisData_training_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training TT");
+        $data_training = date("d/m/Y", strtotime($thisData_training)) . " " . $thisData_training_note;
+        array_push($lista_valori, $data_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_training_in_sito()) != trim($thisData_training_in_sito)
+        || trim($thisSintesi_dati_progettoInfo->getData_training_in_sito_note()) != trim($thisData_training_in_sito_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data training in sito");
+        $data_training_in_sito = date("d/m/Y", strtotime($thisData_training_in_sito)) . " " . $thisData_training_in_sito_note;
+        array_push($lista_valori, $data_training_in_sito);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta()) != trim($thisTipologia_training_richiesta)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Tipologia di training richiesto");
+        array_push($lista_valori, $thisTipologia_training_richiesta);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getLingua_training()) != trim($thisLingua_training)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Lingua training");
+        array_push($lista_valori, $thisLingua_training);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getInterno()) != trim($thisInterno)
+        || trim($thisSintesi_dati_progettoInfo->getInterno_note()) != trim($thisInterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Interno");
+        $interno = date("d/m/Y", strtotime($thisInterno)) . " " . $thisInterno_note;
+        array_push($lista_valori, $interno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getCliente()) != trim($thisCliente)
+        || trim($thisSintesi_dati_progettoInfo->getCliente_note()) != trim($thisCliente_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Cliente");
+        $cliente = date("d/m/Y", strtotime($thisCliente)) . " " . $thisCliente_note;
+        array_push($lista_valori, $cliente);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getEsterno()) != trim($thisEsterno)
+        || trim($thisSintesi_dati_progettoInfo->getEsterno_note()) != trim($thisEsterno_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Esterno");
+        $esterno = date("d/m/Y", strtotime($thisEsterno)) . " " . $thisEsterno_note;
+        array_push($lista_valori, $esterno);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi()) != trim($thisData_consegna_ricambi)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note()) != trim($thisData_consegna_ricambi_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi preliminare");
+        $data_consegna_ricambi = date("d/m/Y", strtotime($thisData_consegna_ricambi)) . " " . $thisData_consegna_ricambi_note;
+        array_push($lista_valori, $data_consegna_ricambi);
+    }
+    if(trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva()) != trim($thisData_consegna_lista_ricambi_definitiva)
+        || trim($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note()) != trim($thisData_consegna_lista_ricambi_definitiva_note)) {
+        $flag_modifica = true;
+        array_push($lista_campi, "Data consegna lista ricambi definitiva");
+        $data_consegna_lista_ricambi_definitiva = date("d/m/Y", strtotime($thisData_consegna_lista_ricambi_definitiva)) . " " . $thisData_consegna_lista_ricambi_definitiva_note;
+        array_push($lista_valori, $data_consegna_lista_ricambi_definitiva);
+    }
+
+    if($flag_modifica) {
+        if(!filter_var($autorizzazioni->email, FILTER_VALIDATE_EMAIL) || trim($autorizzazioni->email) == "") {
+            $mittente = EMAIL;
+            $nome_mittente = EMAIL;
+        } else {
+            $mittente = $autorizzazioni->email;
+            $nome_mittente = $autorizzazioni->nome;
+        }
+
+        $db = open_DatabaseQuery();
+        $query = "SELECT Email FROM utenti WHERE Email <> '' AND Invia_mail_modifiche = 'S'";
+        $rs = $db->executeDirectQuery($query);
+        if($rs) {
+            $righe = $rs->GetRows(-1);
+            $destinatario = [];
+            foreach($righe as $riga) {
+                array_push($destinatario, $riga["Email"]);
+            }
+        }
+
+        $oggetto = "Aggiornamento file Sintesi Date Progetto - " . trim($thisAcronimo_progetto) . " - " . trim($thisRagione_sociale_cliente);
+        
+        for($i = 0; $i < count($lista_campi); $i++) {
+            $testo .= "Modificata voce <b>" . $lista_campi[$i] . "</b>. Nuovo valore <b>" . trim($lista_valori[$i]) . "</b>;<br>";
+        }
+
+        $risultato = inviaMail_nuovo($destinatario, $oggetto, $testo, $mittente, $nome_mittente);
+    }
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni prima della modifica del record (pre sovrascrittura da input)
+    // ===========================================
+    
+    $thisSintesi_dati_progettoInfo->Id_dati_progetto         = $thisId_dati_progetto ;
+    $thisSintesi_dati_progettoInfo->Ragione_sociale_cliente  = $thisRagione_sociale_cliente ;
+    $thisSintesi_dati_progettoInfo->Area                     = $thisArea ;
+    $thisSintesi_dati_progettoInfo->Data_contratto           = $thisData_contratto ;
+    $thisSintesi_dati_progettoInfo->Scopo_fornitura          = $thisScopo_fornitura ;
+    $thisSintesi_dati_progettoInfo->Numero_supercommessa_job = $thisNumero_supercommessa_job ;
+    $thisSintesi_dati_progettoInfo->Acronimo_progetto        = $thisAcronimo_progetto ;
+    $thisSintesi_dati_progettoInfo->Pm_tt                    = $thisPm_tt ;
+    $thisSintesi_dati_progettoInfo->Pm_customer              = $thisPm_customer ;
+    $thisSintesi_dati_progettoInfo->Email                    = $thisEmail ;
+    $thisSintesi_dati_progettoInfo->Delivery_address         = $thisDelivery_address ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale  = $thisData_consegna_materiale ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_materiale_note = $thisData_consegna_materiale_note ;
+    $thisSintesi_dati_progettoInfo->Termine_consegna         = $thisTermine_consegna ;
+    $thisSintesi_dati_progettoInfo->Dich_origine             = $thisDich_origine ;
+    $thisSintesi_dati_progettoInfo->Colori_macchina          = $thisColori_macchina ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna       = $thisPenali_su_consegna ;
+    $thisSintesi_dati_progettoInfo->Penali_su_consegna_note  = $thisPenali_su_consegna_note ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio     = $thisData_fine_smontaggio ;
+    $thisSintesi_dati_progettoInfo->Data_fine_smontaggio_note = $thisData_fine_smontaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione   = $thisData_inizio_spedizione ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_spedizione_note = $thisData_inizio_spedizione_note ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio    = $thisData_inizio_montaggio ;
+    $thisSintesi_dati_progettoInfo->Data_inizio_montaggio_note = $thisData_inizio_montaggio_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto = $thisData_avviamento_da_contratto ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_da_contratto_note = $thisData_avviamento_da_contratto_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso   = $thisData_avviamento_atteso ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_atteso_note = $thisData_avviamento_atteso_note ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo = $thisData_avviamento_effettivo ;
+    $thisSintesi_dati_progettoInfo->Data_avviamento_effettivo_note = $thisData_avviamento_effettivo_note ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione   = $thisData_mesi_accettazione ;
+    $thisSintesi_dati_progettoInfo->Data_mesi_accettazione_note = $thisData_mesi_accettazione_note ;
+    $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale = $thisGaranzia_meccanica_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale = $thisDocumentazione_contrattuale ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente = $thisData_primo_invio_doc_cliente ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_cliente_note = $thisData_primo_invio_doc_cliente_note ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager = $thisData_estrazione_doc_site_manager ;
+    $thisSintesi_dati_progettoInfo->Data_estrazione_doc_site_manager_note = $thisData_estrazione_doc_site_manager_note ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni = $thisData_primo_invio_doc_disegni ;
+    $thisSintesi_dati_progettoInfo->Data_primo_invio_doc_disegni_note = $thisData_primo_invio_doc_disegni_note ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup  = $thisDoc_training_tt_startup ;
+    $thisSintesi_dati_progettoInfo->Doc_training_tt_startup_note = $thisDoc_training_tt_startup_note ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto       = $thisTraining_richiesto ;
+    $thisSintesi_dati_progettoInfo->Training_richiesto_note  = $thisTraining_richiesto_note ;
+    $thisSintesi_dati_progettoInfo->Data_training            = $thisData_training ;
+    $thisSintesi_dati_progettoInfo->Data_training_note       = $thisData_training_note ;
+    $thisSintesi_dati_progettoInfo->Tipologia_training_richiesta = $thisTipologia_training_richiesta ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento        = $thisIncluso_pagamento ;
+    $thisSintesi_dati_progettoInfo->Incluso_pagamento_note   = $thisIncluso_pagamento_note ;
+    $thisSintesi_dati_progettoInfo->Lingua_training          = $thisLingua_training ;
+    $thisSintesi_dati_progettoInfo->Interno                  = $thisInterno ;
+    $thisSintesi_dati_progettoInfo->Interno_note             = $thisInterno_note ;
+    $thisSintesi_dati_progettoInfo->Cliente                  = $thisCliente ;
+    $thisSintesi_dati_progettoInfo->Cliente_note             = $thisCliente_note ;
+    $thisSintesi_dati_progettoInfo->Esterno                  = $thisEsterno ;
+    $thisSintesi_dati_progettoInfo->Esterno_note             = $thisEsterno_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi    = $thisData_consegna_ricambi ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_ricambi_note = $thisData_consegna_ricambi_note ;
+        $thisSintesi_dati_progettoInfo->Garanzia_meccanica_contrattuale_note = $thisGaranzia_meccanica_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Documentazione_contrattuale_note = $thisDocumentazione_contrattuale_note ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito      = $thisData_training_in_sito ;
+    $thisSintesi_dati_progettoInfo->Data_training_in_sito_note = $thisData_training_in_sito_note ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva = $thisData_consegna_lista_ricambi_definitiva ;
+    $thisSintesi_dati_progettoInfo->Data_consegna_lista_ricambi_definitiva_note = $thisData_consegna_lista_ricambi_definitiva_note ;
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni prima della modifica del record (post sovrascrittura da input)
+    // ===========================================
+    
+    $thisSintesi_dati_progettoManager->updateSintesi_dati_progetto(escapeDB(clone $thisSintesi_dati_progettoInfo)); 
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni post aggiornamento del record
+    // ===========================================
+    
+    echo "<b> Sintesi_dati_progetto Modificato</b><br/>"; 
+}
+if($submit=="Elimina"){
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni prima della cancellazione del record
+    // ===========================================
+    
+    $Op="Inserisci"; 
+    $thisSintesi_dati_progettoManager->deleteSintesi_dati_progetto(escapeDB(clone $thisSintesi_dati_progettoInfo)); 
+    // ===========================================
+    // EDIT POINT
+    // Eseguire qui le azioni post cancellazione del record
+    // ===========================================
+    
+    ?><script>window.setTimeout("doRedirect()", 1500);</script><?
+    echo "<b> Sintesi_dati_progetto Eliminato</b><br/>"; 
+}
+
+// ===========================================
+// EDIT POINT
+// Eseguire qui le azioni prima della visualizzazione del pannello
+// ===========================================
+
+?>
+        <script>
+            $(function(){
+                if( typeof delta_dialog != "undefined" && typeof top.delta_dialog != "undefined" ){
+                    $(".edit-button").hide();
+                    var w_height = $(top).height() - 40;
+                    delta_dialog.SetOptions({
+                        title: "<?=$Op;?> Sintesi_dati_progetto",
+                        width: 1600,
+                        height: w_height,
+                        position: ["center"],
+                    });
+                    delta_dialog.setButtons({
+                        <? if ($Op == "Inserisci" && $autorizzazioni->amministratore == true){?>
+                        "Inserisci": function(){ submit2("Inserisci"); }, <?} else {?>
+                        <? if ($autorizzazioni->amministratore == true){?>
+                        "Salva":     function(){ submit2("Salva"); },
+                        "Salva e chiudi":  function(){ submit2("Salva_e_chiudi"); },
+                        "Copia":     function(){ submit2("Copia"); },
+                        "Elimina":   function(){ submit2("Elimina"); },
+                        <?}}?>
+                        "Chiudi":    function(){
+                            delta_dialog.close("done");
+                        }
+                    });
+                }
+                else{
+                    $("#Inserisci").button();
+                    $("#Modifica").button();
+                    $("#Elimina").button();
+                    $("#Copia").button();
+                    $("#Ripristina").button();
+                }
+            });
+            function doRedirect() { //funzione con il link alla pagina che si desidera raggiungere
+                if( typeof delta_dialog != "undefined" && typeof top.delta_dialog != "undefined" ){
+                    delta_dialog.close("done");
+                }
+                else{
+                    <? if($return!="Close"){ ?>
+                    location.href = "view./Sintesi_dati_progetto.php";
+                    <? }else{ ?>
+                    window.close();
+                    parent.CloseDiv();
+                    <? } ?>
+                }
+            }
+        </script>
+<div >
+    
+    <form name="sintesi_dati_progettoEditForm" id="sintesi_dati_progettoEditForm" method="POST" action="editSintesi_dati_progetto.php" onsubmit='if(document.getElementById("submit").value=="Elimina") return window.confirm("Sei sicuro di volerlo Eliminare ?"); else return true;' >
+        <input type="hidden" name="Return" value="<?php echo $return; ?>"></input>
+        <input type="hidden"  id="Id_dati_progetto" name="Id_dati_progetto" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getId_dati_progetto(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="11">
+
+        <table cellspacing="8" cellpadding="0" border="0">
+            <tr valign="top" height="20">
+                <td>
+                    <p class="Titolo">Generali</p>
+                    <table id="Zona_generali" cellspacing='8' cellpadding='0' style="margin-bottom: 20px;">
+                        <tr valign="top" height="20">
+                                <td align="right" style="background-color: #ffff00;"> <b> Acronimo progetto : </b> </td>
+                        <td> <input type="text" id="Acronimo_progetto" name="Acronimo_progetto" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getAcronimo_progetto(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="10"  maxlength="10" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                    <? $a = new AcronimoProgetto\AcronimoProgetto("Progetto");
+                        $a->input_acronimo_progetto_compilabile = "Acronimo_progetto";
+                        $a->output_acronimo_progetto_compilabile = "Acronimo_progetto";
+                        $a->output_area = "Area";
+                        $a->output_ragione_sociale_cliente = "Ragione_sociale_cliente";
+                        $a->output_numero_supercommessa = "Numero_supercommessa_job";
+                        $a->crea_select();
+                        $a->crea_controllo();
+                    ?></td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                    <td align="right" style="background-color: #ffff00;"> <b> Ragione sociale cliente : </b> </td>
+                            <td> <input type="text" id="Ragione_sociale_cliente" name="Ragione_sociale_cliente" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getRagione_sociale_cliente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" readonly > </td>
+                        </tr>
+                            <tr valign="top" height="20">
+                                    <td align="right" style="background-color: #ffff00;"> <b> Area : </b> </td>
+                        <td> <input type="text" id="Area" name="Area" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getArea(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="20"  maxlength="20"  readonly > </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td align="right" style="background-color: #ffff00;"> <b> Data contratto : </b> </td>
+                        <td> <input type="date" id="Data_contratto" name="Data_contratto" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_contratto(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td align="right" style="background-color: #ffff00;"> <b> Scopo fornitura : </b> </td>
+                        <td> <input type="text" id="Scopo_fornitura" name="Scopo_fornitura" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getScopo_fornitura(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td align="right" style="background-color: #ffff00;"> <b> Numero supercommessa / job : </b> </td>
+                        <td> <input type="text" id="Numero_supercommessa_job" name="Numero_supercommessa_job" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getNumero_supercommessa_job(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="10"  maxlength="10"  readonly > </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td style="background-color: #ffff00;" align="right"> <b> PM TT : </b> </td>
+                        <td> <? if($autorizzazioni->amministratore == "S") {
+                          $db = open_DatabaseQuery();
+                            $query ="SELECT Id, Nome FROM pm_toscotec";
+                                $rs = $db->executeDirectQuery($query);
+                                if($rs) {
+                                    ?>
+                                    <select id="Pm_tt" name="Pm_tt">
+                                        <option value=""></option>
+                                        <? 
+                                        $righe = $rs->GetRows(-1);
+                                        foreach($righe as $riga) {
+                                            if($riga["Nome"] == $thisSintesi_dati_progettoInfo->getPm_tt()) {
+                                                echo "<option value='".$riga["Nome"]."' selected>".$riga["Nome"]."</option>";
+                                            } else {
+                                                echo "<option value='".$riga["Nome"]."'>".$riga["Nome"]."</option>";
+                                            }
+                                        }
+                                        } else echo "<input type='text' value='" . $thisSintesi_dati_progettoInfo->getPm_tt() . "' readonly>";
+                                        ?>
+                                    </select>
+                                <?}?></td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td style="background-color: #ffff00;" align="right"> <b> PM Customer : </b> </td>
+                        <td> <input type="text" id="Pm_customer" name="Pm_customer" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getPm_customer(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td style="background-color: #ffff00;" align="right"> <b> Email : </b> </td>
+                        <td> <input type="text" id="Email" name="Email" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getEmail(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                    </tr>
+                            <tr valign="top" height="20">
+                                <td style="background-color: #ffff00;" align="right"> <b> Delivery address : </b> </td>
+                        <td> <input type="text" id="Delivery_address" name="Delivery_address" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getDelivery_address(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="250" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                    </tr>
+                    </table>
+
+                    <p class="Titolo">Manualistica</p>
+                    <table id="Zona_manualistica" cellspacing='8' cellpadding='0' style="margin-bottom: 20px;">
+                                <tr valign="top" height="20">
+                                    <td align="right" style="background-color: #92d050;"> <b> Data di primo invio documentazione cliente : </b> </td>
+                            <td style="display: inline-flex;"> <input type="date" id="Data_primo_invio_doc_cliente" name="Data_primo_invio_doc_cliente" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Data_primo_invio_doc_cliente_note" name="Data_primo_invio_doc_cliente_note" style="width: 250px; margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_cliente_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                                <tr valign="top" height="20">
+                                    <td align="right" style="background-color: #92d050;"> <b> Data di estrazione documentazione site manager : </b> </td>
+                            <td style="display: inline-flex;">
+                                <input type="date" id="Data_estrazione_doc_site_manager" name="Data_estrazione_doc_site_manager" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_estrazione_doc_site_manager_note" name="Data_estrazione_doc_site_manager_note" style="width: 250px; margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_estrazione_doc_site_manager_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                 </td>
+                        </tr>
+                                <tr valign="top" height="20">
+                                    <td align="right" style="background-color: #92d050;"> <b> Data di primo invio documentazione per disegni costruttivi e procurement cliente : </b> </td>
+                            <td style="display: inline-flex;"> <input type="date" id="Data_primo_invio_doc_disegni" name="Data_primo_invio_doc_disegni" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Data_primo_invio_doc_disegni_note" name="Data_primo_invio_doc_disegni_note" style="width: 250px; margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_primo_invio_doc_disegni_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <p class="Titolo">Training</p>
+                    <table id="Zona_training" cellspacing='8' cellpadding='0' style="margin-bottom: 20px;">
+                                <!-- <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Documentazione per training in TT/allo start-up : </b> </td>
+                            <td> 
+                                <select id="Doc_training_tt_startup" name="Doc_training_tt_startup" <? if($autorizzazioni->amministratore != "S") {?> disabled <?}?>>
+                                    <option value="" <?if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup() == '') {?> selected <?}?>></option>
+                                    <option value="S" <?if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup() == 'S') {?> selected <?}?>>Si</option>
+                                    <option value="N" <?if($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup() == 'N') {?> selected <?}?>>No</option>
+                                </select>
+                                <input type="text" id="Doc_training_tt_startup_note" name="Doc_training_tt_startup_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getDoc_training_tt_startup_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                        </tr>-->
+                                <!-- <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Training richiesto : </b> </td>
+                            <td>
+                                <select id="Training_richiesto" name="Training_richiesto" <? if($autorizzazioni->amministratore != "S") {?> disabled <?}?>>
+                                    <option value="" <?if($thisSintesi_dati_progettoInfo->getTraining_richiesto() == '') {?> selected <?}?>></option>
+                                    <option value="S" <?if($thisSintesi_dati_progettoInfo->getTraining_richiesto() == 'S') {?> selected <?}?>>Si</option>
+                                    <option value="N" <?if($thisSintesi_dati_progettoInfo->getTraining_richiesto() == 'N') {?> selected <?}?>>No</option>
+                                </select>
+                            <input type="text" id="Training_richiesto_note" name="Training_richiesto_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getTraining_richiesto_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                        </td>
+                        </tr> -->
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Data training TT : </b> </td>
+                            <td style="display: inline-flex;"> <input type="date" id="Data_training" name="Data_training" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_training(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Data_training_note" name="Data_training_note" style="width: 280px; margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_training_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #538dd5; color: white;" align="right"> <b> Data training in sito : </b> </td>
+                            <td style="display: inline-flex;">
+                                <input type="date" id="Data_training_in_sito" name="Data_training_in_sito" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_training_in_sito(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                                <input type="text" id="Data_training_in_sito_note" name="Data_training_in_sito_note" style="width: 280px; margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_training_in_sito_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                        </tr>
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Tipologia di training richiesto : </b> </td>
+                            <td> <input type="text" id="Tipologia_training_richiesta" name="Tipologia_training_richiesta" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getTipologia_training_richiesta(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                        </tr>
+                                <!-- <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Incluso / a pagamento : </b> </td>
+                            <td style="display: inline-flex;">
+                                <select id="Includo_pagamento" name="Incluso_pagamento" <? if($autorizzazioni->amministratore != "S") {?> disabled <?}?>>
+                                    <option value="" <?if($thisSintesi_dati_progettoInfo->getIncluso_pagamento() == '') {?> selected <?}?>></option>
+                                    <option value="I" <?if($thisSintesi_dati_progettoInfo->getIncluso_pagamento() == 'I') {?> selected <?}?>>Incluso</option>
+                                    <option value="A" <?if($thisSintesi_dati_progettoInfo->getIncluso_pagamento() == 'A') {?> selected <?}?>>A pagamento</option>
+                                </select>
+                            <input type="text" id="Incluso_pagamento_note" name="Incluso_pagamento_note" style="margin-left: 5px; width: 255px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getIncluso_pagamento_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr> -->
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #538dd5; color: white;" align="right"> <b> Lingua training : </b> </td>
+                            <td> <input type="text" id="Lingua_training" name="Lingua_training" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getLingua_training(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="50" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                        </tr>
+                    </table>
+
+
+
+                </td>
+                <td>
+                    <p class="Titolo">7</p>
+                    <table id="Zona_7" cellspacing='8' cellpadding='0' style="margin-bottom: 20px;">
+
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data consegna materiale : </b> </td>
+                                <td> <input type="date" id="Data_consegna_materiale" name="Data_consegna_materiale" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_materiale(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_consegna_materiale_note" name="Data_consegna_materiale_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_materiale_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Termine consegna : </b> </td>
+                                <td> 
+                                    <? $db = open_DatabaseQuery();
+                                    $query = "SELECT codice FROM termini_di_consegna";
+                                $rs = $db->executeDirectQuery($query);
+                                if($rs) {
+                                    ?>
+                                    <select id="Termine_consegna" name="Termine_consegna" <? if($autorizzazioni->amministratore != "S") {?> disabled <?}?>>
+                                        <option value=""></option>
+                                        <? 
+                                        $righe = $rs->GetRows(-1);
+                                        foreach($righe as $riga) {
+                                            if($riga["codice"] == $thisSintesi_dati_progettoInfo->getTermine_consegna()) {
+                                                echo "<option value=".$riga["codice"]." selected>".$riga["codice"]."</option>";
+                                            } else {
+                                                echo "<option value=".$riga["codice"].">".$riga["codice"]."</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                <?}?>
+                                    <input type="text" id="Termine_consegna_note" name="Termine_consegna_note" value="<?=$thisSintesi_dati_progettoInfo->getTermine_consegna_note() ?>" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Dich_origine : </b> </td>
+                                <td> <input type="text" id="Dich_origine" name="Dich_origine" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getDich_origine(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="10"  maxlength="10" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Colori macchina : </b> </td>
+                                <td> <input type="text" id="Colori_macchina" name="Colori_macchina" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getColori_macchina(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="50" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Penali su consegna : </b> </td>
+                                <td>
+                                    <select id="Penali_su_consegna" name="Penali_su_consegna" <? if($autorizzazioni->amministratore != "S") {?> disabled <?}?>>
+                                        <option value="" <?if($thisSintesi_dati_progettoInfo->getPenali_su_consegna() == '') {?> selected <?}?>></option>
+                                        <option value="S" <?if($thisSintesi_dati_progettoInfo->getPenali_su_consegna() == 'S') {?> selected <?}?>>Si</option>
+                                        <option value="N" <?if($thisSintesi_dati_progettoInfo->getPenali_su_consegna() == 'N') {?> selected <?}?>>No</option>
+                                    </select>
+                                <input type="text" id="Penali_su_consegna_note" name="Penali_su_consegna_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getPenali_su_consegna_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data fine smontaggio macchina in toscotec : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_fine_smontaggio" name="Data_fine_smontaggio" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_fine_smontaggio(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_fine_smontaggio_note" name="Data_fine_smontaggio_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_fine_smontaggio_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data inizio spedizione macchina : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_inizio_spedizione" name="Data_inizio_spedizione" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_inizio_spedizione(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_inizio_spedizione_note" name="Data_inizio_spedizione_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_inizio_spedizione_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data inizio montaggio presso Cliente : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_inizio_montaggio" name="Data_inizio_montaggio" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_inizio_montaggio(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                                <input type="text" id="Data_inizio_montaggio_note" name="Data_inizio_montaggio_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_inizio_montaggio_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data avviamento da contratto : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_avviamento_da_contratto" name="Data_avviamento_da_contratto" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_avviamento_da_contratto_note" name="Data_avviamento_da_contratto_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_da_contratto_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data di avviamento atteso : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_avviamento_atteso" name="Data_avviamento_atteso" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_atteso(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_avviamento_atteso_note" name="Data_avviamento_atteso_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_atteso_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data avviamento effettivo : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_avviamento_effettivo" name="Data_avviamento_effettivo" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_avviamento_effettivo_note" name="Data_avviamento_effettivo_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_avviamento_effettivo_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Data / mesi entro cui ottenere accettazione : </b> </td>
+                                <td style="display: inline-flex;"> <input type="date" id="Data_mesi_accettazione" name="Data_mesi_accettazione" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_mesi_accettazione(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                <input type="text" id="Data_mesi_accettazione_note" name="Data_mesi_accettazione_note" style="margin-left: 5px;" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_mesi_accettazione_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Garanzia meccanica contrattuale : </b> </td>
+                                <td> <input type="date" id="Garanzia_meccanica_contrattuale" name="Garanzia_meccanica_contrattuale" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="150" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                                    <input type="text" id="Garanzia_meccanica_contrattuale_note" name="Garanzia_meccanica_contrattuale_note" value="<?= $thisSintesi_dati_progettoInfo->getGaranzia_meccanica_contrattuale_note() ?>" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                            </tr>
+                                    <!-- <tr valign="top" height="20">
+                                        <td style="background-color: #ffc000;" align="right"> <b> Documentazione contrattuale : </b> </td>
+                                <td> <input type="date" id="Documentazione_contrattuale" name="Documentazione_contrattuale" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="150" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                                    <input type="text" id="Documentazione_contrattuale_note" name="Documentazione_contrattuale_note" value="<?= $thisSintesi_dati_progettoInfo->getDocumentazione_contrattuale_note() ?>" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>></td>
+                            </tr> -->
+                    </table>
+
+                    <p class="Titolo">Fat</p>
+                    <table id="Zona_fat" cellspacing='8' cellpadding='0' style="margin-bottom: 20px;">
+                        <tr valign="top" height="20">
+                                    <td style="background-color: #ff0000; color: white; width: 100px;" align="right"> <b> Interno : </b> </td>
+                            <td> <input type="date" id="Interno" name="Interno" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getInterno(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Interno_note" name="Interno_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getInterno_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #ff0000; color: white;" align="right"> <b> Cliente : </b> </td>
+                            <td> <input type="date" id="Cliente" name="Cliente" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getCliente(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Cliente_note" name="Cliente_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getCliente_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #ff0000; color: white;" align="right"> <b> Esterno : </b> </td>
+                            <td> <input type="date" id="Esterno" name="Esterno" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getEsterno(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Esterno_note" name="Esterno_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getEsterno_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <p class="Titolo">Ricambi</p>
+                    <table id="Zona_ricambi" cellspacing="8" cellpadding="0" border="0" style="margin-bottom: 20px;">
+                                <tr valign="top" height="20">
+                                    <td style="background-color: #e6b8b7; width: 280px;" align="right"> <b> Data consegna lista ricambi Preliminare : </b> </td>
+                            <td> <input type="date" id="Data_consegna_ricambi" name="Data_consegna_ricambi" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_ricambi(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>> 
+                            <input type="text" id="Data_consegna_ricambi_note" name="Data_consegna_ricambi_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_ricambi_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" style="width: 310px;" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                        </td>
+                        </tr>
+                        <tr valign="top" height="20">
+                            <td style="background-color: #e6b8b7; width: 280px;" align="right"> <b> Data consegna lista ricambi definitiva : </b> </td>
+                            <td>
+                                <input type="date" id="Data_consegna_lista_ricambi_definitiva" name="Data_consegna_lista_ricambi_definitiva" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="524288" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                                <input type="text" id="Data_consegna_lista_ricambi_definitiva_note" name="Data_consegna_lista_ricambi_definitiva_note" value="<?php echo htmlentities ($thisSintesi_dati_progettoInfo->getData_consegna_lista_ricambi_definitiva_note(),ENT_QUOTES|ENT_IGNORE,"UTF-8"); ?>" size="50"  maxlength="100" style="width: 310px;" <? if($autorizzazioni->amministratore != "S") {?> readonly <?}?>>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+</table>
+<input type="hidden" id="submit" name="submit" value=""/> 
+        <script>
+            function submit2(valore){
+                submit=valore;
+                document.getElementById("submit").value=valore;
+                if( typeof delta_dialog != "undefined" && typeof top.delta_dialog != "undefined" ){
+                    var form = document.getElementById("sintesi_dati_progettoEditForm");
+                    if (form){
+                        if(form.onsubmit()){
+                            HTMLFormElement.prototype.submit.call(form);
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            }
+            function ripristina(){
+                window.location=window.location;
+            }
+
+            $("#Data_inizio_spedizione").on("change", function() {
+                if($("#Data_estrazione_doc_site_manager").val() != "") {
+                    var conferma = confirm("Ricalcolare Data di estrazione documentazione site manager?");
+                    if(conferma) {
+                        var data = new Date($("#Data_inizio_spedizione").val());
+                        data.setMonth(data.getMonth() - 2);
+                        $("#Data_estrazione_doc_site_manager").val(data.toISOString().split('T')[0]);
+                    }
+                } else {
+                    var data = new Date($("#Data_inizio_spedizione").val());
+                    data.setMonth(data.getMonth() - 2);
+                    $("#Data_estrazione_doc_site_manager").val(data.toISOString().split('T')[0]);
+                }
+            })
+
+            $("#Cliente").on("change", function() {
+                if($("#Data_primo_invio_doc_cliente").val() != "") {
+                    var conferma = confirm("Ricalcolare Data di primo invio documentazione cliente?");
+                    if(conferma) {
+                        var data = new Date($("#Cliente").val());
+                        data.setMonth(data.getMonth() - 2);
+                        $("#Data_primo_invio_doc_cliente").val(data.toISOString().split('T')[0]);
+                    }
+                } else {
+                    var data = new Date($("#Cliente").val());
+                    data.setMonth(data.getMonth() - 2);
+                    $("#Data_primo_invio_doc_cliente").val(data.toISOString().split('T')[0]);
+                }
+            })
+
+        </script>
+        <div class='edit-button'>
+            <? if ( $Op=="Inserisci"){ ?> 
+            <button id="Inserisci" type="submit"  onclick='submit2("Inserisci");'>Inserisci</button>
+            <? }else{ ?> 
+            <button id="Salva" type="submit" onclick='submit2("Salva");'>Salva</button>
+            <button id="Salva_e_chiudi" type="submit"  onclick='submit2("Salva_e_chiudi");'>Salva e chiudi</button>
+            <button id="Copia" type="submit"  onclick='submit2("Copia");'>Copia</button>
+            <button id="Elimina" type="submit"  onclick='submit2("Elimina");'>Elimina</button>
+            <? } ?> 
+            <button id="Ripristina" type="button"  onclick='ripristina();'>Ripristina</button>
+        </div>
+</form>
+</div>
+    </body>
+</html>
